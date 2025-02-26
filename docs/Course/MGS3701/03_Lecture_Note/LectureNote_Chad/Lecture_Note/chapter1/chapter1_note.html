@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.40">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Chungil CHae">
+
+<title>[Lecture Note] Chapter1: Introduction – Chad’s Course Portfolio</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../../../../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../../../../">
+<script src="../../../../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../../../../site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../../../../site_libs/bootstrap/bootstrap-2e49cc8d0bd04157c8d4c66010585c4c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../../../../../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../../../../../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../../../../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../../../../../styles.css">
+</head>
+
+<body class="floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../../../../../index.html">
+    <span class="navbar-title">Chad’s Course Portfolio</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../../../Course/GE2021/03_Lecture_Note/LectureNote_Chad/PPT/chapter0/chapter0.html"> 
+<span class="menu-text">test</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">[Lecture Note] Chapter1: Introduction</h1>
+            <p class="subtitle lead">MGS3701: Data Mining</p>
+                      </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Chungil CHae <a href="mailto:cchae@kean.edu" class="quarto-title-author-email"><i class="bi bi-envelope"></i></a> </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">Wed, 26 February 2025</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  <div>
+    <div class="abstract">
+      <div class="block-title">Abstract</div>
+      This book has by far the most comprehensive review of business analytics methods that the author have ever seen, covering everything from classical approaches such as linear and logistic regression, through to modern methods like neural networks, bagging and boosting, and even much more business specific procedures such as social network analysis and text mining. If not the bible, it is at the least a definitive manual on the subject. However, just as important as the list of topics, is the way that they are all presented in an applied fashion using business applications. Indeed the last chapter is entirely dedicated to 10 separate cases where business analytics approaches can be applied.
+    </div>
+  </div>
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">TOPICS</h2>
+   
+  <ul>
+  <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link active" data-scroll-target="#learning-objectives">Learning Objectives</a>
+  <ul>
+  <li><a href="#short-video-introduction" id="toc-short-video-introduction" class="nav-link" data-scroll-target="#short-video-introduction">SHORT VIDEO INTRODUCTION</a></li>
+  </ul></li>
+  <li><a href="#what-is-business-analytics" id="toc-what-is-business-analytics" class="nav-link" data-scroll-target="#what-is-business-analytics">What Is Business Analytics?</a>
+  <ul>
+  <li><a href="#business-analytics" id="toc-business-analytics" class="nav-link" data-scroll-target="#business-analytics">Business Analytics</a></li>
+  <li><a href="#who-uses-predictive-analytics" id="toc-who-uses-predictive-analytics" class="nav-link" data-scroll-target="#who-uses-predictive-analytics">Who Uses Predictive Analytics?</a></li>
+  </ul></li>
+  <li><a href="#what-is-data-mining" id="toc-what-is-data-mining" class="nav-link" data-scroll-target="#what-is-data-mining">What Is Data Mining?</a>
+  <ul>
+  <li><a href="#data-mining-is" id="toc-data-mining-is" class="nav-link" data-scroll-target="#data-mining-is">Data mining is</a></li>
+  </ul></li>
+  <li><a href="#data-mining-and-related-terms" id="toc-data-mining-and-related-terms" class="nav-link" data-scroll-target="#data-mining-and-related-terms">Data Mining and Related Terms</a></li>
+  <li><a href="#big-data" id="toc-big-data" class="nav-link" data-scroll-target="#big-data">Big Data</a></li>
+  <li><a href="#data-science" id="toc-data-science" class="nav-link" data-scroll-target="#data-science">Data Science</a></li>
+  <li><a href="#why-are-there-so-many-different-methods" id="toc-why-are-there-so-many-different-methods" class="nav-link" data-scroll-target="#why-are-there-so-many-different-methods">Why Are There So Many Different Methods?</a></li>
+  <li><a href="#terminology-and-notation" id="toc-terminology-and-notation" class="nav-link" data-scroll-target="#terminology-and-notation">Terminology and Notation</a>
+  <ul>
+  <li><a href="#terms" id="toc-terms" class="nav-link" data-scroll-target="#terms">Terms</a></li>
+  </ul></li>
+  <li><a href="#road-maps-to-this-book" id="toc-road-maps-to-this-book" class="nav-link" data-scroll-target="#road-maps-to-this-book">Road Maps to This Book</a>
+  <ul>
+  <li><a href="#order-of-topics" id="toc-order-of-topics" class="nav-link" data-scroll-target="#order-of-topics">Order of Topics</a></li>
+  </ul></li>
+  <li><a href="#house-management" id="toc-house-management" class="nav-link" data-scroll-target="#house-management">House management</a>
+  <ul>
+  <li><a href="#more-to-read" id="toc-more-to-read" class="nav-link" data-scroll-target="#more-to-read">More to Read</a></li>
+  <li><a href="#assignment" id="toc-assignment" class="nav-link" data-scroll-target="#assignment">Assignment</a></li>
+  </ul></li>
+  <li><a href="#reference" id="toc-reference" class="nav-link" data-scroll-target="#reference">Reference</a></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="chapter1_note.docx"><i class="bi bi-file-word"></i>MS Word</a></li><li><a href="chapter1_note.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></nav>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<section id="learning-objectives" class="level1">
+<h1>Learning Objectives</h1>
+<ol type="1">
+<li>What Is Business Analytics?</li>
+<li>What Is Data Mining?</li>
+<li>Data Mining and Related Terms</li>
+<li>Big Data</li>
+<li>Data Science</li>
+<li>Why Are There So Many Different Methods?</li>
+<li>Terminology and Notation</li>
+<li>Road Maps to This Book <span class="citation" data-cites="textbook">(<a href="#ref-textbook" role="doc-biblioref">Shmueli et al., 2017</a>)</span></li>
+</ol>
+<section id="short-video-introduction" class="level2">
+<h2 class="anchored" data-anchor-id="short-video-introduction">SHORT VIDEO INTRODUCTION</h2>
+<div class="quarto-video"><iframe data-external="1" src="https://www.youtube.com/embed/diaZdX1s5L4" width="100%" height="85%" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+</section>
+</section>
+<section id="what-is-business-analytics" class="level1">
+<h1>What Is Business Analytics?</h1>
+<section id="business-analytics" class="level2">
+<h2 class="anchored" data-anchor-id="business-analytics">Business Analytics</h2>
+<ul>
+<li>Business Analytics (BA) involves using quantitative data to aid decision-making, with its applications and interpretations varying across different organizations.
+<ul>
+<li>For example, a British tabloid once utilized it to test which images on their website, like cats or dogs, garnered more views.</li>
+<li>In contrast, the Washington Post uses analytics to target specific influential audiences, such as defense contractors, by tracking reader behaviors like time of day and subscription details.</li>
+<li>BA encompasses simple data analysis techniques such as counting and basic arithmetic.</li>
+</ul></li>
+<li>However, it also includes more advanced practices known as Business Intelligence (BI),which focuses on data visualization and dynamic reporting to help understand past and current events.
+<ul>
+<li>BI tools have evolved from static reports to interactive dashboards that provide real-time data interaction, enhancing managerial decision-making.</li>
+</ul></li>
+<li>Furthermore, Business Analytics has expanded to include sophisticated statistical and data mining methods aimed at exploring data relationships, making predictions, and forecasting future trends.
+<ul>
+<li>Techniques like regression models describe relationships and predict outcomes.</li>
+<li>The field of BA is also supported by methods like A-B testing used in pricing strategies, demonstrating its practical implications in various business contexts.</li>
+<li>However, successful deployment of BA requires a clear understanding of the business context and the functionality of analytics tools to avoid misapplication.</li>
+</ul></li>
+<li>Overall, Business Analytics has evolved from basic data reporting (BI) to a comprehensive toolkit that includes advanced analytics, emphasizing the necessity for strategic application aligned with business objectives.</li>
+</ul>
+</section>
+<section id="who-uses-predictive-analytics" class="level2">
+<h2 class="anchored" data-anchor-id="who-uses-predictive-analytics">Who Uses Predictive Analytics?</h2>
+<blockquote class="blockquote">
+<p>The integration of predictive analytics into various sectors has significantly enhanced organizational capabilities due to the growing availability of data. Key examples include:</p>
+</blockquote>
+<ul>
+<li>Credit Scoring:
+<ul>
+<li>Credit scoring utilizes predictive modeling to assess an individual’s likelihood of repaying debts. Rather than being an arbitrary measure, it derives from historical data analysis to forecast future repayment behaviors. This established method helps financial institutions determine creditworthiness efficiently.</li>
+</ul></li>
+<li>Future Purchases:
+<ul>
+<li>An instance of the application of predictive models in marketing is demonstrated by Target’s method to infer whether a customer is likely pregnant based on their shopping patterns. This insight allows Target to send tailored promotions to potential mothers at the early stages of pregnancy, optimizing marketing efforts and potentially increasing sales during a crucial buying period.</li>
+</ul></li>
+<li>Tax Evasion:
+<ul>
+<li>The U.S. Internal Revenue Service (IRS) has leveraged predictive analytics to enhance its enforcement strategies. By employing predictive models, the IRS is reportedly 25 times more successful in identifying cases of tax evasion. This focused approach allows them to concentrate resources on auditing individuals who are statistically more likely to have evaded taxes, making their processes more effective and efficient.</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="what-is-data-mining" class="level1">
+<h1>What Is Data Mining?</h1>
+<section id="data-mining-is" class="level2">
+<h2 class="anchored" data-anchor-id="data-mining-is">Data mining is</h2>
+<ul>
+<li>In the context of this book, data mining extends beyond simple counting, descriptive statistics, and rule-based methods, venturing into more sophisticated realms of business analytics.</li>
+<li>While data visualization serves as an introductory tool in advanced analytics, the primary focus of the book is on deeper, more complex data analytics tools.</li>
+<li>These include both statistical and machine-learning techniques designed to automate and enhance decision-making processes, with a strong emphasis on prediction at an individual level.</li>
+<li>For instance, rather than merely analyzing broad relationships like the connection between advertising and sales, the book explores targeted questions such as which specific advertisement or recommendation should be presented to a particular online shopper in real-time.</li>
+<li>Additionally, it covers methods for clustering customers into distinct groups or “personas” tailored for different marketing strategies, and details how new prospects can be assigned to these personas for more effective engagement.</li>
+<li>The rise of Big Data has further propelled data mining into prominence.</li>
+<li>These methods are particularly adept at handling vast datasets and are key to unlocking valuable insights from the data deluge, thanks to their powerful analytical capabilities and automation potential.</li>
+<li>This shift highlights the advanced level of analytics discussed in the book, which prioritizes actionable insights and customization in business strategies.</li>
+</ul>
+</section>
+</section>
+<section id="data-mining-and-related-terms" class="level1">
+<h1>Data Mining and Related Terms</h1>
+<ul>
+<li>The analytics field is expanding rapidly in both the scope of its applications and the prevalence of its use across organizations. This growth has led to considerable inconsistencies and overlaps in terminology.</li>
+<li>For example, “data mining” is defined differently by different groups:
+<ul>
+<li>the general public may view it as an invasive search of personal data;</li>
+<li>a major consulting firm might focus on identifying trends in historical data under a “data mining department,” while relegating more advanced predictive modeling to an “advanced analytics department.”</li>
+</ul></li>
+<li>Data mining occupies a space at the intersection of statistics and machine learning (also referred to as artificial intelligence).</li>
+<li>It employs a range of techniques, many of which have roots in long-established statistical methods like linear regression, logistic regression, discriminant analysis, and principal components analysis.</li>
+<li>However, unlike classical statistics where data scarcity and computation limitations are primary concerns, data mining operates in environments where data and computational power are abundant. This shift leads to what Daryl Pregibon describes as “statistics at scale and speed.”</li>
+<li>Significantly, there are fundamental differences between statistics and machine learning.
+<ul>
+<li>Statistics typically focuses on inferring from a sample to the broader population about an average effect</li>
+<li>Machine learning concentrates on predicting outcomes for individual instances.</li>
+</ul></li>
+<li>Furthermore, while statistical methods lean heavily on inference to determine if observed patterns occur by chance, data mining sidesteps such inference, which occasionally leads to overfitting.</li>
+<li>This occurs when a model so closely fits the sample data that it also captures random noise rather than just the underlying pattern.</li>
+<li>In this text, the term “machine learning” is used specifically for algorithms that learn directly from data, spotting local patterns in a layered or iterative manner.</li>
+<li>Conversely, “statistical models” refer to approaches applying a global structure to the data, such as linear regression, as opposed to algorithms like k-nearest-neighbors which focus on nearby data points for predictions.</li>
+<li>Ultimately, many IT and computer science professionals use the term “machine learning” more inclusively to refer to all the methodologies discussed in this book, highlighting the variations in how these terms are understood and applied across different sectors.</li>
+</ul>
+</section>
+<section id="big-data" class="level1">
+<h1>Big Data</h1>
+<ul>
+<li>Data mining and Big Data are inextricably linked, with the landscape of Big Data defined by the “four V’s”: volume, velocity, variety, and veracity. These characteristics outline the challenges and opportunities presented by modern data sets:
+<ul>
+<li>Volume addresses the sheer amount of data.</li>
+<li>Velocity pertains to the rapid rate at which data is generated and updated.</li>
+<li>Variety indicates the different types of data being collected, from numerical to textual and beyond.</li>
+<li>Veracity highlights the unreliability and organic nature of data generation processes, which often lack the rigorous controls found in traditional data collection.</li>
+</ul></li>
+</ul>
+<blockquote class="blockquote">
+<p>The scale of Big Data can be astonishing. Comparatively, if traditional statistical data (like those from a small-scale study) were the size of a period at the end of a sentence, a database like Walmart’s could be equated to the size of a football field. This doesn’t even consider additional unstructured data from sources such as social media.</p>
+</blockquote>
+<ul>
+<li>The challenge of handling Big Data is significant but the potential rewards are great, as demonstrated by several practical examples:
+<ul>
+<li>OKCupid utilizes statistical models to predict which messaging strategies are most likely to engage users.</li>
+<li>Telenor utilized predictive models to reduce subscriber turnover by 37%, identifying at-risk customers early and proactively engaging them.</li>
+<li>Allstate improved the accuracy of predicting injury liability claims by threefold by incorporating detailed information about vehicle types.</li>
+</ul></li>
+<li>Big Data has enabled new technologies that were previously unfeasible.
+<ul>
+<li>For instance, the evolution of Google’s search technology showcases this shift.</li>
+<li>Initially, searches returned general results based on keywords.</li>
+<li>However, as Google’s database grew and incorporated user interaction data, searches became remarkably specific, capable of returning highly relevant results based on complex queries, such as pinpointing a humorous scene in an “I Love Lucy” episode based on a mixed-language script.</li>
+</ul></li>
+</ul>
+<blockquote class="blockquote">
+<p>Thus, Big Data not only presents complex challenges but also unprecedented opportunities to derive deep insights and create value across various domains.</p>
+</blockquote>
+</section>
+<section id="data-science" class="level1">
+<h1>Data Science</h1>
+<ul>
+<li>The emergence of Big Data has led to the creation of an entirely new professional field: data science.</li>
+<li>This discipline is broadly defined and encompassing, requiring a diverse set of skills ranging from statistics and machine learning to mathematics, programming, business, and IT.</li>
+<li>The term data scientist reflects this wide array of competencies, with most practitioners possessing what is described as a ‘T’-shaped skill set.</li>
+<li>This includes deep expertise in one particular area (the vertical bar of the T) complemented by broader, shallower knowledge across other relevant disciplines (the horizontal top of the T).</li>
+<li>The role of programming within data science is debated; during the Strata+Hadoop World conference in October 2014, a majority of attendees considered programming essential, though a significant minority disagreed.</li>
+<li>Notably, despite the big data motivator, most data scientists do not usually deal with terabyte-size datasets on a daily basis.</li>
+<li>Instead, such massive datasets more commonly come into play during the deployment stage of a model, which is predominantly managed by IT professionals who tackle data-handling and systems integration challenges.</li>
+<li>The focus of our book, however, is on the earlier stages of data science work, which involve piloting and prototyping.</li>
+<li>This phase includes developing statistical and machine learning models that will later be integrated into larger systems.</li>
+<li>Our exploration centers on understanding which methods are suitable for different types of data and problems, how these methods function, their strengths and weaknesses, their requirements, and how to evaluate their effectiveness.</li>
+<li>Thus, data science, as a field, operates at the intersection of numerous disciplines, requiring a versatile skill set to navigate the complexities of both the creation and implementation of data-driven models and systems.</li>
+<li>The profession not only prioritizes technical proficiency but also necessitates an understanding of business and operational contexts to effectively leverage Big Data.</li>
+</ul>
+</section>
+<section id="why-are-there-so-many-different-methods" class="level1">
+<h1>Why Are There So Many Different Methods?</h1>
+<ul>
+<li>As explored in this book, and indeed across the broader literature on data mining, there is a plethora of methods available for prediction and classification.</li>
+<li>The coexistence of these diverse methods often raises questions regarding their relative merits and applicabilities.</li>
+<li>The reason for this variety is that <strong>each method comes with its own set of strengths and weaknesses, making them suitable for different scenarios depending on several factors.</strong></li>
+<li>These factors include the size of the dataset, the types of patterns present in the data, adherence to the assumptions underlying each method, the level of noise in the data, and the specific objectives of the analysis.</li>
+<li>For instance, in a simplified example illustrated (as would be in Figure 1.1 of a hypothetical book), where the task is to differentiate between buyers and non-buyers of riding mowers based on household income and lot size, two different methods might be applied.</li>
+<li>One method might employ straightforward horizontal and vertical lines to segregate buyers from non-buyers, while another might utilize a diagonal line for separation.</li>
+</ul>
+<p><a href="_img/manymethod.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="_img/manymethod.png" class="img-fluid"></a></p>
+<ul>
+<li>These differing approaches can yield varying results, and their effectiveness can change based on the context in which they are used.</li>
+<li>Consequently, it is typical practice in data mining to experiment with multiple methods to determine which one best meets the specific needs of the analysis at hand.</li>
+<li>This approach ensures a more tailored and potentially more accurate outcome in predicting or classifying data according to the challenge posed by the dataset.</li>
+<li>This pragmatic and flexible strategy highlights the inherently adaptive and investigative nature of data mining, where method selection is critical to achieving optimal results.</li>
+</ul>
+</section>
+<section id="terminology-and-notation" class="level1">
+<h1>Terminology and Notation</h1>
+<section id="terms" class="level2">
+<h2 class="anchored" data-anchor-id="terms">Terms</h2>
+<blockquote class="blockquote">
+<p>Due to the hybrid origins and interdisciplinary nature of data mining, the terminology used by its practitioners often varies depending on their background in fields like machine learning (artificial intelligence) or statistics. Here’s a list of commonly used terms in data mining, along with descriptions of how they might be referred to in different fields:</p>
+</blockquote>
+<ul>
+<li><p>Algorithm : A specific procedure for implementing a data mining technique, such as a classification tree or discriminant analysis. Attribute : Also referred to as Predictor.</p></li>
+<li><p>Case : Also known as Observation.</p></li>
+<li><p>Confidence : In the context of association rules, this is the conditional probability that an event will occur given another event. In statistics, it also refers to the concept of confidence intervals, which deal with the variability expected from one sample to another.</p></li>
+<li><p>Dependent Variable : Known in machine learning as the Response.</p></li>
+<li><p>Estimation : Also referred to as Prediction.</p></li>
+<li><p>Feature : Another term for Predictor.</p></li>
+<li><p>Holdout Data : A subset of data not used in training a model but reserved for testing its performance. Also called the validation set or test set.</p></li>
+<li><p>Input Variable : Also known as Predictor.</p></li>
+<li><p>Model : An algorithm applied to a dataset, complete with its parameter settings.</p></li>
+<li><p>Observation : The unit of analysis, also called instance, sample, example, case, record, pattern, or row.</p></li>
+<li><p>Outcome Variable : Another term for Response.</p></li>
+<li><p>Output Variable : Also known as Response.</p></li>
+<li><p>P (A | B) : The probability of event A given event B has occurred.</p></li>
+<li><p>Prediction : The act of predicting the value of a continuous variable; also called estimation.</p></li>
+<li><p>Predictor : An input variable (denoted by X) used in a predictive model. Also called feature, input variable, independent variable, or field.</p></li>
+<li><p>Profile : A set of measurements on an observation.</p></li>
+<li><p>Record : Synonymous with Observation.</p></li>
+<li><p>Response : The variable being predicted in supervised learning, also known as the dependent variable, output variable, target variable, or outcome variable.</p></li>
+<li><p>Sample : Used in statistics to denote a collection of observations, whereas in machine learning it typically refers to a single observation.</p></li>
+<li><p>Score : A predicted value or class. Scoring involves using a model developed with training data to predict values in new data.</p></li>
+<li><p>Success Class : In binary outcomes, this refers to the class of interest (e.g., purchasers in a purchase/no purchase outcome).</p></li>
+<li><p>Supervised Learning : A type of machine learning where the model is trained on data where the outcome is known in order to learn to predict the outcome on new data.</p></li>
+<li><p>Target : Synonymous with Response. Test Data : Data reserved for testing the final model’s performance, used only at the end stages of model building and selection.</p></li>
+<li><p>Training Data : Data used initially to fit and train a model. Unsupervised Learning : Learning patterns from data that do not involve predicting a specific output value.</p></li>
+<li><p>Validation Data : Data used to check how well a model fits, to tweak models, and to select the best among tried models.</p></li>
+</ul>
+</section>
+</section>
+<section id="road-maps-to-this-book" class="level1">
+<h1>Road Maps to This Book</h1>
+<section id="order-of-topics" class="level2">
+<h2 class="anchored" data-anchor-id="order-of-topics">Order of Topics</h2>
+<p>The book is structured into eight parts, each focusing on distinct aspects and applications of data mining:</p>
+<ul>
+<li><p>Part I (Chapters 1–2): This section provides a broad introduction to data mining, outlining its key components and the fundamental concepts underpinning the field. It serves as the foundational groundwork for the more detailed explorations that follow.</p></li>
+<li><p>Part II (Chapters 3–4): Here, the focus shifts to the preliminary stages of data analysis, specifically on data exploration and dimension reduction. These chapters help readers understand how to streamline complex datasets into more manageable and interpretable forms.</p></li>
+<li><p>Part III (Chapter 5): Although it consists of only one chapter, this part dives deep into performance evaluation, covering everything from predictive performance metrics to the costs associated with misclassification. The principles discussed here are critical for accurately evaluating and comparing different supervised learning methodologies.</p></li>
+<li><p>Part IV (Chapters 6–13): This substantial segment discusses various popular supervised learning methods used for classification and prediction. The chapters are organized by the complexity of the algorithms, their popularity, and their accessibility. The concluding chapter in this part introduces the concept of ensembles and method combinations, which can enhance prediction accuracy.</p></li>
+<li><p>Part V (Chapters 14–15): Focused on unsupervised learning, this part examines methods for mining relationships through association rules and collaborative filtering, as well as cluster analysis. These techniques are vital for discovering patterns and groupings in data without predefined labels.</p></li>
+<li><p>Part VI (Chapters 16–18): These chapters are devoted to forecasting time series data. The initial chapter addresses general issues related to handling and interpreting time series data, followed by chapters on regression-based forecasting and smoothing methods. These approaches are essential for making predictions about future events based on historical data.</p></li>
+<li><p>Part VII (Chapters 19–20): This section explores specialized applications of data mining in social network analysis and text mining. These chapters demonstrate how data mining techniques can be adapted to analyze data from specific structures like social networks and textual content.</p></li>
+<li><p>Part VIII: The final part of the book presents a collection of case studies that illustrate the practical application of the techniques discussed in earlier chapters.</p></li>
+<li><p>While the chapters within the book are designed to stand alone, enabling readers to focus on topics of particular interest without requiring sequential reading, it is recommended that Parts I–III be read first to establish a solid understanding of the basics before delving into the more advanced topics in Parts IV–VIII.</p></li>
+<li><p>Additionally, Chapter 16 should ideally be read before proceeding with other chapters in Part VI to ensure a proper understanding of time series analysis fundamentals. This structured approach allows readers to build their knowledge progressively and effectively.</p></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="_img/overview1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="_img/overview1.png" class="quarto-figure quarto-figure-center figure-img" height="500"></a></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="_img/overview2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="_img/overview2.png" class="quarto-figure quarto-figure-center figure-img" height="500"></a></p>
+</figure>
+</div>
+</section>
+</section>
+<section id="house-management" class="level1">
+<h1>House management</h1>
+<section id="more-to-read" class="level2">
+<h2 class="anchored" data-anchor-id="more-to-read">More to Read</h2>
+</section>
+<section id="assignment" class="level2">
+<h2 class="anchored" data-anchor-id="assignment">Assignment</h2>
+<ul>
+<li><p>What to do</p></li>
+<li><p>Requirement</p>
+<ul>
+<li>PDF format</li>
+<li>file name should be include your student id and name
+<ul>
+<li>stuID_name_title.pdf (e.g.&nbsp;1111111_ChungilChae_SelfIntroduction.pdf)</li>
+</ul></li>
+</ul></li>
+<li><p>Due date</p>
+<ul>
+<li>by DATE 11:59PM</li>
+<li>NO LATE SUBMISSION ALLOWED!!!!</li>
+</ul></li>
+</ul>
+</section>
+</section>
+<section id="reference" class="level1">
+
+
+
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">Reference</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list">
+<div id="ref-textbook" class="csl-entry" role="listitem">
+Shmueli, G., Bruce, P. C., Yahav, I., Patel, N. R., &amp; Lichtendahl Jr, K. C. (2017). <em>Data mining for business analytics: Concepts, techniques, and applications in r</em>. John Wiley &amp; Sons.
+</div>
+</div></section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+          // default icon
+          link.classList.add("external");
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
+
+
+
+
+</body></html>

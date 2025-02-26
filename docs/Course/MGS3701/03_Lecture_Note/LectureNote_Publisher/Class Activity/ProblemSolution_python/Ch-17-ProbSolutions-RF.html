@@ -1,0 +1,2421 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.40">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Chapter 17: Regression-Based Forecasting – Chad’s Course Portfolio</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../../../../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../../../../">
+<script src="../../../../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../../../../site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../../../../site_libs/bootstrap/bootstrap-6bd9cfa162949bde0a231f530c97869d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../../../../../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../../../../../index.html">
+    <span class="navbar-title">Chad’s Course Portfolio</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../../../Course/GE2021/03_Lecture_Note/LectureNote_Chad/PPT/chapter0/chapter0.html"> 
+<span class="menu-text">test</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#problem-17.1-impact-of-september-11-on-air-travel-in-the-united-states" id="toc-problem-17.1-impact-of-september-11-on-air-travel-in-the-united-states" class="nav-link active" data-scroll-target="#problem-17.1-impact-of-september-11-on-air-travel-in-the-united-states">Problem 17.1: Impact of September 11 on Air Travel in the United States</a>
+  <ul class="collapse">
+  <li><a href="#solution-17.1.a" id="toc-solution-17.1.a" class="nav-link" data-scroll-target="#solution-17.1.a">Solution 17.1.a</a></li>
+  <li><a href="#solution-17.1.b" id="toc-solution-17.1.b" class="nav-link" data-scroll-target="#solution-17.1.b">Solution 17.1.b</a></li>
+  <li><a href="#solution-17.1.c" id="toc-solution-17.1.c" class="nav-link" data-scroll-target="#solution-17.1.c">Solution 17.1.c</a></li>
+  <li><a href="#solution-17.1.d" id="toc-solution-17.1.d" class="nav-link" data-scroll-target="#solution-17.1.d">Solution 17.1.d</a>
+  <ul class="collapse">
+  <li><a href="#solution-17.1.d.i" id="toc-solution-17.1.d.i" class="nav-link" data-scroll-target="#solution-17.1.d.i">Solution 17.1.d.i</a></li>
+  <li><a href="#solution-17.1.d.ii" id="toc-solution-17.1.d.ii" class="nav-link" data-scroll-target="#solution-17.1.d.ii">Solution 17.1.d.ii</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#solution-17.1.e" id="toc-solution-17.1.e" class="nav-link" data-scroll-target="#solution-17.1.e">Solution 17.1.e</a>
+  <ul class="collapse">
+  <li><a href="#solution-17.1.e.i" id="toc-solution-17.1.e.i" class="nav-link" data-scroll-target="#solution-17.1.e.i">Solution 17.1.e.i</a></li>
+  <li><a href="#solution-17.1.e.ii" id="toc-solution-17.1.e.ii" class="nav-link" data-scroll-target="#solution-17.1.e.ii">Solution 17.1.e.ii</a></li>
+  <li><a href="#solution-17.1.f" id="toc-solution-17.1.f" class="nav-link" data-scroll-target="#solution-17.1.f">Solution 17.1.f</a></li>
+  <li><a href="#solution-17.1.f.i" id="toc-solution-17.1.f.i" class="nav-link" data-scroll-target="#solution-17.1.f.i">Solution 17.1.f.i</a></li>
+  <li><a href="#solution-17.1.f.ii" id="toc-solution-17.1.f.ii" class="nav-link" data-scroll-target="#solution-17.1.f.ii">Solution 17.1.f.ii</a></li>
+  </ul></li>
+  <li><a href="#problem-17.2-analysis-of-canadian-manufacturing-workers-workhours" id="toc-problem-17.2-analysis-of-canadian-manufacturing-workers-workhours" class="nav-link" data-scroll-target="#problem-17.2-analysis-of-canadian-manufacturing-workers-workhours">Problem 17.2: Analysis of Canadian Manufacturing Workers Workhours</a>
+  <ul class="collapse">
+  <li><a href="#solution-17.2.a" id="toc-solution-17.2.a" class="nav-link" data-scroll-target="#solution-17.2.a">Solution 17.2.a</a></li>
+  <li><a href="#solution-17.2.b" id="toc-solution-17.2.b" class="nav-link" data-scroll-target="#solution-17.2.b">Solution 17.2.b</a></li>
+  <li><a href="#solution-17.2.c" id="toc-solution-17.2.c" class="nav-link" data-scroll-target="#solution-17.2.c">Solution 17.2.c</a></li>
+  </ul></li>
+  <li><a href="#problem-17.3-toys-r-us-revenues" id="toc-problem-17.3-toys-r-us-revenues" class="nav-link" data-scroll-target="#problem-17.3-toys-r-us-revenues">Problem 17.3: Toys “R” Us Revenues</a>
+  <ul class="collapse">
+  <li><a href="#solution-17.3.a" id="toc-solution-17.3.a" class="nav-link" data-scroll-target="#solution-17.3.a">Solution 17.3.a</a></li>
+  <li><a href="#solution-17.3.b" id="toc-solution-17.3.b" class="nav-link" data-scroll-target="#solution-17.3.b">Solution 17.3.b</a>
+  <ul class="collapse">
+  <li><a href="#solution-17.3.b.i" id="toc-solution-17.3.b.i" class="nav-link" data-scroll-target="#solution-17.3.b.i">Solution 17.3.b.i</a></li>
+  <li><a href="#solution-17.3.b.ii" id="toc-solution-17.3.b.ii" class="nav-link" data-scroll-target="#solution-17.3.b.ii">Solution 17.3.b.ii</a></li>
+  <li><a href="#solution-17.3.b.iii" id="toc-solution-17.3.b.iii" class="nav-link" data-scroll-target="#solution-17.3.b.iii">Solution 17.3.b.iii</a></li>
+  <li><a href="#solution-17.3.b.iv" id="toc-solution-17.3.b.iv" class="nav-link" data-scroll-target="#solution-17.3.b.iv">Solution 17.3.b.iv</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#problem-17.4-walmart-stock" id="toc-problem-17.4-walmart-stock" class="nav-link" data-scroll-target="#problem-17.4-walmart-stock">Problem 17.4: Walmart Stock</a>
+  <ul class="collapse">
+  <li><a href="#solution-17.4.a" id="toc-solution-17.4.a" class="nav-link" data-scroll-target="#solution-17.4.a">Solution 17.4.a</a></li>
+  <li><a href="#solution-17.4.b" id="toc-solution-17.4.b" class="nav-link" data-scroll-target="#solution-17.4.b">Solution 17.4.b</a></li>
+  <li><a href="#solution-17.4.c" id="toc-solution-17.4.c" class="nav-link" data-scroll-target="#solution-17.4.c">Solution 17.4.c</a></li>
+  <li><a href="#solution-17.4.d" id="toc-solution-17.4.d" class="nav-link" data-scroll-target="#solution-17.4.d">Solution 17.4.d</a></li>
+  </ul></li>
+  <li><a href="#problem-17.5-department-store-sales" id="toc-problem-17.5-department-store-sales" class="nav-link" data-scroll-target="#problem-17.5-department-store-sales">Problem 17.5: Department Store Sales</a>
+  <ul class="collapse">
+  <li><a href="#solution-17.5.a" id="toc-solution-17.5.a" class="nav-link" data-scroll-target="#solution-17.5.a">Solution 17.5.a</a></li>
+  <li><a href="#solution-17.5.b" id="toc-solution-17.5.b" class="nav-link" data-scroll-target="#solution-17.5.b">Solution 17.5.b</a></li>
+  <li><a href="#solution-17.5.c" id="toc-solution-17.5.c" class="nav-link" data-scroll-target="#solution-17.5.c">Solution 17.5.c</a></li>
+  <li><a href="#solution-17.5.d" id="toc-solution-17.5.d" class="nav-link" data-scroll-target="#solution-17.5.d">Solution 17.5.d</a></li>
+  <li><a href="#solution-17.5.e" id="toc-solution-17.5.e" class="nav-link" data-scroll-target="#solution-17.5.e">Solution 17.5.e</a>
+  <ul class="collapse">
+  <li><a href="#solution-17.5.e.i" id="toc-solution-17.5.e.i" class="nav-link" data-scroll-target="#solution-17.5.e.i">Solution 17.5.e.i</a></li>
+  <li><a href="#solution-17.5.e.ii" id="toc-solution-17.5.e.ii" class="nav-link" data-scroll-target="#solution-17.5.e.ii">Solution 17.5.e.ii</a></li>
+  </ul></li>
+  <li><a href="#solution-17.5.f" id="toc-solution-17.5.f" class="nav-link" data-scroll-target="#solution-17.5.f">Solution 17.5.f</a></li>
+  <li><a href="#solution-17.5.g" id="toc-solution-17.5.g" class="nav-link" data-scroll-target="#solution-17.5.g">Solution 17.5.g</a></li>
+  </ul></li>
+  <li><a href="#problem-17.6-souvenir-sales" id="toc-problem-17.6-souvenir-sales" class="nav-link" data-scroll-target="#problem-17.6-souvenir-sales">Problem 17.6: Souvenir Sales</a>
+  <ul class="collapse">
+  <li><a href="#solution-17.6.a" id="toc-solution-17.6.a" class="nav-link" data-scroll-target="#solution-17.6.a">Solution 17.6.a</a></li>
+  <li><a href="#solution-17.6.b" id="toc-solution-17.6.b" class="nav-link" data-scroll-target="#solution-17.6.b">Solution 17.6.b</a>
+  <ul class="collapse">
+  <li><a href="#solution-17.6.b.i" id="toc-solution-17.6.b.i" class="nav-link" data-scroll-target="#solution-17.6.b.i">Solution 17.6.b.i</a></li>
+  <li><a href="#solution-17.6.b.ii" id="toc-solution-17.6.b.ii" class="nav-link" data-scroll-target="#solution-17.6.b.ii">Solution 17.6.b.ii</a></li>
+  </ul></li>
+  <li><a href="#solution-17.6.c" id="toc-solution-17.6.c" class="nav-link" data-scroll-target="#solution-17.6.c">Solution 17.6.c</a>
+  <ul class="collapse">
+  <li><a href="#solution-17.6.c.i" id="toc-solution-17.6.c.i" class="nav-link" data-scroll-target="#solution-17.6.c.i">Solution 17.6.c.i</a></li>
+  <li><a href="#solution-17.6.c.ii" id="toc-solution-17.6.c.ii" class="nav-link" data-scroll-target="#solution-17.6.c.ii">Solution 17.6.c.ii</a></li>
+  <li><a href="#solution-17.6.c.iii" id="toc-solution-17.6.c.iii" class="nav-link" data-scroll-target="#solution-17.6.c.iii">Solution 17.6.c.iii</a></li>
+  </ul></li>
+  <li><a href="#solution-17.6.d" id="toc-solution-17.6.d" class="nav-link" data-scroll-target="#solution-17.6.d">Solution 17.6.d</a></li>
+  <li><a href="#solution-17.6.e" id="toc-solution-17.6.e" class="nav-link" data-scroll-target="#solution-17.6.e">Solution 17.6.e</a>
+  <ul class="collapse">
+  <li><a href="#solution-17.6.e.i" id="toc-solution-17.6.e.i" class="nav-link" data-scroll-target="#solution-17.6.e.i">Solution 17.6.e.i</a></li>
+  <li><a href="#solution-17.6.e.i-1" id="toc-solution-17.6.e.i-1" class="nav-link" data-scroll-target="#solution-17.6.e.i-1">Solution 17.6.e.i</a></li>
+  </ul></li>
+  <li><a href="#solution-17.6.f" id="toc-solution-17.6.f" class="nav-link" data-scroll-target="#solution-17.6.f">Solution 17.6.f</a></li>
+  </ul></li>
+  <li><a href="#problem-17.7-shipments-of-household-appliances" id="toc-problem-17.7-shipments-of-household-appliances" class="nav-link" data-scroll-target="#problem-17.7-shipments-of-household-appliances">Problem 17.7: Shipments of Household Appliances</a></li>
+  <li><a href="#problem-17.8-australian-wine-sales" id="toc-problem-17.8-australian-wine-sales" class="nav-link" data-scroll-target="#problem-17.8-australian-wine-sales">Problem 17.8: Australian Wine Sales</a>
+  <ul class="collapse">
+  <li><a href="#solution-17.8.a" id="toc-solution-17.8.a" class="nav-link" data-scroll-target="#solution-17.8.a">Solution 17.8.a</a></li>
+  <li><a href="#solution-17.8.b" id="toc-solution-17.8.b" class="nav-link" data-scroll-target="#solution-17.8.b">Solution 17.8.b</a>
+  <ul class="collapse">
+  <li><a href="#solution-17.8.b.i" id="toc-solution-17.8.b.i" class="nav-link" data-scroll-target="#solution-17.8.b.i">Solution 17.8.b.i</a></li>
+  <li><a href="#solution-17.8.b.ii" id="toc-solution-17.8.b.ii" class="nav-link" data-scroll-target="#solution-17.8.b.ii">Solution 17.8.b.ii</a></li>
+  </ul></li>
+  <li><a href="#solution-17.8.c" id="toc-solution-17.8.c" class="nav-link" data-scroll-target="#solution-17.8.c">Solution 17.8.c</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Chapter 17: Regression-Based Forecasting</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<blockquote class="blockquote">
+<ol start="3" type="a">
+<li>2019-2020 Galit Shmueli, Peter C. Bruce, Peter Gedeck</li>
+</ol>
+<p><em>Data Mining for Business Analytics: Concepts, Techniques, and Applications in Python</em> (First Edition) Galit Shmueli, Peter C. Bruce, Peter Gedeck, and Nitin R. Patel. 2019.</p>
+<p>Date: 2020-03-08</p>
+<p>Python Version: 3.8.2 Jupyter Notebook Version: 5.6.1</p>
+<p>Packages: - dmba: 0.0.12 - matplotlib: 3.2.0 - numpy: 1.18.1 - pandas: 1.0.1 - statsmodels: 0.11.1</p>
+<p>The assistance from Mr.&nbsp;Kuber Deokar and Ms.&nbsp;Anuja Kulkarni in preparing these solutions is gratefully acknowledged.</p>
+</blockquote>
+<div id="cell-3" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># import required packages for this chapter</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> warnings</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.formula.api <span class="im">as</span> sm</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> statsmodels.tsa <span class="im">import</span> tsatools</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> statsmodels.tsa.arima_model <span class="im">import</span> ARIMA</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> statsmodels.graphics <span class="im">import</span> tsaplots</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dmba <span class="im">import</span> regressionSummary</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pylab <span class="im">as</span> plt</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>matplotlib inline</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-4" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Working directory:</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># We assume that data are kept in the same directory as the notebook. If you keep your </span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># data in a different folder, replace the argument of the `Path`</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>DATA <span class="op">=</span> Path(<span class="st">'.'</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co"># and then load data using </span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co"># pd.read_csv(DATA / ‘filename.csv’)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="problem-17.1-impact-of-september-11-on-air-travel-in-the-united-states" class="level1">
+<h1>Problem 17.1: Impact of September 11 on Air Travel in the United States</h1>
+<p>The Research and Innovative Technology Administration’s Bureau of Transportation Statistics conducted a study to evaluate the impact of the September 11, 2001 terrorist attack on US transportation. The 2006 study report and the data can be found at https://www.bts.gov/archive/publications/estimated_impacts_of_9_11_on_us_travel/index. The goal of the study was stated as follows:</p>
+<blockquote class="blockquote">
+<p>The purpose of this study is to provide a greater understanding of the passenger travel behavior patterns of persons making long distance trips before and after 9/11.</p>
+</blockquote>
+<p>The report analyzes monthly passenger movement data between January 1990 and May 2004. Data on three monthly time series are given in file <em>Sept11Travel.csv</em> for this period:</p>
+<ol type="1">
+<li>Actual airline revenue passenger miles (Air),</li>
+<li>Rail passenger miles (Rail), and</li>
+<li>Vehicle miles traveled (Car).</li>
+</ol>
+<p>In order to assess the impact of September 11, BTS took the following approach: using data before September 11, they forecasted future data (under the assumption of no terrorist attack). Then, they compared the forecasted series with the actual data to assess the impact of the event. Our first step, therefore, is to split each of the time series into two parts: pre- and post September 11. We now concentrate only on the earlier time series.</p>
+<section id="solution-17.1.a" class="level2">
+<h2 class="anchored" data-anchor-id="solution-17.1.a">Solution 17.1.a</h2>
+<p>Plot the pre-event AIR time series. What time series components appear?</p>
+<div id="cell-7" class="cell" data-scrolled="true" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(DATA <span class="op">/</span> <span class="st">'Sept11Travel.csv'</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># convert the date information to a datetime object</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'Date'</span>] <span class="op">=</span> pd.to_datetime(df.Month, <span class="bu">format</span><span class="op">=</span><span class="st">'%b-%y'</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>air_ts <span class="op">=</span> pd.Series(df[<span class="st">'Air RPM (000s)'</span>].values, index<span class="op">=</span>df.Date, name<span class="op">=</span><span class="st">'Air'</span>)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>pre_air_ts <span class="op">=</span> air_ts[:<span class="st">'2001-08-31'</span>]</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>post_air_ts <span class="op">=</span> air_ts[<span class="st">'2001-08-31'</span>:]</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>rail_ts <span class="op">=</span> pd.Series(df[<span class="st">'Rail PM'</span>].values, index<span class="op">=</span>df.Date, name<span class="op">=</span><span class="st">'Rail'</span>)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>pre_rail_ts <span class="op">=</span> rail_ts[:<span class="st">'2001-08-31'</span>]</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>post_rail_ts <span class="op">=</span> rail_ts[<span class="st">'2001-08-31'</span>:]</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>car_ts <span class="op">=</span> pd.Series(df[<span class="st">'VMT (billions)'</span>].values, index<span class="op">=</span>df.Date, name<span class="op">=</span><span class="st">'Car'</span>)</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>pre_car_ts <span class="op">=</span> car_ts[:<span class="st">'2001-08-31'</span>]</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>post_car_ts <span class="op">=</span> car_ts[<span class="st">'2001-08-31'</span>:]</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> pre_air_ts.plot()</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>ax.set_yscale(<span class="st">'log'</span>)</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Ch-17-ProbSolutions-RF_files/figure-html/cell-4-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>From the time plot we can say that the following components appear in the given time series:</p>
+<p>Level, trend, seasonality and noise.</p>
+</section>
+<section id="solution-17.1.b" class="level2">
+<h2 class="anchored" data-anchor-id="solution-17.1.b">Solution 17.1.b</h2>
+<p>The Figure in the book shows a time plot of the <strong>seasonally adjusted</strong> pre-September-11 AIR series. Which of the following methods would be adequate for forecasting the series shown in the figure?</p>
+<ul>
+<li><p>Linear regression model seasonality</p></li>
+<li><p>Linear regression model with trend</p></li>
+<li><p>Linear regression model with trend and seasonality</p></li>
+<li><p>Linear regression model seasonality - NO</p></li>
+<li><p>Linear regression model with trend - YES</p></li>
+<li><p>Linear regression model with trend and seasonality - NO</p></li>
+</ul>
+</section>
+<section id="solution-17.1.c" class="level2">
+<h2 class="anchored" data-anchor-id="solution-17.1.c">Solution 17.1.c</h2>
+<p>Specify a linear regression model for the AIR series that would produce a seasonally adjusted series similar to the Figure shown in the book, with multiplicative seasonality. What is the outcome variable? What are the predictors?</p>
+<ul>
+<li>Outcome variable = log Y</li>
+<li>Predictor = 11 dummies, for 11 of the 12 months (one reference category)</li>
+</ul>
+</section>
+<section id="solution-17.1.d" class="level2">
+<h2 class="anchored" data-anchor-id="solution-17.1.d">Solution 17.1.d</h2>
+<p>Run the regression model from (c). Remember to use only pre-event data.</p>
+<div id="cell-11" class="cell" data-scrolled="false" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>pre_air_df <span class="op">=</span> tsatools.add_trend(pre_air_ts, trend<span class="op">=</span><span class="st">'ct'</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>pre_air_df[<span class="st">'Month'</span>] <span class="op">=</span> pre_air_df.index.month</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>lm_ts <span class="op">=</span> sm.ols(formula<span class="op">=</span><span class="st">'np.log(Air) ~ C(Month)'</span>, data<span class="op">=</span>pre_air_df).fit()</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>lm_ts.summary()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<table class="simpletable caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<caption>OLS Regression Results</caption>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Dep. Variable:</td>
+<td>np.log(Air)</td>
+<td data-quarto-table-cell-role="th">R-squared:</td>
+<td>0.322</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Model:</td>
+<td>OLS</td>
+<td data-quarto-table-cell-role="th">Adj. R-squared:</td>
+<td>0.263</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Method:</td>
+<td>Least Squares</td>
+<td data-quarto-table-cell-role="th">F-statistic:</td>
+<td>5.515</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Date:</td>
+<td>Sun, 08 Mar 2020</td>
+<td data-quarto-table-cell-role="th">Prob (F-statistic):</td>
+<td>3.60e-07</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Time:</td>
+<td>20:21:12</td>
+<td data-quarto-table-cell-role="th">Log-Likelihood:</td>
+<td>68.335</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">No. Observations:</td>
+<td>140</td>
+<td data-quarto-table-cell-role="th">AIC:</td>
+<td>-112.7</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Df Residuals:</td>
+<td>128</td>
+<td data-quarto-table-cell-role="th">BIC:</td>
+<td>-77.37</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Df Model:</td>
+<td>11</td>
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Covariance Type:</td>
+<td>nonrobust</td>
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+
+
+<table class="simpletable caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<tbody>
+<tr class="odd">
+<td></td>
+<td data-quarto-table-cell-role="th">coef</td>
+<td data-quarto-table-cell-role="th">std err</td>
+<td data-quarto-table-cell-role="th">t</td>
+<td data-quarto-table-cell-role="th">P&gt;|t|</td>
+<td data-quarto-table-cell-role="th">[0.025</td>
+<td data-quarto-table-cell-role="th">0.975]</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Intercept</td>
+<td>17.5598</td>
+<td>0.045</td>
+<td>391.626</td>
+<td>0.000</td>
+<td>17.471</td>
+<td>17.649</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">C(Month)[T.2]</td>
+<td>-0.0616</td>
+<td>0.063</td>
+<td>-0.971</td>
+<td>0.333</td>
+<td>-0.187</td>
+<td>0.064</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">C(Month)[T.3]</td>
+<td>0.1410</td>
+<td>0.063</td>
+<td>2.224</td>
+<td>0.028</td>
+<td>0.016</td>
+<td>0.267</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">C(Month)[T.4]</td>
+<td>0.0955</td>
+<td>0.063</td>
+<td>1.507</td>
+<td>0.134</td>
+<td>-0.030</td>
+<td>0.221</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">C(Month)[T.5]</td>
+<td>0.1250</td>
+<td>0.063</td>
+<td>1.971</td>
+<td>0.051</td>
+<td>-0.001</td>
+<td>0.250</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">C(Month)[T.6]</td>
+<td>0.2064</td>
+<td>0.063</td>
+<td>3.254</td>
+<td>0.001</td>
+<td>0.081</td>
+<td>0.332</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">C(Month)[T.7]</td>
+<td>0.2717</td>
+<td>0.063</td>
+<td>4.285</td>
+<td>0.000</td>
+<td>0.146</td>
+<td>0.397</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">C(Month)[T.8]</td>
+<td>0.2983</td>
+<td>0.063</td>
+<td>4.704</td>
+<td>0.000</td>
+<td>0.173</td>
+<td>0.424</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">C(Month)[T.9]</td>
+<td>0.0803</td>
+<td>0.065</td>
+<td>1.239</td>
+<td>0.218</td>
+<td>-0.048</td>
+<td>0.209</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">C(Month)[T.10]</td>
+<td>0.1137</td>
+<td>0.065</td>
+<td>1.753</td>
+<td>0.082</td>
+<td>-0.015</td>
+<td>0.242</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">C(Month)[T.11]</td>
+<td>0.0280</td>
+<td>0.065</td>
+<td>0.432</td>
+<td>0.666</td>
+<td>-0.100</td>
+<td>0.156</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">C(Month)[T.12]</td>
+<td>0.0699</td>
+<td>0.065</td>
+<td>1.078</td>
+<td>0.283</td>
+<td>-0.058</td>
+<td>0.198</td>
+</tr>
+</tbody>
+</table>
+
+
+<table class="simpletable caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Omnibus:</td>
+<td>59.298</td>
+<td data-quarto-table-cell-role="th">Durbin-Watson:</td>
+<td>0.032</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Prob(Omnibus):</td>
+<td>0.000</td>
+<td data-quarto-table-cell-role="th">Jarque-Bera (JB):</td>
+<td>8.596</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Skew:</td>
+<td>0.010</td>
+<td data-quarto-table-cell-role="th">Prob(JB):</td>
+<td>0.0136</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Kurtosis:</td>
+<td>1.786</td>
+<td data-quarto-table-cell-role="th">Cond. No.</td>
+<td>12.8</td>
+</tr>
+</tbody>
+</table>
+<br><br>Warnings:<br>[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+</div>
+</div>
+<p>check the Estimate for Season2 (Feb), -0.600 means Feb numbers (on an average) are less than Jan and positive estimates for all other seasons means they are more than Jan.</p>
+<section id="solution-17.1.d.i" class="level3">
+<h3 class="anchored" data-anchor-id="solution-17.1.d.i">Solution 17.1.d.i</h3>
+<p>What can we learn from the statistical insignificance of the coefficients for October and September?</p>
+<p>We learn that the apparently positive seasonal effect for Sep.&nbsp;(P-value=0.218) is not statistically significant. However, it is statistically significant for October (P-value=0.082).</p>
+</section>
+<section id="solution-17.1.d.ii" class="level3">
+<h3 class="anchored" data-anchor-id="solution-17.1.d.ii">Solution 17.1.d.ii</h3>
+<p>The actual value of AIR (air revenue passenger miles) in January 1990 was 35.153577 billion. What is the residual for this month, using the regression model? Report the residual in terms of air revenue passenger miles.</p>
+<div id="cell-14" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Note that the model predicts the logarithm of the outcome, we need to `exp` it</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>predicted <span class="op">=</span> np.exp(lm_ts.predict(pre_air_df))[<span class="dv">0</span>]</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>actual <span class="op">=</span> pre_air_ts[<span class="dv">0</span>]</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Predicted for Jan 1990   :'</span>, predicted)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Actual value for Jan 1990:'</span>, actual)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>residual <span class="op">=</span> actual <span class="op">-</span> predicted</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Residual for Jan 1990    :'</span>, residual)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Predicted for Jan 1990   : 42278658.58950092
+Actual value for Jan 1990: 35153577
+Residual for Jan 1990    : -7125081.589500919</code></pre>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="solution-17.1.e" class="level1">
+<h1>Solution 17.1.e</h1>
+<p>Create an ACF (autocorrelation) plot of the regression residuals.</p>
+<div id="cell-16" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> tsaplots.plot_acf(lm_ts.resid)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>fig.axes[<span class="dv">0</span>].set_xlim(<span class="dv">0</span>, <span class="dv">12</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Ch-17-ProbSolutions-RF_files/figure-html/cell-7-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<section id="solution-17.1.e.i" class="level3">
+<h3 class="anchored" data-anchor-id="solution-17.1.e.i">Solution 17.1.e.i</h3>
+<p>What does the ACF plot tell us about the regression model’s forecasts?</p>
+<p>The positive autocorrelation at many lags tells us that the forecast errors from this model are positively correlated. If we over-predict in a certain month, we are likely to over-predict the following month as well.</p>
+</section>
+<section id="solution-17.1.e.ii" class="level3">
+<h3 class="anchored" data-anchor-id="solution-17.1.e.ii">Solution 17.1.e.ii</h3>
+<p>How can this information be used to improve the model?</p>
+<p>By creating a second-level where we model the residuals using an AR model. (Alternatively, by incorporating lagged periods as predictors, within an ARIMA model).</p>
+</section>
+<section id="solution-17.1.f" class="level3">
+<h3 class="anchored" data-anchor-id="solution-17.1.f">Solution 17.1.f</h3>
+<p>Fit linear regression models to Air, Rail, and to Car with additive seasonality and an appropriate trend. For Air and Car, fit a linear trend. For Rail, use a quadratic trend. Remember to use only pre-event data. Once the models are estimated, use them to forecast each of the three post-event series.</p>
+<div id="cell-19" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>air_df <span class="op">=</span> tsatools.add_trend(air_ts, trend<span class="op">=</span><span class="st">'ct'</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>air_df[<span class="st">'Month'</span>] <span class="op">=</span> air_df.index.month</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>rail_df <span class="op">=</span> tsatools.add_trend(rail_ts, trend<span class="op">=</span><span class="st">'ct'</span>)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>rail_df[<span class="st">'Month'</span>] <span class="op">=</span> rail_df.index.month</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>car_df <span class="op">=</span> tsatools.add_trend(car_ts, trend<span class="op">=</span><span class="st">'ct'</span>)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>car_df[<span class="st">'Month'</span>] <span class="op">=</span> car_df.index.month</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>air_lm <span class="op">=</span> sm.ols(formula<span class="op">=</span><span class="st">'Air ~ trend + C(Month)'</span>, data<span class="op">=</span>air_df[:<span class="st">'2001-01-01'</span>]).fit()</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>rail_lm <span class="op">=</span> sm.ols(formula<span class="op">=</span><span class="st">'Rail ~ trend + np.square(trend) + C(Month)'</span>, data<span class="op">=</span>rail_df[:<span class="st">'2001-01-01'</span>]).fit()</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>car_lm <span class="op">=</span> sm.ols(formula<span class="op">=</span><span class="st">'Car ~ trend + C(Month)'</span>, data<span class="op">=</span>car_df[:<span class="st">'2001-01-01'</span>]).fit()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="solution-17.1.f.i" class="level3">
+<h3 class="anchored" data-anchor-id="solution-17.1.f.i">Solution 17.1.f.i</h3>
+<p>For each series (Air, Rail, Auto), plot the complete pre-event and post-event actual series overlayed with the predicted series.</p>
+<div id="cell-21" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> warnings.catch_warnings():</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    warnings.simplefilter(<span class="st">"ignore"</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    fig, axes <span class="op">=</span> plt.subplots(nrows<span class="op">=</span><span class="dv">3</span>, ncols<span class="op">=</span><span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">9</span>))</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    air_ts.plot(ax<span class="op">=</span>axes[<span class="dv">0</span>])</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    air_lm.predict(air_df).plot(ax<span class="op">=</span>axes[<span class="dv">0</span>])</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    rail_ts.plot(ax<span class="op">=</span>axes[<span class="dv">1</span>])</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    rail_lm.predict(rail_df).plot(ax<span class="op">=</span>axes[<span class="dv">1</span>])</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    car_ts.plot(ax<span class="op">=</span>axes[<span class="dv">2</span>])</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    car_lm.predict(car_df).plot(ax<span class="op">=</span>axes[<span class="dv">2</span>])</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>    axes[<span class="dv">0</span>].axvline(x<span class="op">=</span><span class="st">'2001-09-11'</span>)</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>    axes[<span class="dv">1</span>].axvline(x<span class="op">=</span><span class="st">'2001-09-11'</span>)</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>    axes[<span class="dv">2</span>].axvline(x<span class="op">=</span><span class="st">'2001-09-11'</span>)</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Ch-17-ProbSolutions-RF_files/figure-html/cell-9-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="solution-17.1.f.ii" class="level3">
+<h3 class="anchored" data-anchor-id="solution-17.1.f.ii">Solution 17.1.f.ii</h3>
+<p>What can be said about the effect of the September 11 terrorist attack on the three modes of transportation? Discuss the magnitude of the effect, its time span, and any other relevant aspects.</p>
+<p>For Rail and Auto, there is hardly any change. For Air, there is an immediate drop after Sept 11, 2001 of approximately 30%, a modest portion of which is recovered by spring of 2002.</p>
+</section>
+</section>
+<section id="problem-17.2-analysis-of-canadian-manufacturing-workers-workhours" class="level1">
+<h1>Problem 17.2: Analysis of Canadian Manufacturing Workers Workhours</h1>
+<p>The time plot (see book) describes the average annual number of weekly hours spent by Canadian manufacturing workers (data are available in <em>CanadianWorkHours.csv</em>, data courtesy of Ken Black).</p>
+<div id="cell-24" class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(DATA <span class="op">/</span> <span class="st">'CanadianWorkHours.csv'</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>df_ts <span class="op">=</span> pd.Series(df[<span class="st">'Hours'</span>].values, index<span class="op">=</span>pd.to_datetime(df.Year, <span class="bu">format</span><span class="op">=</span><span class="st">'%Y'</span>), name<span class="op">=</span><span class="st">'shipments'</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> df_ts.plot()</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">'Hours per Week'</span>)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Ch-17-ProbSolutions-RF_files/figure-html/cell-10-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<section id="solution-17.2.a" class="level2">
+<h2 class="anchored" data-anchor-id="solution-17.2.a">Solution 17.2.a</h2>
+<p>Which of the following regression models would fit the series best? (Choose one.)</p>
+<ul>
+<li>Linear trend model</li>
+<li>Linear trend model with seasonality</li>
+<li>Quadratic trend model</li>
+<li>Quadratic trend model with seasonality</li>
+</ul>
+<p>Of the four options, the <em>quadratic trend model</em> would fit the series best.</p>
+</section>
+<section id="solution-17.2.b" class="level2">
+<h2 class="anchored" data-anchor-id="solution-17.2.b">Solution 17.2.b</h2>
+<p>If we computed the autocorrelation of this series, would the lag-1 autocorrelation exhibit negative, positive, or no autocorrelation? How can you see this from the plot?</p>
+<p>Positive autocorrelation - each succeeding value in the series stays fairly close to the previous value.</p>
+</section>
+<section id="solution-17.2.c" class="level2">
+<h2 class="anchored" data-anchor-id="solution-17.2.c">Solution 17.2.c</h2>
+<p>Compute the autocorrelation of the series and produce an ACF plot. Verify your answer to the previous question.</p>
+<div id="cell-26" class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>tsaplots.plot_acf(df_ts)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Ch-17-ProbSolutions-RF_files/figure-html/cell-11-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="problem-17.3-toys-r-us-revenues" class="level1">
+<h1>Problem 17.3: Toys “R” Us Revenues</h1>
+<p>The Figure is a time plot of the quarterly revenues of Toys “R” Us between 1992 and 1995 (thanks to Chris Albright for suggesting the use of these data, which are available in <em>ToysRUsRevenues.csv</em>).</p>
+<div id="cell-28" class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(DATA <span class="op">/</span> <span class="st">'ToysRUsRevenues.csv'</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> q, m <span class="kw">in</span> (<span class="st">'Q1'</span>, <span class="st">'03'</span>), (<span class="st">'Q2'</span>, <span class="st">'06'</span>), (<span class="st">'Q3'</span>, <span class="st">'09'</span>), (<span class="st">'Q4'</span>, <span class="st">'12'</span>):</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">'QuarterYear'</span>] <span class="op">=</span> df[<span class="st">'QuarterYear'</span>].<span class="bu">str</span>.replace(q, m)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'Date'</span>] <span class="op">=</span> pd.to_datetime(df.QuarterYear, <span class="bu">format</span><span class="op">=</span><span class="st">'%m-%y'</span>)</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>df_ts <span class="op">=</span> pd.Series(df[<span class="st">'Revenue(in million $)'</span>].values, index<span class="op">=</span>df.Date, name<span class="op">=</span><span class="st">'Revenue'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-29" class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> df_ts.plot()</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">'Quarter'</span>)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">'Revenue(in million $)'</span>)</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Ch-17-ProbSolutions-RF_files/figure-html/cell-13-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<section id="solution-17.3.a" class="level2">
+<h2 class="anchored" data-anchor-id="solution-17.3.a">Solution 17.3.a</h2>
+<p>Fit a regression model with a linear trend and additive seasonality. Use the entire series (excluding the last two quarters) as the training set.</p>
+</section>
+<section id="solution-17.3.b" class="level2">
+<h2 class="anchored" data-anchor-id="solution-17.3.b">Solution 17.3.b</h2>
+<p>A partial output of the regression model is shown in this Table (where <code>C(Quarter)[T.2]</code> is the Quarter 2 dummy).</p>
+<div id="cell-31" class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> tsatools.add_trend(df_ts, trend<span class="op">=</span><span class="st">'ct'</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'Quarter'</span>] <span class="op">=</span> df.index.quarter</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>train_df <span class="op">=</span> df[:<span class="op">-</span><span class="dv">2</span>]</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>valid_df <span class="op">=</span> df[<span class="op">-</span><span class="dv">2</span>:]</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>lm <span class="op">=</span> sm.ols(formula<span class="op">=</span><span class="st">'Revenue ~ trend + C(Quarter)'</span>, data<span class="op">=</span>train_df).fit()</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(pd.DataFrame({<span class="st">'coef'</span>: lm.params, <span class="st">'std err'</span>: lm.bse}))</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="co"># warning expected</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(lm.summary())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                        coef     std err
+Intercept         906.750000  115.346119
+C(Quarter)[T.2]   -15.107143  119.659603
+C(Quarter)[T.3]    89.166667  128.673983
+C(Quarter)[T.4]  2101.726190  129.165419
+trend              47.107143   11.256629
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:                Revenue   R-squared:                       0.977
+Model:                            OLS   Adj. R-squared:                  0.967
+Method:                 Least Squares   F-statistic:                     97.18
+Date:                Sun, 08 Mar 2020   Prob (F-statistic):           2.13e-07
+Time:                        20:21:13   Log-Likelihood:                -88.547
+No. Observations:                  14   AIC:                             187.1
+Df Residuals:                       9   BIC:                             190.3
+Df Model:                           4                                         
+Covariance Type:            nonrobust                                         
+===================================================================================
+                      coef    std err          t      P&gt;|t|      [0.025      0.975]
+-----------------------------------------------------------------------------------
+Intercept         906.7500    115.346      7.861      0.000     645.819    1167.681
+C(Quarter)[T.2]   -15.1071    119.660     -0.126      0.902    -285.796     255.582
+C(Quarter)[T.3]    89.1667    128.674      0.693      0.506    -201.914     380.247
+C(Quarter)[T.4]  2101.7262    129.165     16.272      0.000    1809.534    2393.919
+trend              47.1071     11.257      4.185      0.002      21.643      72.571
+==============================================================================
+Omnibus:                        5.015   Durbin-Watson:                   2.269
+Prob(Omnibus):                  0.081   Jarque-Bera (JB):                2.414
+Skew:                          -0.166   Prob(JB):                        0.299
+Kurtosis:                       5.007   Cond. No.                         36.0
+==============================================================================
+
+Warnings:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>/Users/gedeck/opt/anaconda3/envs/dmba-notebooks/lib/python3.8/site-packages/scipy/stats/stats.py:1534: UserWarning: kurtosistest only valid for n&gt;=20 ... continuing anyway, n=14
+  warnings.warn("kurtosistest only valid for n&gt;=20 ... continuing "</code></pre>
+</div>
+</div>
+<div id="cell-32" class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>regressionSummary(valid_df[<span class="st">'Revenue'</span>], lm.predict(valid_df))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Regression statistics
+
+                      Mean Error (ME) : 183.1429
+       Root Mean Squared Error (RMSE) : 313.6820
+            Mean Absolute Error (MAE) : 254.6667
+          Mean Percentage Error (MPE) : 3.0194
+Mean Absolute Percentage Error (MAPE) : 7.4047</code></pre>
+</div>
+</div>
+<p>Use this output to answer the following questions:</p>
+<section id="solution-17.3.b.i" class="level3">
+<h3 class="anchored" data-anchor-id="solution-17.3.b.i">Solution 17.3.b.i</h3>
+<p>Which two statistics (and their values) measure how well this model fits the training data?</p>
+<p>The multiple R-squared (0.98) indicates what portion of the overall variation is explained by the regression, and the RMS Error (314) gives an idea of the magnitude of the typical error (regardless of direction).</p>
+</section>
+<section id="solution-17.3.b.ii" class="level3">
+<h3 class="anchored" data-anchor-id="solution-17.3.b.ii">Solution 17.3.b.ii</h3>
+<p>Which two statistics (and their values) measure the predictive accuracy of this model?</p>
+<p>The RMS error (314) gives an idea of the magnitude of the typical error, and the Mean Error (183) an idea of the overall average error (with errors in one direction netting out errors in the other).</p>
+</section>
+<section id="solution-17.3.b.iii" class="level3">
+<h3 class="anchored" data-anchor-id="solution-17.3.b.iii">Solution 17.3.b.iii</h3>
+<p>After adjusting for trend, what is the average difference between sales in Q3 and sales in Q1?</p>
+<div id="cell-34" class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>q3q1_differences <span class="op">=</span> (df_ts[<span class="dv">2</span>:].values <span class="op">-</span> df_ts[:<span class="op">-</span><span class="dv">2</span>].values)[[<span class="dv">0</span>, <span class="dv">4</span>, <span class="dv">8</span>, <span class="dv">12</span>]]</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Differences: '</span>, q3q1_differences)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'mean difference: '</span>, q3q1_differences.mean())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Differences:  [156 174 163 169]
+mean difference:  165.5</code></pre>
+</div>
+</div>
+<p>The actual Q3-Q1 differences are 156+174+163+169, the average is 165.5. \$94 million of this is actually trend (the coefficient for trend is \$47 million, so two quarter’s worth is \$94 million), leaving \$71 million as the average Q3-Q1 difference after adjusting for trend .</p>
+</section>
+<section id="solution-17.3.b.iv" class="level3">
+<h3 class="anchored" data-anchor-id="solution-17.3.b.iv">Solution 17.3.b.iv</h3>
+<p>After adjusting for seasonality, which quarter (<span class="math inline">\(Q_1, Q_2, Q_3\)</span>, or <span class="math inline">\(Q_4\)</span>) has the highest average sales?</p>
+<p>After adjusting for seasonality, you are left with trend, and the trend is for increasing sales. Therefore, Q4, the last quarter, will have the highest average sales.</p>
+</section>
+</section>
+</section>
+<section id="problem-17.4-walmart-stock" class="level1">
+<h1>Problem 17.4: Walmart Stock</h1>
+<p>The Figure shows the series of Walmart daily closing prices between February 2001 and February 2002 (Thanks to Chris Albright for suggesting the use of these data, which are publicly available, for example, at http://finance.yahoo.com and are in the file <em>WalMartStock.csv</em>).</p>
+<div id="cell-37" class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(DATA <span class="op">/</span> <span class="st">'WalMartStock.csv'</span>)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>ts <span class="op">=</span> pd.Series(df[<span class="st">'Close'</span>].values, index<span class="op">=</span>pd.to_datetime(df.Date, <span class="bu">format</span><span class="op">=</span><span class="st">'</span><span class="sc">%d</span><span class="st">-%b-%y'</span>), name<span class="op">=</span><span class="st">'Walmart'</span>)</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>ts.plot()</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Ch-17-ProbSolutions-RF_files/figure-html/cell-17-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<section id="solution-17.4.a" class="level2">
+<h2 class="anchored" data-anchor-id="solution-17.4.a">Solution 17.4.a</h2>
+<p>Fit an AR(1) model to the close price series. Report the coefficient table.</p>
+<div id="cell-39" class="cell" data-scrolled="false" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># warning expected</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>ARIMA(ts, order<span class="op">=</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>)).fit(disp<span class="op">=</span><span class="dv">0</span>).summary()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>/Users/gedeck/opt/anaconda3/envs/dmba-notebooks/lib/python3.8/site-packages/statsmodels/tsa/base/tsa_model.py:216: ValueWarning: A date index has been provided, but it has no associated frequency information and so will be ignored when e.g. forecasting.
+  warnings.warn('A date index has been provided, but it has no'</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="17">
+<table class="simpletable caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<caption>ARMA Model Results</caption>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Dep. Variable:</td>
+<td>Walmart</td>
+<td data-quarto-table-cell-role="th">No. Observations:</td>
+<td>248</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Model:</td>
+<td>ARMA(1, 0)</td>
+<td data-quarto-table-cell-role="th">Log Likelihood</td>
+<td>-349.796</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Method:</td>
+<td>css-mle</td>
+<td data-quarto-table-cell-role="th">S.D. of innovations</td>
+<td>0.987</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Date:</td>
+<td>Sun, 08 Mar 2020</td>
+<td data-quarto-table-cell-role="th">AIC</td>
+<td>705.593</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Time:</td>
+<td>20:21:13</td>
+<td data-quarto-table-cell-role="th">BIC</td>
+<td>716.133</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Sample:</td>
+<td>0</td>
+<td data-quarto-table-cell-role="th">HQIC</td>
+<td>709.836</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+
+
+<table class="simpletable caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<tbody>
+<tr class="odd">
+<td></td>
+<td data-quarto-table-cell-role="th">coef</td>
+<td data-quarto-table-cell-role="th">std err</td>
+<td data-quarto-table-cell-role="th">z</td>
+<td data-quarto-table-cell-role="th">P&gt;|z|</td>
+<td data-quarto-table-cell-role="th">[0.025</td>
+<td data-quarto-table-cell-role="th">0.975]</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">const</td>
+<td>52.9511</td>
+<td>1.328</td>
+<td>39.863</td>
+<td>0.000</td>
+<td>50.348</td>
+<td>55.555</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">ar.L1.Walmart</td>
+<td>0.9558</td>
+<td>0.019</td>
+<td>51.090</td>
+<td>0.000</td>
+<td>0.919</td>
+<td>0.993</td>
+</tr>
+</tbody>
+</table>
+
+
+<table class="simpletable caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<caption>Roots</caption>
+<tbody>
+<tr class="odd">
+<td></td>
+<td data-quarto-table-cell-role="th">Real</td>
+<td data-quarto-table-cell-role="th">Imaginary</td>
+<td data-quarto-table-cell-role="th">Modulus</td>
+<td data-quarto-table-cell-role="th">Frequency</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">AR.1</td>
+<td>1.0462</td>
+<td>+0.0000j</td>
+<td>1.0462</td>
+<td>0.0000</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="solution-17.4.b" class="level2">
+<h2 class="anchored" data-anchor-id="solution-17.4.b">Solution 17.4.b</h2>
+<p>Which of the following is/are relevant for testing whether this stock is a random walk?</p>
+<ul>
+<li><p>The autocorrelations of the close prices series</p></li>
+<li><p>The AR(1) slope coefficient</p></li>
+<li><p>The AR(1) constant coefficient</p></li>
+<li><p>The autocorrelations of the close prices series - NO</p></li>
+<li><p>The AR(1) slope coefficient - YES</p></li>
+<li><p>The AR(1) constant coefficient - NO</p></li>
+</ul>
+</section>
+<section id="solution-17.4.c" class="level2">
+<h2 class="anchored" data-anchor-id="solution-17.4.c">Solution 17.4.c</h2>
+<p>Does the AR model indicate that this is a random walk? Explain how you reached your conclusion.</p>
+<div id="cell-42" class="cell" data-execution_count="18">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>tsaplots.plot_acf(ts, lags<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>tsaplots.plot_acf(np.diff(ts), lags<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Ch-17-ProbSolutions-RF_files/figure-html/cell-19-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Ch-17-ProbSolutions-RF_files/figure-html/cell-19-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>First, note that the ACF plot indicates no substantial autocorrelation for the differences. Fitting an AR(1) model to the close price series yields a slope coefficient of 0.956 with standard error 0.019. The slope coefficient is 2.3 standard errors away from the value 1. At a 5% significance level we’d say that this is not a random walk, but at 1% it is. In conclusion, the series appears to be close to a random walk.</p>
+</section>
+<section id="solution-17.4.d" class="level2">
+<h2 class="anchored" data-anchor-id="solution-17.4.d">Solution 17.4.d</h2>
+<p>What are the implications of finding that a time-series is a random walk? Choose the correct statement(s) below.</p>
+<ul>
+<li><p>It is impossible to obtain forecasts that are more accurate than naive forecasts for the series</p></li>
+<li><p>The series is random</p></li>
+<li><p>The changes in the series from one period to the next are random</p></li>
+<li><p>It is impossible to obtain forecasts that are more accurate than naive forecasts for the series - YES (except for the naive prediction that yesterday’s price is a good predictor of today’s)</p></li>
+<li><p>The series is random - NO (there is an underlying value around which there is noise (errors))</p></li>
+<li><p>The changes in the series from one period to the next are random - YES</p></li>
+</ul>
+</section>
+</section>
+<section id="problem-17.5-department-store-sales" class="level1">
+<h1>Problem 17.5: Department Store Sales</h1>
+<p>The time plot in the Figure describes actual quarterly sales for a department store over a 6-year period (data are available in <em>DepartmentStoreSales.csv</em>, data courtesy of Chris Albright).</p>
+<div id="cell-46" class="cell" data-execution_count="19">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(DATA <span class="op">/</span> <span class="st">'DepartmentStoreSales.csv'</span>)</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>df_ts <span class="op">=</span> pd.Series(df[<span class="st">'Sales'</span>].values, index<span class="op">=</span>df.Quarter, name<span class="op">=</span><span class="st">'Sales'</span>)</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> df_ts.plot(style<span class="op">=</span><span class="st">'.-'</span>)</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">'Sales'</span>)</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Ch-17-ProbSolutions-RF_files/figure-html/cell-20-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<section id="solution-17.5.a" class="level2">
+<h2 class="anchored" data-anchor-id="solution-17.5.a">Solution 17.5.a</h2>
+<p>The forecaster decided that there is an exponential trend in the series. In order to fit a regression-based model that accounts for this trend, which of the following operations must be performed?</p>
+<ul>
+<li><p>Take log of quarter index</p></li>
+<li><p>Take log of sales</p></li>
+<li><p>Take an exponent of sales</p></li>
+<li><p>Take an exponent of quarter index</p></li>
+<li><p>Take log of quarter index - NO</p></li>
+<li><p>Take log of sales - YES</p></li>
+<li><p>Take an exponent of sales - NO</p></li>
+<li><p>Take an exponent of quarter index - NO</p></li>
+</ul>
+</section>
+<section id="solution-17.5.b" class="level2">
+<h2 class="anchored" data-anchor-id="solution-17.5.b">Solution 17.5.b</h2>
+<p>Fit a regression model with an exponential trend and seasonality, using the first 20 quarters as the training data (remember to first partition the series into training and validation series).</p>
+<div id="cell-49" class="cell" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> tsatools.add_trend(df_ts, trend<span class="op">=</span><span class="st">'ct'</span>)</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'Quarter'</span>] <span class="op">=</span> [<span class="ss">f'Q</span><span class="sc">{</span>(idx<span class="op">-</span><span class="dv">1</span>) <span class="op">%</span> <span class="dv">4</span> <span class="op">+</span> <span class="dv">1</span><span class="sc">}</span><span class="ss">'</span> <span class="cf">for</span> idx <span class="kw">in</span> df.index]</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>train_df <span class="op">=</span> df[:<span class="dv">20</span>]</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>valid_df <span class="op">=</span> df[<span class="dv">20</span>:]</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>lm_expo <span class="op">=</span> sm.ols(formula<span class="op">=</span><span class="st">'np.log(Sales) ~ trend + Quarter'</span>, data<span class="op">=</span>df[:<span class="dv">20</span>]).fit()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="solution-17.5.c" class="level2">
+<h2 class="anchored" data-anchor-id="solution-17.5.c">Solution 17.5.c</h2>
+<p>A partial output is shown in the Table. From the output, after adjusting for trend, are Q2 average sales higher, lower, or approximately equal to the average Q1 sales?</p>
+<div id="cell-51" class="cell" data-scrolled="false" data-execution_count="21">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(lm_expo.summary())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:          np.log(Sales)   R-squared:                       0.979
+Model:                            OLS   Adj. R-squared:                  0.974
+Method:                 Least Squares   F-statistic:                     175.9
+Date:                Sun, 08 Mar 2020   Prob (F-statistic):           2.08e-12
+Time:                        20:21:14   Log-Likelihood:                 42.865
+No. Observations:                  20   AIC:                            -75.73
+Df Residuals:                      15   BIC:                            -70.75
+Df Model:                           4                                         
+Covariance Type:            nonrobust                                         
+=================================================================================
+                    coef    std err          t      P&gt;|t|      [0.025      0.975]
+---------------------------------------------------------------------------------
+Intercept        10.7489      0.019    574.057      0.000      10.709      10.789
+Quarter[T.Q2]     0.0250      0.021      1.202      0.248      -0.019       0.069
+Quarter[T.Q3]     0.1653      0.021      7.917      0.000       0.121       0.210
+Quarter[T.Q4]     0.4337      0.021     20.572      0.000       0.389       0.479
+trend             0.0111      0.001      8.561      0.000       0.008       0.014
+==============================================================================
+Omnibus:                        0.809   Durbin-Watson:                   0.728
+Prob(Omnibus):                  0.667   Jarque-Bera (JB):                0.424
+Skew:                           0.351   Prob(JB):                        0.809
+Kurtosis:                       2.872   Cond. No.                         52.6
+==============================================================================
+
+Warnings:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.</code></pre>
+</div>
+</div>
+<p>Coefficient of the Q_2 is 0.024, which is very low close to 0%. This implies that an average sale of Q2 is approximately equal to the average Q1 sales. Approximately equal (p-value is insignificant)</p>
+</section>
+<section id="solution-17.5.d" class="level2">
+<h2 class="anchored" data-anchor-id="solution-17.5.d">Solution 17.5.d</h2>
+<p>Use this model to forecast sales in quarters 21 and 22.</p>
+<div id="cell-54" class="cell" data-execution_count="22">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>predict_lm_expo <span class="op">=</span> np.exp(lm_expo.predict(train_df))</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> train_df.plot(y<span class="op">=</span><span class="st">'Sales'</span>)</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>predict_lm_expo.plot(ax<span class="op">=</span>ax)</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>valid_df.plot(ax<span class="op">=</span>ax, y<span class="op">=</span><span class="st">'Sales'</span>, color<span class="op">=</span><span class="st">'C0'</span>, linestyle<span class="op">=</span><span class="st">'dashed'</span>)</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>np.exp(lm_expo.predict(valid_df)).plot(ax<span class="op">=</span>ax, y<span class="op">=</span><span class="st">'Sales'</span>, color<span class="op">=</span><span class="st">'C1'</span>, linestyle<span class="op">=</span><span class="st">'dashed'</span>)</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Ch-17-ProbSolutions-RF_files/figure-html/cell-23-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Predictions for quarters 21 and 22</p>
+<div id="cell-56" class="cell" data-execution_count="23">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>np.exp(lm_expo.predict(valid_df))[:<span class="dv">2</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="23">
+<pre><code>Quarter
+21    58793.709570
+22    60951.509541
+dtype: float64</code></pre>
+</div>
+</div>
+<div id="cell-57" class="cell" data-execution_count="24">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>regressionSummary(valid_df[<span class="st">'Sales'</span>][:<span class="dv">2</span>], np.exp(lm_expo.predict(valid_df))[:<span class="dv">2</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Regression statistics
+
+                      Mean Error (ME) : 2977.3904
+       Root Mean Squared Error (RMSE) : 3131.7550
+            Mean Absolute Error (MAE) : 2977.3904
+          Mean Percentage Error (MPE) : 4.6919
+Mean Absolute Percentage Error (MAPE) : 4.6919</code></pre>
+</div>
+</div>
+</section>
+<section id="solution-17.5.e" class="level2">
+<h2 class="anchored" data-anchor-id="solution-17.5.e">Solution 17.5.e</h2>
+<p>The plots in the Figure describe the fit (top) and forecast errors (bottom) from this regression model.</p>
+<section id="solution-17.5.e.i" class="level3">
+<h3 class="anchored" data-anchor-id="solution-17.5.e.i">Solution 17.5.e.i</h3>
+<p>Recreate these plots.</p>
+<div id="cell-59" class="cell" data-scrolled="false" data-execution_count="25">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> warnings.catch_warnings():</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>    warnings.simplefilter(<span class="st">"ignore"</span>)</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>    fig, axes <span class="op">=</span> plt.subplots(nrows<span class="op">=</span><span class="dv">2</span>, ncols<span class="op">=</span><span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">8</span>,<span class="dv">6</span>))</span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>    np.exp(lm_expo.predict(df[:<span class="dv">20</span>])).plot(ax<span class="op">=</span>axes[<span class="dv">0</span>], color<span class="op">=</span><span class="st">'C1'</span>, style<span class="op">=</span><span class="st">'.-'</span>)</span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>    resid <span class="op">=</span> df[:<span class="dv">20</span>].Sales <span class="op">-</span> np.exp(lm_expo.predict(df[:<span class="dv">20</span>]))</span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>    resid.plot(ax<span class="op">=</span>axes[<span class="dv">1</span>], color<span class="op">=</span><span class="st">'C1'</span>, style<span class="op">=</span><span class="st">'.-'</span>)</span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>    df[:<span class="dv">20</span>].Sales.plot(ax<span class="op">=</span>axes[<span class="dv">0</span>], color<span class="op">=</span><span class="st">'C0'</span>, style<span class="op">=</span><span class="st">'.-'</span>)</span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>    axes[<span class="dv">0</span>].set_ylabel(<span class="st">'Sales'</span>)</span>
+<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>    axes[<span class="dv">1</span>].set_ylabel(<span class="st">'Residuals'</span>)</span>
+<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a>    plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Ch-17-ProbSolutions-RF_files/figure-html/cell-26-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="solution-17.5.e.ii" class="level3">
+<h3 class="anchored" data-anchor-id="solution-17.5.e.ii">Solution 17.5.e.ii</h3>
+<p>Based on these plots, what can you say about your forecasts for quarters 21 and 22? Are they likely to over-forecast, under-forecast, or be reasonably close to the real sales values?</p>
+<p>Based on the U-shape of the residual plot, at Q20, you would expect Q21 and Q22 estimates to be too low (actual - forecast &gt; 0). If we look at the actual data (below), it turns out that the predictions were indeed too low, indicating that the fitted exponential trend is inadequate. From the above estimates for Q21 and Q22 we can see that the predicted forecast values for quarter 21 and 22 are below the actual values.</p>
+<div id="cell-61" class="cell" data-execution_count="26">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>valid_df[<span class="st">'Sales'</span>][:<span class="dv">2</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="26">
+<pre><code>Quarter
+21    60800
+22    64900
+Name: Sales, dtype: int64</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="solution-17.5.f" class="level2">
+<h2 class="anchored" data-anchor-id="solution-17.5.f">Solution 17.5.f</h2>
+<p>From the forecast errors plot, which of the following statements appear true?</p>
+<ul>
+<li><p>Seasonality is not captured well</p></li>
+<li><p>The regression model fits the data well</p></li>
+<li><p>The trend in the data is not captured well by the model</p></li>
+<li><p>Seasonality is not captured well - NO</p></li>
+<li><p>The regression model fits the data well - NO</p></li>
+<li><p>The trend in the data is not captured well by the model - YES</p></li>
+</ul>
+</section>
+<section id="solution-17.5.g" class="level2">
+<h2 class="anchored" data-anchor-id="solution-17.5.g">Solution 17.5.g</h2>
+<p>Which of the following solutions is adequate <em>and</em> a parsimonious solution for improving model fit?</p>
+<ul>
+<li><p>Fit a quadratic trend model to the residuals (with Quarter and Quarter<span class="math inline">\(^2\)</span>)</p></li>
+<li><p>Fit an AR model to the residuals</p></li>
+<li><p>Fit a quadratic trend model to Sales (with Quarter and Quarter<span class="math inline">\(^2\)</span>)</p></li>
+<li><p>Fit a quadratic trend model to the residuals (with Quarter and Quarter<span class="math inline">\(^2\)</span>) - NO</p></li>
+<li><p>Fit an AR model to the residuals - NO</p></li>
+<li><p>Fit a quadratic trend model to Sales (with Quarter and Quarter<span class="math inline">\(^2\)</span>) - YES</p></li>
+</ul>
+<div id="cell-63" class="cell" data-scrolled="false" data-execution_count="27">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> warnings.catch_warnings():</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>    warnings.simplefilter(<span class="st">"ignore"</span>)</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>    lm_quadratic <span class="op">=</span> sm.ols(formula<span class="op">=</span><span class="st">'np.log(Sales) ~ trend + np.square(trend) + Quarter'</span>, data<span class="op">=</span>df[:<span class="dv">20</span>]).fit()</span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>    predict_lm_quadratic <span class="op">=</span> np.exp(lm_quadratic.predict(df))</span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># ax = df_ts.plot()</span></span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># predict_lm_quadratic.plot(ax=ax)</span></span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>    fig, axes <span class="op">=</span> plt.subplots(nrows<span class="op">=</span><span class="dv">2</span>, ncols<span class="op">=</span><span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">9</span>))</span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>    df[:<span class="dv">20</span>].Sales.plot(ax<span class="op">=</span>axes[<span class="dv">0</span>], color<span class="op">=</span><span class="st">'C0'</span>)</span>
+<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a>    np.exp(lm_quadratic.predict(df[:<span class="dv">20</span>])).plot(ax<span class="op">=</span>axes[<span class="dv">0</span>], color<span class="op">=</span><span class="st">'C1'</span>)</span>
+<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a>    resid <span class="op">=</span> df[:<span class="dv">20</span>].Sales <span class="op">-</span> np.exp(lm_quadratic.predict(df[:<span class="dv">20</span>]))</span>
+<span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a>    resid.plot(ax<span class="op">=</span>axes[<span class="dv">1</span>], color<span class="op">=</span><span class="st">'C1'</span>)</span>
+<span id="cb37-14"><a href="#cb37-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-15"><a href="#cb37-15" aria-hidden="true" tabindex="-1"></a>    df[<span class="dv">20</span>:].Sales.plot(ax<span class="op">=</span>axes[<span class="dv">0</span>], color<span class="op">=</span><span class="st">'C0'</span>)</span>
+<span id="cb37-16"><a href="#cb37-16" aria-hidden="true" tabindex="-1"></a>    np.exp(lm_quadratic.predict(df[<span class="dv">20</span>:])).plot(ax<span class="op">=</span>axes[<span class="dv">0</span>], color<span class="op">=</span><span class="st">'C1'</span>)</span>
+<span id="cb37-17"><a href="#cb37-17" aria-hidden="true" tabindex="-1"></a>    resid <span class="op">=</span> df[<span class="dv">20</span>:].Sales <span class="op">-</span> np.exp(lm_quadratic.predict(df[<span class="dv">20</span>:]))</span>
+<span id="cb37-18"><a href="#cb37-18" aria-hidden="true" tabindex="-1"></a>    resid.plot(ax<span class="op">=</span>axes[<span class="dv">1</span>], color<span class="op">=</span><span class="st">'C1'</span>)</span>
+<span id="cb37-19"><a href="#cb37-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-20"><a href="#cb37-20" aria-hidden="true" tabindex="-1"></a>    plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Ch-17-ProbSolutions-RF_files/figure-html/cell-28-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="problem-17.6-souvenir-sales" class="level1">
+<h1>Problem 17.6: Souvenir Sales</h1>
+<p>The file <em>SouvenirSales.csv</em> contains monthly sales for a souvenir shop at a beach resort town in Queensland, Australia, between 1995–2001. (Source: Hyndman, R.J., Time Series Data Library, https://datamarket.com/data/list/?q=provider:tsdl. Accessed on 11/20/2018). The series is presented twice, in Australian dollars and in log-scale. Back in 2001, the store wanted to use the data to forecast sales for the next 12 months (year 2002). They hired an analyst to generate forecasts. The analyst first partitioned the data into training and validation sets, with the validation set containing the last 12 months of data (year 2001). She then fit a regression model to sales, using the training set.</p>
+<div id="cell-65" class="cell" data-execution_count="28">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(DATA <span class="op">/</span> <span class="st">'SouvenirSales.csv'</span>)</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>df_ts <span class="op">=</span> pd.Series(df[<span class="st">'Sales'</span>].values, index<span class="op">=</span>pd.to_datetime(df.Date, <span class="bu">format</span><span class="op">=</span><span class="st">'%b-%y'</span>), name<span class="op">=</span><span class="st">'Sales'</span>)</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(nrows<span class="op">=</span><span class="dv">1</span>, ncols<span class="op">=</span><span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">4</span>))</span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ax <span class="kw">in</span> axes:</span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>    df_ts.plot(ax<span class="op">=</span>ax, y<span class="op">=</span>[<span class="st">'Sales'</span>], style<span class="op">=</span><span class="st">'.-'</span>)</span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>    ax.set_xlabel(<span class="st">'Time'</span>)</span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_yscale(<span class="st">'log'</span>)</span>
+<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_ylabel(<span class="st">'Sales (Australian $)'</span>)</span>
+<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_ylabel(<span class="st">'Sales (log-scale)'</span>)</span>
+<span id="cb38-11"><a href="#cb38-11" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb38-12"><a href="#cb38-12" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Ch-17-ProbSolutions-RF_files/figure-html/cell-29-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<section id="solution-17.6.a" class="level2">
+<h2 class="anchored" data-anchor-id="solution-17.6.a">Solution 17.6.a</h2>
+<p>Based on the two time plots, which predictors should be included in the regression model? What is the total number of predictors in the model?</p>
+<p>12 predictors - the monthly index variable (trend), plus 11 seasonal variables (one for each month minus 1 - including all 12 would lead to multicollinearity errors in the regression).</p>
+</section>
+<section id="solution-17.6.b" class="level2">
+<h2 class="anchored" data-anchor-id="solution-17.6.b">Solution 17.6.b</h2>
+<p>Run a regression model with Sales (in Australian dollars) as the outcome variable, and with a linear trend and monthly seasonality. Remember to fit only the training data. Call this model A.</p>
+<div id="cell-67" class="cell" data-execution_count="29">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> tsatools.add_trend(df_ts, trend<span class="op">=</span><span class="st">'ct'</span>)</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'month'</span>] <span class="op">=</span> df.index.month</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>train_df <span class="op">=</span> df[:<span class="st">'2000-12-31'</span>]</span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>valid_df <span class="op">=</span> df[<span class="st">'2001-01-01'</span>:]</span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>modelA <span class="op">=</span> sm.ols(formula<span class="op">=</span><span class="st">'Sales ~ trend + C(month)'</span>, data<span class="op">=</span>train_df).fit()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="solution-17.6.b.i" class="level3">
+<h3 class="anchored" data-anchor-id="solution-17.6.b.i">Solution 17.6.b.i</h3>
+<p>Examine the estimated coefficients: which month tends to have the highest average sales during the year? Why is this reasonable?</p>
+<div id="cell-69" class="cell" data-execution_count="30">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(modelA.summary())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:                  Sales   R-squared:                       0.790
+Model:                            OLS   Adj. R-squared:                  0.748
+Method:                 Least Squares   F-statistic:                     18.53
+Date:                Sun, 08 Mar 2020   Prob (F-statistic):           9.44e-16
+Time:                        20:21:15   Log-Likelihood:                -720.48
+No. Observations:                  72   AIC:                             1467.
+Df Residuals:                      59   BIC:                             1497.
+Df Model:                          12                                         
+Covariance Type:            nonrobust                                         
+==================================================================================
+                     coef    std err          t      P&gt;|t|      [0.025      0.975]
+----------------------------------------------------------------------------------
+Intercept      -3065.5544   2640.262     -1.161      0.250   -8348.706    2217.597
+C(month)[T.2]   1119.3842   3422.055      0.327      0.745   -5728.132    7966.901
+C(month)[T.3]   4408.8450   3422.564      1.288      0.203   -2439.690    1.13e+04
+C(month)[T.4]   1462.5675   3423.413      0.427      0.671   -5387.665    8312.800
+C(month)[T.5]   1446.1950   3424.600      0.422      0.674   -5406.414    8298.804
+C(month)[T.6]   1867.9775   3426.126      0.545      0.588   -4987.685    8723.640
+C(month)[T.7]   2988.5633   3427.990      0.872      0.387   -3870.830    9847.956
+C(month)[T.8]   3227.5808   3430.192      0.941      0.351   -3636.218    1.01e+04
+C(month)[T.9]   3955.5600   3432.731      1.152      0.254   -2913.320    1.08e+04
+C(month)[T.10]  4821.6574   3435.606      1.403      0.166   -2052.975    1.17e+04
+C(month)[T.11]  1.152e+04   3438.817      3.351      0.001    4643.581    1.84e+04
+C(month)[T.12]  3.247e+04   3442.362      9.432      0.000    2.56e+04    3.94e+04
+trend            245.3642     34.083      7.199      0.000     177.165     313.564
+==============================================================================
+Omnibus:                       82.427   Durbin-Watson:                   0.634
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):             1266.965
+Skew:                           3.203   Prob(JB):                    7.62e-276
+Kurtosis:                      22.526   Cond. No.                         524.
+==============================================================================
+
+Warnings:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.</code></pre>
+</div>
+</div>
+<p>December - this is the holiday season (and the height of the summer in Australia).</p>
+</section>
+<section id="solution-17.6.b.ii" class="level3">
+<h3 class="anchored" data-anchor-id="solution-17.6.b.ii">Solution 17.6.b.ii</h3>
+<p>The estimated trend coefficient in model A is 245.36. What does this mean?</p>
+<p>Seasonally adjusted sales increase by 240.1 Australian dollars per month</p>
+<div id="cell-71" class="cell" data-execution_count="31">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(nrows<span class="op">=</span><span class="dv">1</span>, ncols<span class="op">=</span><span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">4</span>))</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> sub_df <span class="kw">in</span> (train_df, valid_df):</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>    sub_df.Sales.plot(ax<span class="op">=</span>axes[<span class="dv">0</span>], color<span class="op">=</span><span class="st">'C0'</span>)</span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>    modelA.predict(sub_df).plot(ax<span class="op">=</span>axes[<span class="dv">0</span>], color<span class="op">=</span><span class="st">'C1'</span>)</span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>    resid <span class="op">=</span> sub_df.Sales <span class="op">-</span> modelA.predict(sub_df)</span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>    resid.plot(ax<span class="op">=</span>axes[<span class="dv">1</span>], color<span class="op">=</span><span class="st">'C1'</span>)</span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Ch-17-ProbSolutions-RF_files/figure-html/cell-32-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="solution-17.6.c" class="level2">
+<h2 class="anchored" data-anchor-id="solution-17.6.c">Solution 17.6.c</h2>
+<p>Run a regression model with an exponential trend and multiplicative seasonality. Remember to fit only the training data. Call this model B.</p>
+<div id="cell-73" class="cell" data-execution_count="32">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>modelB <span class="op">=</span> sm.ols(formula<span class="op">=</span><span class="st">'np.log(Sales) ~ trend + C(month)'</span>, data<span class="op">=</span>train_df).fit()</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(modelB.summary())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:          np.log(Sales)   R-squared:                       0.942
+Model:                            OLS   Adj. R-squared:                  0.931
+Method:                 Least Squares   F-statistic:                     80.40
+Date:                Sun, 08 Mar 2020   Prob (F-statistic):           6.21e-32
+Time:                        20:21:16   Log-Likelihood:                 25.021
+No. Observations:                  72   AIC:                            -24.04
+Df Residuals:                      59   BIC:                             5.554
+Df Model:                          12                                         
+Covariance Type:            nonrobust                                         
+==================================================================================
+                     coef    std err          t      P&gt;|t|      [0.025      0.975]
+----------------------------------------------------------------------------------
+Intercept          7.6464      0.084     90.898      0.000       7.478       7.815
+C(month)[T.2]      0.2820      0.109      2.587      0.012       0.064       0.500
+C(month)[T.3]      0.6950      0.109      6.374      0.000       0.477       0.913
+C(month)[T.4]      0.3739      0.109      3.428      0.001       0.156       0.592
+C(month)[T.5]      0.4217      0.109      3.865      0.000       0.203       0.640
+C(month)[T.6]      0.4470      0.109      4.095      0.000       0.229       0.665
+C(month)[T.7]      0.5834      0.109      5.341      0.000       0.365       0.802
+C(month)[T.8]      0.5469      0.109      5.004      0.000       0.328       0.766
+C(month)[T.9]      0.6356      0.109      5.811      0.000       0.417       0.854
+C(month)[T.10]     0.7295      0.109      6.664      0.000       0.510       0.949
+C(month)[T.11]     1.2010      0.110     10.961      0.000       0.982       1.420
+C(month)[T.12]     1.9522      0.110     17.800      0.000       1.733       2.172
+trend              0.0211      0.001     19.449      0.000       0.019       0.023
+==============================================================================
+Omnibus:                        0.280   Durbin-Watson:                   1.036
+Prob(Omnibus):                  0.869   Jarque-Bera (JB):                0.465
+Skew:                          -0.029   Prob(JB):                        0.793
+Kurtosis:                       2.611   Cond. No.                         524.
+==============================================================================
+
+Warnings:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.</code></pre>
+</div>
+</div>
+<section id="solution-17.6.c.i" class="level3">
+<h3 class="anchored" data-anchor-id="solution-17.6.c.i">Solution 17.6.c.i</h3>
+<p>Fitting a model to log(Sales) with a linear trend is equivalent to fitting a model to Sales (in dollars) with what type of trend?</p>
+<p>Exponential trend</p>
+</section>
+<section id="solution-17.6.c.ii" class="level3">
+<h3 class="anchored" data-anchor-id="solution-17.6.c.ii">Solution 17.6.c.ii</h3>
+<p>The estimated trend coefficient in model B is 0.02. What does this mean?</p>
+<p>Seasonally-adjusted sales increase by 2% per month on average.</p>
+</section>
+<section id="solution-17.6.c.iii" class="level3">
+<h3 class="anchored" data-anchor-id="solution-17.6.c.iii">Solution 17.6.c.iii</h3>
+<p>Use this model to forecast the sales in February 2002.</p>
+<p>In order to predict February 2002, we need to rebuild a model with the full dataset</p>
+<div id="cell-75" class="cell" data-execution_count="33">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>modelBfull <span class="op">=</span> sm.ols(formula<span class="op">=</span><span class="st">'np.log(Sales) ~ trend + C(month)'</span>, data<span class="op">=</span>df).fit()</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>future_df <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'const'</span>: [<span class="fl">1.0</span>, <span class="fl">1.0</span>],</span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'trend'</span>: [<span class="fl">85.0</span>, <span class="fl">86.0</span>],</span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">'month'</span>: [<span class="dv">1</span>, <span class="dv">2</span>],</span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a>}, index<span class="op">=</span>[<span class="st">'2002-01-01'</span>, <span class="st">'2002-02-01'</span>])</span>
+<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a>np.exp(modelBfull.predict(future_df))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="33">
+<pre><code>2002-01-01    13484.062109
+2002-02-01    17724.450248
+dtype: float64</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="solution-17.6.d" class="level2">
+<h2 class="anchored" data-anchor-id="solution-17.6.d">Solution 17.6.d</h2>
+<p>Compare the two regression models (A and B) in terms of forecast performance. Which model is preferable for forecasting? Mention at least two reasons based on the information in the outputs.</p>
+<div id="cell-77" class="cell" data-execution_count="34">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>regressionSummary(valid_df[<span class="st">'Sales'</span>], modelA.predict(valid_df))</span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>regressionSummary(valid_df[<span class="st">'Sales'</span>], np.exp(modelB.predict(valid_df)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Regression statistics
+
+                      Mean Error (ME) : 8251.5127
+       Root Mean Squared Error (RMSE) : 17451.5469
+            Mean Absolute Error (MAE) : 10055.2761
+          Mean Percentage Error (MPE) : 10.5340
+Mean Absolute Percentage Error (MAPE) : 26.6657
+
+Regression statistics
+
+                      Mean Error (ME) : 4824.4941
+       Root Mean Squared Error (RMSE) : 7101.4442
+            Mean Absolute Error (MAE) : 5191.6695
+          Mean Percentage Error (MPE) : 12.3594
+Mean Absolute Percentage Error (MAPE) : 15.5191</code></pre>
+</div>
+</div>
+<p>Fitting the natural log in model B damps the variability in the seasonal component so it is additive. It can now be modeled by dummy variables. Also the log makes the trend linear and suitable for linear regression. In model A we fit a linear trend to data that had a nonlinear trend.</p>
+</section>
+<section id="solution-17.6.e" class="level2">
+<h2 class="anchored" data-anchor-id="solution-17.6.e">Solution 17.6.e</h2>
+<p>Continuing with model B, create an ACF plot until lag 15 for the forecast errors. Now fit an AR model with lag 2 [ARIMA(2,0,0)] to the forecast errors.</p>
+<div id="cell-80" class="cell" data-execution_count="35">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> tsaplots.plot_acf(modelB.resid, lags<span class="op">=</span><span class="dv">15</span>)</span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Ch-17-ProbSolutions-RF_files/figure-html/cell-36-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="cell-81" class="cell" data-execution_count="36">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>arimaB <span class="op">=</span> ARIMA(modelBfull.resid, order<span class="op">=</span>(<span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">0</span>), freq<span class="op">=</span><span class="st">'MS'</span>).fit(disp<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>arimaB.summary()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="36">
+<table class="simpletable caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<caption>ARMA Model Results</caption>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Dep. Variable:</td>
+<td>y</td>
+<td data-quarto-table-cell-role="th">No. Observations:</td>
+<td>84</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Model:</td>
+<td>ARMA(2, 0)</td>
+<td data-quarto-table-cell-role="th">Log Likelihood</td>
+<td>46.278</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Method:</td>
+<td>css-mle</td>
+<td data-quarto-table-cell-role="th">S.D. of innovations</td>
+<td>0.139</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Date:</td>
+<td>Sun, 08 Mar 2020</td>
+<td data-quarto-table-cell-role="th">AIC</td>
+<td>-84.556</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Time:</td>
+<td>20:21:16</td>
+<td data-quarto-table-cell-role="th">BIC</td>
+<td>-74.833</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Sample:</td>
+<td>01-01-1995</td>
+<td data-quarto-table-cell-role="th">HQIC</td>
+<td>-80.647</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th"></td>
+<td>- 12-01-2001</td>
+<td data-quarto-table-cell-role="th"></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+
+
+<table class="simpletable caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<tbody>
+<tr class="odd">
+<td></td>
+<td data-quarto-table-cell-role="th">coef</td>
+<td data-quarto-table-cell-role="th">std err</td>
+<td data-quarto-table-cell-role="th">z</td>
+<td data-quarto-table-cell-role="th">P&gt;|z|</td>
+<td data-quarto-table-cell-role="th">[0.025</td>
+<td data-quarto-table-cell-role="th">0.975]</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">const</td>
+<td>-0.0026</td>
+<td>0.044</td>
+<td>-0.058</td>
+<td>0.954</td>
+<td>-0.089</td>
+<td>0.084</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">ar.L1.y</td>
+<td>0.3488</td>
+<td>0.103</td>
+<td>3.392</td>
+<td>0.001</td>
+<td>0.147</td>
+<td>0.550</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">ar.L2.y</td>
+<td>0.3182</td>
+<td>0.103</td>
+<td>3.089</td>
+<td>0.002</td>
+<td>0.116</td>
+<td>0.520</td>
+</tr>
+</tbody>
+</table>
+
+
+<table class="simpletable caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<caption>Roots</caption>
+<tbody>
+<tr class="odd">
+<td></td>
+<td data-quarto-table-cell-role="th">Real</td>
+<td data-quarto-table-cell-role="th">Imaginary</td>
+<td data-quarto-table-cell-role="th">Modulus</td>
+<td data-quarto-table-cell-role="th">Frequency</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">AR.1</td>
+<td>1.3074</td>
+<td>+0.0000j</td>
+<td>1.3074</td>
+<td>0.0000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">AR.2</td>
+<td>-2.4034</td>
+<td>+0.0000j</td>
+<td>2.4034</td>
+<td>0.5000</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<section id="solution-17.6.e.i" class="level3">
+<h3 class="anchored" data-anchor-id="solution-17.6.e.i">Solution 17.6.e.i</h3>
+<p>Examining the ACF plot and the estimated coefficients of the AR(2) model (and their statistical significance), what can we learn about the forecasts that result from model B?</p>
+<p>They should be adjusted to account for the autocorrelation at lags 1 and 2.</p>
+</section>
+<section id="solution-17.6.e.i-1" class="level3">
+<h3 class="anchored" data-anchor-id="solution-17.6.e.i-1">Solution 17.6.e.i</h3>
+<p>Use the autocorrelation information to compute an improved forecast for January 2002, using model B and the AR(2) model above.</p>
+<div id="cell-83" class="cell" data-execution_count="37">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>forecast, _, conf_int <span class="op">=</span> arimaB.forecast(<span class="dv">1</span>)</span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>arimaCorrection <span class="op">=</span> forecast[<span class="dv">0</span>]</span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>arimaCorrection</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="37">
+<pre><code>0.06501310628340459</code></pre>
+</div>
+</div>
+<p>The untransformed prediction from <code>modelBfull</code> is</p>
+<div id="cell-85" class="cell" data-execution_count="38">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>modelPrediction <span class="op">=</span> modelBfull.predict(future_df)[<span class="dv">0</span>]</span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>modelPrediction</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="38">
+<pre><code>9.50926368247093</code></pre>
+</div>
+</div>
+<p>We can combine the prediction and the correction</p>
+<div id="cell-87" class="cell" data-execution_count="39">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'corrected prediction: '</span>, modelPrediction <span class="op">+</span> arimaCorrection)</span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'predicted sales: '</span>, np.exp(modelPrediction <span class="op">+</span> arimaCorrection))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>corrected prediction:  9.574276788754334
+predicted sales:  14389.827160919325</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="solution-17.6.f" class="level2">
+<h2 class="anchored" data-anchor-id="solution-17.6.f">Solution 17.6.f</h2>
+<p>How would you model these data differently if the goal was to understand the different components of sales in the souvenir shop between 1995–2001? Mention two differences.</p>
+<p>No data partitioning. Evaluate model on the basis of data fit, not forecast error. Since Model B is the more accurate model we can go ahead and fit the model to all of the data, then generate the residuals for all the data, then fit an ARIMA model to the residuals which will then be used to adjust the forecast. We do not have a trend showing in the residuals since it has been taken out by the regression model. We have significant autocorrelation at lags 1 and 2, so we fit an ARIMA (2,0,0) to the residuals.</p>
+</section>
+</section>
+<section id="problem-17.7-shipments-of-household-appliances" class="level1">
+<h1>Problem 17.7: Shipments of Household Appliances</h1>
+<p>The time plot in the Figure shows the series of quarterly shipments (in million dollars) of US household appliances between 1985-1989 (data are available in <em>ApplianceShipments.csv</em>, data courtesy of Ken Black).</p>
+<div id="cell-90" class="cell" data-execution_count="40">
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(DATA <span class="op">/</span> <span class="st">'ApplianceShipments.csv'</span>)</span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a><span class="co"># convert Quarter information into month-year</span></span>
+<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> q, m <span class="kw">in</span> (<span class="st">'Q1'</span>, <span class="st">'03'</span>), (<span class="st">'Q2'</span>, <span class="st">'06'</span>), (<span class="st">'Q3'</span>, <span class="st">'09'</span>), (<span class="st">'Q4'</span>, <span class="st">'12'</span>):</span>
+<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">'Quarter'</span>] <span class="op">=</span> df[<span class="st">'Quarter'</span>].<span class="bu">str</span>.replace(q, m)</span>
+<span id="cb57-6"><a href="#cb57-6" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'Quarter'</span>] <span class="op">=</span> pd.to_datetime(df.Quarter, <span class="bu">format</span><span class="op">=</span><span class="st">'%m-%Y'</span>)</span>
+<span id="cb57-7"><a href="#cb57-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-8"><a href="#cb57-8" aria-hidden="true" tabindex="-1"></a>df_ts <span class="op">=</span> pd.Series(df[<span class="st">'Shipments'</span>].values, index<span class="op">=</span>df.Quarter, name<span class="op">=</span><span class="st">'shipments'</span>)</span>
+<span id="cb57-9"><a href="#cb57-9" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> df_ts.plot(style<span class="op">=</span><span class="st">'.-'</span>, figsize<span class="op">=</span>(<span class="dv">6</span>,<span class="dv">3</span>))</span>
+<span id="cb57-10"><a href="#cb57-10" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">'Shipments (in 000$)'</span>)</span>
+<span id="cb57-11"><a href="#cb57-11" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">'Time'</span>)</span>
+<span id="cb57-12"><a href="#cb57-12" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb57-13"><a href="#cb57-13" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Ch-17-ProbSolutions-RF_files/figure-html/cell-41-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>If we compute the autocorrelation of the series, which lag (&gt; 0) is most likely to have the largest coefficient (in absolute value)? Create an ACF plot and compare with your answer.</p>
+<div id="cell-92" class="cell" data-scrolled="true" data-execution_count="41">
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>tsaplots.plot_acf(df.Shipments)</span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Ch-17-ProbSolutions-RF_files/figure-html/cell-42-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Our guess is that lag = 4 will have the greatest coefficient. Sales appear to be highly cyclical, meaning that the quarter most like the current quarter will be the year-ago quarter. This is confirmed by the ACF plot.</p>
+</section>
+<section id="problem-17.8-australian-wine-sales" class="level1">
+<h1>Problem 17.8: Australian Wine Sales</h1>
+<p>The Figure shows time plots of monthly sales of six types of Australian wines (red, rose, sweet white, dry white, sparkling, and fortified) for 1980–1994 (Data are available in <em>AustralianWines.csv</em>, source: Hyndman, R.J., Time Series Data Library, https://datamarket.com/data/list/?q=provider:tsdl. Accessed on 11/20/2018). The units are thousands of litres. You are hired to obtain short term forecasts (2-3 months ahead) for each of the six series, and this task will be repeated every month.</p>
+<p>Note: This problem more properly pertains to chapter 18, where Holt-Winters is covered.</p>
+<div id="cell-95" class="cell" data-execution_count="42">
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(DATA <span class="op">/</span> <span class="st">'AustralianWines.csv'</span>, na_values<span class="op">=</span>[<span class="st">'*'</span>])</span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'Date'</span>] <span class="op">=</span> pd.to_datetime(df.Month, <span class="bu">format</span><span class="op">=</span><span class="st">'%b-%y'</span>)</span>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a>df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="42">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Month</th>
+<th data-quarto-table-cell-role="th">Fortified</th>
+<th data-quarto-table-cell-role="th">Red</th>
+<th data-quarto-table-cell-role="th">Rose</th>
+<th data-quarto-table-cell-role="th">sparkling</th>
+<th data-quarto-table-cell-role="th">Sweet white</th>
+<th data-quarto-table-cell-role="th">Dry white</th>
+<th data-quarto-table-cell-role="th">Date</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>Jan-80</td>
+<td>2585</td>
+<td>464</td>
+<td>112.0</td>
+<td>1686</td>
+<td>85</td>
+<td>1954</td>
+<td>1980-01-01</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>Feb-80</td>
+<td>3368</td>
+<td>675</td>
+<td>118.0</td>
+<td>1591</td>
+<td>89</td>
+<td>2302</td>
+<td>1980-02-01</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>Mar-80</td>
+<td>3210</td>
+<td>703</td>
+<td>129.0</td>
+<td>2304</td>
+<td>109</td>
+<td>3054</td>
+<td>1980-03-01</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>Apr-80</td>
+<td>3111</td>
+<td>887</td>
+<td>99.0</td>
+<td>1712</td>
+<td>95</td>
+<td>2414</td>
+<td>1980-04-01</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>May-80</td>
+<td>3756</td>
+<td>1139</td>
+<td>116.0</td>
+<td>1471</td>
+<td>91</td>
+<td>2226</td>
+<td>1980-05-01</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="cell-96" class="cell" data-execution_count="43">
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(nrows<span class="op">=</span><span class="dv">3</span>, ncols<span class="op">=</span><span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">12</span>))</span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>params <span class="op">=</span> [</span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a>    {<span class="st">'ax'</span>: axes[<span class="dv">0</span>, <span class="dv">0</span>], <span class="st">'title'</span>: <span class="st">'Sweet white'</span>, <span class="st">'y'</span>: <span class="st">'Sweet white'</span>},</span>
+<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a>    {<span class="st">'ax'</span>: axes[<span class="dv">0</span>, <span class="dv">1</span>], <span class="st">'title'</span>: <span class="st">'Rose wine'</span>, <span class="st">'y'</span>: <span class="st">'Rose'</span>},</span>
+<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a>    {<span class="st">'ax'</span>: axes[<span class="dv">1</span>, <span class="dv">0</span>], <span class="st">'title'</span>: <span class="st">'Sparkling wine'</span>, <span class="st">'y'</span>: <span class="st">'sparkling'</span>},</span>
+<span id="cb60-6"><a href="#cb60-6" aria-hidden="true" tabindex="-1"></a>    {<span class="st">'ax'</span>: axes[<span class="dv">1</span>, <span class="dv">1</span>], <span class="st">'title'</span>: <span class="st">'Red wine'</span>, <span class="st">'y'</span>: <span class="st">'Red'</span>},</span>
+<span id="cb60-7"><a href="#cb60-7" aria-hidden="true" tabindex="-1"></a>    {<span class="st">'ax'</span>: axes[<span class="dv">2</span>, <span class="dv">0</span>], <span class="st">'title'</span>: <span class="st">'Dry white wine'</span>, <span class="st">'y'</span>: <span class="st">'Dry white'</span>},</span>
+<span id="cb60-8"><a href="#cb60-8" aria-hidden="true" tabindex="-1"></a>    {<span class="st">'ax'</span>: axes[<span class="dv">2</span>, <span class="dv">1</span>], <span class="st">'title'</span>: <span class="st">'Fortified wine'</span>, <span class="st">'y'</span>: <span class="st">'Fortified'</span>},</span>
+<span id="cb60-9"><a href="#cb60-9" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb60-10"><a href="#cb60-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-11"><a href="#cb60-11" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> warnings.catch_warnings():</span>
+<span id="cb60-12"><a href="#cb60-12" aria-hidden="true" tabindex="-1"></a>    warnings.simplefilter(<span class="st">"ignore"</span>)</span>
+<span id="cb60-13"><a href="#cb60-13" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb60-14"><a href="#cb60-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> param <span class="kw">in</span> params:</span>
+<span id="cb60-15"><a href="#cb60-15" aria-hidden="true" tabindex="-1"></a>        ax <span class="op">=</span> df.plot(x<span class="op">=</span><span class="st">'Date'</span>, <span class="op">**</span>param)</span>
+<span id="cb60-16"><a href="#cb60-16" aria-hidden="true" tabindex="-1"></a>        ax.set_xlabel(<span class="st">''</span>)</span>
+<span id="cb60-17"><a href="#cb60-17" aria-hidden="true" tabindex="-1"></a>        ax.set_ylabel(<span class="st">'Thousands of litres'</span>)</span>
+<span id="cb60-18"><a href="#cb60-18" aria-hidden="true" tabindex="-1"></a>        ax.get_legend().remove()</span>
+<span id="cb60-19"><a href="#cb60-19" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb60-20"><a href="#cb60-20" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Ch-17-ProbSolutions-RF_files/figure-html/cell-44-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<section id="solution-17.8.a" class="level2">
+<h2 class="anchored" data-anchor-id="solution-17.8.a">Solution 17.8.a</h2>
+<p>Which forecasting method would you choose if you had to choose the same method for all series? Why?</p>
+<p>Model/Method: Holt-Winter’s exponential smoothing Reasons: 1. Ability of the model to capture both seasonality and trend that are present in the various data series. 2. Adaptability of the model - will adapt to the various patterns of different data series 3. Holt-Winter’s model is a reasonable model for all series - it will be able to capture and adjust to changing levels of trends and seasonality swings. It is parsimonious and should produce good fit as well as good forecasts</p>
+</section>
+<section id="solution-17.8.b" class="level2">
+<h2 class="anchored" data-anchor-id="solution-17.8.b">Solution 17.8.b</h2>
+<p>Fortified wine has the largest market share of the above six types of wine. You are asked to focus on fortified wine sales alone, and produce as accurate as possible forecasts for the next 2 months.</p>
+<ul>
+<li>Start by partitioning the data: use the period until December 1993 as the training set.</li>
+<li>Fit a regression model to sales with a linear trend and additive seasonality.</li>
+</ul>
+<div id="cell-98" class="cell" data-execution_count="44">
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(DATA <span class="op">/</span> <span class="st">'AustralianWines.csv'</span>, na_values<span class="op">=</span>[<span class="st">'*'</span>])</span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'Date'</span>] <span class="op">=</span> pd.to_datetime(df.Month, <span class="bu">format</span><span class="op">=</span><span class="st">'%b-%y'</span>)</span>
+<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> tsatools.add_trend(pd.Series(df[<span class="st">'Fortified'</span>].values, index<span class="op">=</span>df.Date, name<span class="op">=</span><span class="st">'fortified'</span>), trend<span class="op">=</span><span class="st">'ct'</span>)</span>
+<span id="cb61-5"><a href="#cb61-5" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'month'</span>] <span class="op">=</span> df.index.month</span>
+<span id="cb61-6"><a href="#cb61-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb61-7"><a href="#cb61-7" aria-hidden="true" tabindex="-1"></a>train_df <span class="op">=</span> df[:<span class="st">'1993-12-31'</span>]</span>
+<span id="cb61-8"><a href="#cb61-8" aria-hidden="true" tabindex="-1"></a>valid_df <span class="op">=</span> df[<span class="st">'1994-01-01'</span>:]</span>
+<span id="cb61-9"><a href="#cb61-9" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> train_df.plot(y<span class="op">=</span>[<span class="st">'fortified'</span>])</span>
+<span id="cb61-10"><a href="#cb61-10" aria-hidden="true" tabindex="-1"></a>valid_df.plot(y<span class="op">=</span>[<span class="st">'fortified'</span>], ax<span class="op">=</span>ax)</span>
+<span id="cb61-11"><a href="#cb61-11" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb61-12"><a href="#cb61-12" aria-hidden="true" tabindex="-1"></a><span class="co"># df.head()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Ch-17-ProbSolutions-RF_files/figure-html/cell-45-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="cell-99" class="cell" data-execution_count="45">
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> sm.ols(formula<span class="op">=</span><span class="st">'fortified ~ trend + C(month)'</span>, data<span class="op">=</span>train_df).fit()</span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(model.summary())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:              fortified   R-squared:                       0.891
+Model:                            OLS   Adj. R-squared:                  0.883
+Method:                 Least Squares   F-statistic:                     105.6
+Date:                Sun, 08 Mar 2020   Prob (F-statistic):           4.09e-68
+Time:                        20:21:18   Log-Likelihood:                -1188.7
+No. Observations:                 168   AIC:                             2403.
+Df Residuals:                     155   BIC:                             2444.
+Df Model:                          12                                         
+Covariance Type:            nonrobust                                         
+==================================================================================
+                     coef    std err          t      P&gt;|t|      [0.025      0.975]
+----------------------------------------------------------------------------------
+Intercept       2679.6545     88.043     30.436      0.000    2505.735    2853.574
+C(month)[T.2]    361.1331    112.625      3.207      0.002     138.656     583.611
+C(month)[T.3]    791.9804    112.628      7.032      0.000     569.497    1014.464
+C(month)[T.4]   1048.3992    112.633      9.308      0.000     825.906    1270.893
+C(month)[T.5]   1619.3894    112.640     14.377      0.000    1396.882    1841.897
+C(month)[T.6]   1691.2367    112.649     15.013      0.000    1468.712    1913.762
+C(month)[T.7]   2410.0126    112.660     21.392      0.000    2187.466    2632.559
+C(month)[T.8]   2116.2171    112.673     18.782      0.000    1893.645    2338.790
+C(month)[T.9]   1115.7073    112.688      9.901      0.000     893.105    1338.310
+C(month)[T.10]   922.1975    112.705      8.182      0.000     699.562    1144.833
+C(month)[T.11]  1373.6163    112.724     12.186      0.000    1150.943    1596.290
+C(month)[T.12]  1583.1779    112.745     14.042      0.000    1360.463    1805.893
+trend            -10.4188      0.475    -21.923      0.000     -11.358      -9.480
+==============================================================================
+Omnibus:                        9.128   Durbin-Watson:                   1.677
+Prob(Omnibus):                  0.010   Jarque-Bera (JB):                9.178
+Skew:                           0.494   Prob(JB):                       0.0102
+Kurtosis:                       3.578   Cond. No.                     1.21e+03
+==============================================================================
+
+Warnings:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+[2] The condition number is large, 1.21e+03. This might indicate that there are
+strong multicollinearity or other numerical problems.</code></pre>
+</div>
+</div>
+<section id="solution-17.8.b.i" class="level3">
+<h3 class="anchored" data-anchor-id="solution-17.8.b.i">Solution 17.8.b.i</h3>
+<p>Create the ‘actual vs.&nbsp;forecast’ plot. What can you say about the model fit?</p>
+<div id="cell-101" class="cell" data-execution_count="46">
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="co"># train_df = df[:'1993-12-31']</span></span>
+<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a><span class="co"># valid_df = df['1994-01-01':]</span></span>
+<span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> train_df.plot(y<span class="op">=</span>[<span class="st">'fortified'</span>], color<span class="op">=</span><span class="st">'C0'</span>)</span>
+<span id="cb64-4"><a href="#cb64-4" aria-hidden="true" tabindex="-1"></a>valid_df.plot(y<span class="op">=</span>[<span class="st">'fortified'</span>], ax<span class="op">=</span>ax, color<span class="op">=</span><span class="st">'C0'</span>, linestyle<span class="op">=</span><span class="st">'dashed'</span>)</span>
+<span id="cb64-5"><a href="#cb64-5" aria-hidden="true" tabindex="-1"></a>model.predict(train_df).plot(y<span class="op">=</span>[<span class="st">'fortified'</span>], ax<span class="op">=</span>ax, color<span class="op">=</span><span class="st">'C1'</span>)</span>
+<span id="cb64-6"><a href="#cb64-6" aria-hidden="true" tabindex="-1"></a>model.predict(valid_df).plot(y<span class="op">=</span>[<span class="st">'fortified'</span>], ax<span class="op">=</span>ax, color<span class="op">=</span><span class="st">'C1'</span>, linestyle<span class="op">=</span><span class="st">'dashed'</span>)</span>
+<span id="cb64-7"><a href="#cb64-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb64-8"><a href="#cb64-8" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Ch-17-ProbSolutions-RF_files/figure-html/cell-47-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="solution-17.8.b.ii" class="level3">
+<h3 class="anchored" data-anchor-id="solution-17.8.b.ii">Solution 17.8.b.ii</h3>
+<p>Use the regression model to forecast sales in January and February 1994.</p>
+<div id="cell-103" class="cell" data-execution_count="47">
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a>model.predict(valid_df)[:<span class="dv">2</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="47">
+<pre><code>Date
+1994-01-01     918.881868
+1994-02-01    1269.596154
+dtype: float64</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="solution-17.8.c" class="level2">
+<h2 class="anchored" data-anchor-id="solution-17.8.c">Solution 17.8.c</h2>
+<p>Create an ACF plot for the residuals from the above model until lag 12.</p>
+<div id="cell-105" class="cell" data-execution_count="48">
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a>tsaplots.plot_acf(model.resid, lags<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Ch-17-ProbSolutions-RF_files/figure-html/cell-49-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Examining this plot (only), which of the following statements are reasonable conclusions?</p>
+<ul>
+<li><p>Decembers (month 12) are not captured well by the model.</p></li>
+<li><p>There is a strong correlation between sales on the same calendar month.</p></li>
+<li><p>The model does not capture the seasonality well.</p></li>
+<li><p>We should try to fit an autoregressive model with lag 12 to the residuals.</p></li>
+<li><p>Decembers (month 12) are not captured well by the model - NO (don’t forget, the “12” in the ACF plot refers to lag of 12 months, not to December!)</p></li>
+<li><p>There is a strong correlation between sales on the same calendar month - YES (this is what the high coefficient for lag 12 means</p></li>
+<li><p>The model does not capture the seasonality well - YES (this follows from the above)</p></li>
+<li><p>We should try to fit an autoregressive model with lag 12 to the residuals - YES</p></li>
+</ul>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

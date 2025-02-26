@@ -1,0 +1,2402 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.40">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Chapter 14: Association Rules and Collaborative Filtering – Chad’s Course Portfolio</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../../../../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../../../../">
+<script src="../../../../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../../../../site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../../../../site_libs/bootstrap/bootstrap-6bd9cfa162949bde0a231f530c97869d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+<link rel="stylesheet" href="../../../../../../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../../../../../index.html">
+    <span class="navbar-title">Chad’s Course Portfolio</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../../../Course/GE2021/03_Lecture_Note/LectureNote_Chad/PPT/chapter0/chapter0.html"> 
+<span class="menu-text">test</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#problem-14.1-satellite-radio-customers" id="toc-problem-14.1-satellite-radio-customers" class="nav-link active" data-scroll-target="#problem-14.1-satellite-radio-customers">Problem 14.1: Satellite Radio Customers</a>
+  <ul class="collapse">
+  <li><a href="#solution-14.1" id="toc-solution-14.1" class="nav-link" data-scroll-target="#solution-14.1">Solution 14.1</a></li>
+  </ul></li>
+  <li><a href="#problem-14.2-identifying-course-combinations" id="toc-problem-14.2-identifying-course-combinations" class="nav-link" data-scroll-target="#problem-14.2-identifying-course-combinations">Problem 14.2: Identifying Course Combinations</a>
+  <ul class="collapse">
+  <li><a href="#solution-14.2" id="toc-solution-14.2" class="nav-link" data-scroll-target="#solution-14.2">Solution 14.2</a></li>
+  </ul></li>
+  <li><a href="#problem-14.3-recommending-courses" id="toc-problem-14.3-recommending-courses" class="nav-link" data-scroll-target="#problem-14.3-recommending-courses">Problem 14.3: Recommending Courses</a>
+  <ul class="collapse">
+  <li><a href="#solution-14.3" id="toc-solution-14.3" class="nav-link" data-scroll-target="#solution-14.3">Solution 14.3</a></li>
+  </ul></li>
+  <li><a href="#problem-14.4-cosmetics-purchases" id="toc-problem-14.4-cosmetics-purchases" class="nav-link" data-scroll-target="#problem-14.4-cosmetics-purchases">Problem 14.4: Cosmetics Purchases</a>
+  <ul class="collapse">
+  <li><a href="#solution-14.4.a" id="toc-solution-14.4.a" class="nav-link" data-scroll-target="#solution-14.4.a">Solution 14.4.a</a></li>
+  <li><a href="#solution-14.4.b" id="toc-solution-14.4.b" class="nav-link" data-scroll-target="#solution-14.4.b">Solution 14.4.b</a>
+  <ul class="collapse">
+  <li><a href="#solution-14.4.b.i" id="toc-solution-14.4.b.i" class="nav-link" data-scroll-target="#solution-14.4.b.i">Solution 14.4.b.i</a></li>
+  <li><a href="#solution-14.4.b.ii" id="toc-solution-14.4.b.ii" class="nav-link" data-scroll-target="#solution-14.4.b.ii">Solution 14.4.b.ii</a></li>
+  <li><a href="#solution-14.4.b.iii" id="toc-solution-14.4.b.iii" class="nav-link" data-scroll-target="#solution-14.4.b.iii">Solution 14.4.b.iii</a></li>
+  <li><a href="#solution-14.4.b.iv" id="toc-solution-14.4.b.iv" class="nav-link" data-scroll-target="#solution-14.4.b.iv">Solution 14.4.b.iv</a></li>
+  </ul></li>
+  <li><a href="#solution-14.4.c" id="toc-solution-14.4.c" class="nav-link" data-scroll-target="#solution-14.4.c">Solution 14.4.c</a>
+  <ul class="collapse">
+  <li><a href="#solution-14.4.c.i" id="toc-solution-14.4.c.i" class="nav-link" data-scroll-target="#solution-14.4.c.i">Solution 14.4.c.i</a></li>
+  <li><a href="#solution-14.4.c.ii" id="toc-solution-14.4.c.ii" class="nav-link" data-scroll-target="#solution-14.4.c.ii">Solution 14.4.c.ii</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#problem-14.5-course-ratings" id="toc-problem-14.5-course-ratings" class="nav-link" data-scroll-target="#problem-14.5-course-ratings">Problem 14.5: Course ratings</a>
+  <ul class="collapse">
+  <li><a href="#solution-14.5.a" id="toc-solution-14.5.a" class="nav-link" data-scroll-target="#solution-14.5.a">Solution 14.5.a</a></li>
+  <li><a href="#solution-14.5.b" id="toc-solution-14.5.b" class="nav-link" data-scroll-target="#solution-14.5.b">Solution 14.5.b</a></li>
+  <li><a href="#solution-14.5.c" id="toc-solution-14.5.c" class="nav-link" data-scroll-target="#solution-14.5.c">Solution 14.5.c</a></li>
+  <li><a href="#solution-14.5.d" id="toc-solution-14.5.d" class="nav-link" data-scroll-target="#solution-14.5.d">Solution 14.5.d</a></li>
+  <li><a href="#solution-14.5.e" id="toc-solution-14.5.e" class="nav-link" data-scroll-target="#solution-14.5.e">Solution 14.5.e</a></li>
+  <li><a href="#solution-14.5.f" id="toc-solution-14.5.f" class="nav-link" data-scroll-target="#solution-14.5.f">Solution 14.5.f</a>
+  <ul class="collapse">
+  <li><a href="#solution-14.5.f.i" id="toc-solution-14.5.f.i" class="nav-link" data-scroll-target="#solution-14.5.f.i">Solution 14.5.f.i</a></li>
+  <li><a href="#solution-14.5.f.ii" id="toc-solution-14.5.f.ii" class="nav-link" data-scroll-target="#solution-14.5.f.ii">Solution 14.5.f.ii</a></li>
+  </ul></li>
+  <li><a href="#solution-14.5.g" id="toc-solution-14.5.g" class="nav-link" data-scroll-target="#solution-14.5.g">Solution 14.5.g</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Chapter 14: Association Rules and Collaborative Filtering</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<blockquote class="blockquote">
+<ol start="3" type="a">
+<li>2019-2020 Galit Shmueli, Peter C. Bruce, Peter Gedeck</li>
+</ol>
+<p><em>Data Mining for Business Analytics: Concepts, Techniques, and Applications in Python</em> (First Edition) Galit Shmueli, Peter C. Bruce, Peter Gedeck, and Nitin R. Patel. 2019.</p>
+<p>Date: 2020-03-08</p>
+<p>Python Version: 3.8.2 Jupyter Notebook Version: 5.6.1</p>
+<p>Packages: - mlxtend: 0.17.2 - numpy: 1.18.1 - pandas: 1.0.1 - scipy: 1.4.1 - scikit-learn: 0.22.2 - scikit-surprise: 1.1.0</p>
+<p>The assistance from Mr.&nbsp;Kuber Deokar and Ms.&nbsp;Anuja Kulkarni in preparing these solutions is gratefully acknowledged.</p>
+</blockquote>
+<div id="cell-3" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import required packages for this chapter</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.spatial.distance <span class="im">import</span> cosine</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mlxtend.frequent_patterns <span class="im">import</span> apriori</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mlxtend.frequent_patterns <span class="im">import</span> association_rules</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics.pairwise <span class="im">import</span> cosine_similarity</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> surprise <span class="im">import</span> Dataset</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> surprise <span class="im">import</span> Reader</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> surprise <span class="im">import</span> KNNBasic</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>matplotlib inline</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-4" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Working directory:</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># We assume that data are kept in the same directory as the notebook. If you keep your </span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># data in a different folder, replace the argument of the `Path`</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>DATA <span class="op">=</span> Path(<span class="st">'.'</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co"># and then load data using </span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co"># pd.read_csv(DATA / ‘filename.csv’)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="problem-14.1-satellite-radio-customers" class="level1">
+<h1>Problem 14.1: Satellite Radio Customers</h1>
+<p>An analyst at a subscription-based satellite radio company has been given a sample of data from their customer database, with the goal of finding groups of customers who are associated with one another. The data consist of company data, together with purchased demographic data that are mapped to the company data (see Table). The analyst decides to apply association rules to learn more about the associations between customers. Comment on this approach.</p>
+<section id="solution-14.1" class="level2">
+<h2 class="anchored" data-anchor-id="solution-14.1">Solution 14.1</h2>
+<p>Association rules is not the correct approach. It determines associations among items listed in the columns (demographic and other descriptor variables in this database), not associations between rows (customers in this database). Cluster analysis would be more appropriate.</p>
+</section>
+</section>
+<section id="problem-14.2-identifying-course-combinations" class="level1">
+<h1>Problem 14.2: Identifying Course Combinations</h1>
+<p>The Institute for Statistics Education at Statistics.com offers online courses in statistics and analytics, and is seeking information that will help in packaging and sequencing courses. Consider the data in the file <em>CourseTopics.csv</em>, the first few rows of which are shown in the Table. These data are for purchases of online statistics courses at Statistics.com. Each row represents the courses attended by a single customer. The firm wishes to assess alternative sequencings and bundling of courses. Use association rules to analyze these data, and interpret several of the resulting rules.</p>
+<div id="cell-8" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(DATA <span class="op">/</span> <span class="st">'CourseTopics.csv'</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="3">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Intro</th>
+<th data-quarto-table-cell-role="th">DataMining</th>
+<th data-quarto-table-cell-role="th">Survey</th>
+<th data-quarto-table-cell-role="th">Cat Data</th>
+<th data-quarto-table-cell-role="th">Regression</th>
+<th data-quarto-table-cell-role="th">Forecast</th>
+<th data-quarto-table-cell-role="th">DOE</th>
+<th data-quarto-table-cell-role="th">SW</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<section id="solution-14.2" class="level2">
+<h2 class="anchored" data-anchor-id="solution-14.2">Solution 14.2</h2>
+<div id="cell-10" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create frequent itemsets</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>itemsets <span class="op">=</span> apriori(df, min_support<span class="op">=</span><span class="fl">0.01</span>, use_colnames<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># and convert into rules</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>rules <span class="op">=</span> association_rules(itemsets, metric<span class="op">=</span><span class="st">'confidence'</span>, min_threshold<span class="op">=</span><span class="fl">0.1</span>)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>rules.sort_values(by<span class="op">=</span>[<span class="st">'lift'</span>], ascending<span class="op">=</span><span class="va">False</span>).head(<span class="dv">6</span>)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(rules.sort_values(by<span class="op">=</span>[<span class="st">'lift'</span>], ascending<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>      .drop(columns<span class="op">=</span>[<span class="st">'antecedent support'</span>, <span class="st">'consequent support'</span>, <span class="st">'conviction'</span>])</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>      .head(<span class="dv">6</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                antecedents             consequents   support  confidence  \
+316            (Intro, DOE)        (SW, Regression)  0.019178    0.411765   
+321        (SW, Regression)            (Intro, DOE)  0.019178    0.350000   
+319       (Regression, DOE)             (Intro, SW)  0.019178    0.636364   
+318             (Intro, SW)       (Regression, DOE)  0.019178    0.200000   
+249     (Intro, DataMining)  (Forecast, Regression)  0.013699    0.250000   
+248  (Forecast, Regression)     (Intro, DataMining)  0.013699    0.357143   
+
+         lift  leverage  
+316  7.514706  0.016626  
+321  7.514706  0.016626  
+319  6.636364  0.016288  
+318  6.636364  0.016288  
+249  6.517857  0.011597  
+248  6.517857  0.011597  </code></pre>
+</div>
+</div>
+<div id="cell-11" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># filter rules to have only one consequent</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>single_rules <span class="op">=</span> rules[[<span class="bu">len</span>(c) <span class="op">==</span> <span class="dv">1</span> <span class="cf">for</span> c <span class="kw">in</span> rules.consequents]]</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>(single_rules.sort_values(by<span class="op">=</span>[<span class="st">'lift'</span>], ascending<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>      .drop(columns<span class="op">=</span>[<span class="st">'antecedent support'</span>, <span class="st">'consequent support'</span>, <span class="st">'conviction'</span>])</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>      .head(<span class="dv">6</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">antecedents</th>
+<th data-quarto-table-cell-role="th">consequents</th>
+<th data-quarto-table-cell-role="th">support</th>
+<th data-quarto-table-cell-role="th">confidence</th>
+<th data-quarto-table-cell-role="th">lift</th>
+<th data-quarto-table-cell-role="th">leverage</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">243</td>
+<td>(Forecast, Intro, Regression)</td>
+<td>(DataMining)</td>
+<td>0.013699</td>
+<td>0.714286</td>
+<td>4.010989</td>
+<td>0.010283</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">262</td>
+<td>(Intro, Survey, DOE)</td>
+<td>(Cat Data)</td>
+<td>0.010959</td>
+<td>0.800000</td>
+<td>3.842105</td>
+<td>0.008107</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">233</td>
+<td>(Intro, DataMining, Cat Data)</td>
+<td>(Regression)</td>
+<td>0.016438</td>
+<td>0.750000</td>
+<td>3.601974</td>
+<td>0.011875</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">255</td>
+<td>(Intro, Survey, Cat Data)</td>
+<td>(Forecast)</td>
+<td>0.013699</td>
+<td>0.500000</td>
+<td>3.578431</td>
+<td>0.009871</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">245</td>
+<td>(Intro, DataMining, Regression)</td>
+<td>(Forecast)</td>
+<td>0.013699</td>
+<td>0.500000</td>
+<td>3.578431</td>
+<td>0.009871</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">312</td>
+<td>(Intro, Regression, DOE)</td>
+<td>(SW)</td>
+<td>0.019178</td>
+<td>0.777778</td>
+<td>3.504801</td>
+<td>0.013706</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>Interpreting some rules:</p>
+<ul>
+<li>The first rule is “If Intro, Regression and Forecasting are taken, Data Mining is also taken.” It has confidence of 71.4%, and a lift of 4.</li>
+<li>The second rule is “If Intro, Survey and DOE are taken, Categorical Data is also taken.” It has confidence of 80% and lift of 3.84.</li>
+</ul>
+<p>The support (a U c) for all rules is very low. under 4%. This means that the applicability of these rules is not great, and also that the chances are greater that we are not picking up true associations that will persist into the future – just random noise.</p>
+</section>
+</section>
+<section id="problem-14.3-recommending-courses" class="level1">
+<h1>Problem 14.3: Recommending Courses</h1>
+<p>We again consider the data in <em>CourseTopics.csv</em> describing course purchases at Statistics.com (see Problem 14.2 and data sample in Table). We want to provide a course recommendation to a student who purchased the Regression and Forecast courses. Apply user-based collaborative filtering to the data. All recommendations will be 1. Explain why this happens.</p>
+<section id="solution-14.3" class="level2">
+<h2 class="anchored" data-anchor-id="solution-14.3">Solution 14.3</h2>
+<div id="cell-15" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>course_df <span class="op">=</span> pd.read_csv(DATA <span class="op">/</span> <span class="st">'Coursetopics.csv'</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>course_df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="6">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Intro</th>
+<th data-quarto-table-cell-role="th">DataMining</th>
+<th data-quarto-table-cell-role="th">Survey</th>
+<th data-quarto-table-cell-role="th">Cat Data</th>
+<th data-quarto-table-cell-role="th">Regression</th>
+<th data-quarto-table-cell-role="th">Forecast</th>
+<th data-quarto-table-cell-role="th">DOE</th>
+<th data-quarto-table-cell-role="th">SW</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="cell-16" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>ratings <span class="op">=</span> []</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> customer, row <span class="kw">in</span> course_df.iterrows():</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> course, value <span class="kw">in</span> row.iteritems():</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> value<span class="op">==</span><span class="dv">0</span>: <span class="cf">continue</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>        ratings.append([customer, course, value])</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>ratings <span class="op">=</span> pd.DataFrame(ratings, columns<span class="op">=</span>[<span class="st">'customer'</span>, <span class="st">'course'</span>, <span class="st">'rating'</span>])</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>reader <span class="op">=</span> Reader(rating_scale<span class="op">=</span>(<span class="dv">1</span>, <span class="dv">1</span>))</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> Dataset.load_from_df(ratings, reader)</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>trainset <span class="op">=</span> data.build_full_trainset()</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>sim_options <span class="op">=</span> {<span class="st">'name'</span>: <span class="st">'cosine'</span>, <span class="st">'user_based'</span>: <span class="va">False</span>}  <span class="co"># compute cosine similarities between users</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>algo <span class="op">=</span> KNNBasic(sim_options<span class="op">=</span>sim_options)</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>algo.fit(trainset)</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>predictions <span class="op">=</span> []</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> user <span class="kw">in</span> course_df.index:</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>    predictions.append([algo.predict(user, course).est <span class="cf">for</span> course <span class="kw">in</span> course_df])</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>predictions <span class="op">=</span> pd.DataFrame(predictions, columns<span class="op">=</span>course_df.columns)</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>predictions.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Computing the cosine similarity matrix...
+Done computing similarity matrix.</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="7">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Intro</th>
+<th data-quarto-table-cell-role="th">DataMining</th>
+<th data-quarto-table-cell-role="th">Survey</th>
+<th data-quarto-table-cell-role="th">Cat Data</th>
+<th data-quarto-table-cell-role="th">Regression</th>
+<th data-quarto-table-cell-role="th">Forecast</th>
+<th data-quarto-table-cell-role="th">DOE</th>
+<th data-quarto-table-cell-role="th">SW</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>The resulting predictions are all 1. This is because the input is not a rating matrix but a binary one.</p>
+</section>
+</section>
+<section id="problem-14.4-cosmetics-purchases" class="level1">
+<h1>Problem 14.4: Cosmetics Purchases</h1>
+<p>The data and rules shown in the book are based on a subset of a dataset on cosmetic purchases (<em>Cosmetics.csv</em>) at a large chain drugstore. The store wants to analyze associations among purchases of these items for purposes of point-of-sale display, guidance to sales personnel in promoting cross-sales, and guidance for piloting an eventual time-of-purchase electronic recommender system to boost cross-sales. Consider first only the data shown in Table, given in binary matrix form.</p>
+<div id="cell-19" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>cosmetics_df <span class="op">=</span> pd.read_csv(DATA <span class="op">/</span> <span class="st">'Cosmetics.csv'</span>, index_col<span class="op">=</span><span class="st">'Trans. '</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>cosmetics_df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="8">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Bag</th>
+<th data-quarto-table-cell-role="th">Blush</th>
+<th data-quarto-table-cell-role="th">Nail Polish</th>
+<th data-quarto-table-cell-role="th">Brushes</th>
+<th data-quarto-table-cell-role="th">Concealer</th>
+<th data-quarto-table-cell-role="th">Eyebrow Pencils</th>
+<th data-quarto-table-cell-role="th">Bronzer</th>
+<th data-quarto-table-cell-role="th">Lip liner</th>
+<th data-quarto-table-cell-role="th">Mascara</th>
+<th data-quarto-table-cell-role="th">Eye shadow</th>
+<th data-quarto-table-cell-role="th">Foundation</th>
+<th data-quarto-table-cell-role="th">Lip Gloss</th>
+<th data-quarto-table-cell-role="th">Lipstick</th>
+<th data-quarto-table-cell-role="th">Eyeliner</th>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">Trans.</th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">1</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">3</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">4</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">5</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<section id="solution-14.4.a" class="level2">
+<h2 class="anchored" data-anchor-id="solution-14.4.a">Solution 14.4.a</h2>
+<p>Select several values in the matrix and explain their meaning.</p>
+<p>The “0” in the first row, first column under “bag” indicates that, in the first transaction (i.e.&nbsp;the first row), no bag was purchased. The “1” to its right indicates that blush was purchased in that first transaction.</p>
+</section>
+<section id="solution-14.4.b" class="level2">
+<h2 class="anchored" data-anchor-id="solution-14.4.b">Solution 14.4.b</h2>
+<p>Consider the results of the association rules analysis shown in the book.</p>
+<section id="solution-14.4.b.i" class="level3">
+<h3 class="anchored" data-anchor-id="solution-14.4.b.i">Solution 14.4.b.i</h3>
+<p>For the first row, explain the <code>confidence</code> output and how it is calculated.</p>
+<p>If Blush, Concealer, Mascara, Eye.shadow, Lipstick were purchased, 30% of the time Eyebrow.Pencils were also purchased. The calculation is:</p>
+<blockquote class="blockquote">
+<p>100 * (# transactions with Blush + Concealer + Mascara + Eye.shadow + Lipstick) / (# transactions with Eyebrow.Pencils)</p>
+</blockquote>
+</section>
+<section id="solution-14.4.b.ii" class="level3">
+<h3 class="anchored" data-anchor-id="solution-14.4.b.ii">Solution 14.4.b.ii</h3>
+<p>For the first row, explain the <code>support</code> output and how it is calculated.</p>
+<p>The Support of 0.013 means there were 13 transactions in which &gt; Blush + Concealer + Mascara + Eye.shadow + Lipstick + Eyebrow.Pencils</p>
+<p>were purchased.</p>
+</section>
+<section id="solution-14.4.b.iii" class="level3">
+<h3 class="anchored" data-anchor-id="solution-14.4.b.iii">Solution 14.4.b.iii</h3>
+<p>For the first row, explain the <code>lift</code> and how it is calculated.</p>
+<p>Lift Ratio = 7.19 means we are 7.19 times more likely to find a transaction with Eyebrow.Pencils IF we look only in those transactions where &gt; Blush + Concealer + Mascara + Eye.shadow + Lipstick</p>
+<p>are purchased, compared to searching randomly in all transactions. The calculation:</p>
+<blockquote class="blockquote">
+<p>((# trans with Eyebrow.Pencils + Blush + Concealer + Mascara + Eye.shadow + Lipstick)/ (# trans with Blush + Concealer + Mascara + Eye.shadow + Lipstick)) / ((# trans with Eyebrow.Pencils) / (all transactions))</p>
+</blockquote>
+</section>
+<section id="solution-14.4.b.iv" class="level3">
+<h3 class="anchored" data-anchor-id="solution-14.4.b.iv">Solution 14.4.b.iv</h3>
+<p>For the first row, explain the rule that is represented there in words.</p>
+<p>The rule is “If a transaction includes Blush + Concealer + Mascara + Eye.shadow + Lipstick, it will also include Eyebrow.Pencils.”</p>
+<p>If we are searching for transactions with Eyebrow.Pencils, limiting our search to transactions with Blush + Concealer + Mascara + Eye.shadow + Lipstick will increase our probability of success by a factor of 7.19.</p>
+</section>
+</section>
+<section id="solution-14.4.c" class="level2">
+<h2 class="anchored" data-anchor-id="solution-14.4.c">Solution 14.4.c</h2>
+<p>Now, use the complete dataset on the cosmetics purchases (in the file <em>Cosmetics.csv</em>). Using Python, apply association rules to these data (for <em>apriori</em> use <code>min_support=0.1</code> and <code>use_colnames=True</code>, for <em>association_rules</em> use default parameters).</p>
+<div id="cell-21" class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>frequentItemsets <span class="op">=</span> apriori(cosmetics_df, min_support<span class="op">=</span><span class="fl">0.1</span>, use_colnames<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>rules <span class="op">=</span> association_rules(frequentItemsets)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>(rules.sort_values(by<span class="op">=</span>[<span class="st">'lift'</span>], ascending<span class="op">=</span><span class="va">False</span>).head(<span class="dv">20</span>)</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>     .drop(columns<span class="op">=</span>[<span class="st">'antecedent support'</span>, <span class="st">'consequent support'</span>, <span class="st">'conviction'</span>]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="9">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">antecedents</th>
+<th data-quarto-table-cell-role="th">consequents</th>
+<th data-quarto-table-cell-role="th">support</th>
+<th data-quarto-table-cell-role="th">confidence</th>
+<th data-quarto-table-cell-role="th">lift</th>
+<th data-quarto-table-cell-role="th">leverage</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>(Brushes)</td>
+<td>(Nail Polish)</td>
+<td>0.149</td>
+<td>1.000000</td>
+<td>3.571429</td>
+<td>0.107280</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">21</td>
+<td>(Concealer, Eye shadow, Blush)</td>
+<td>(Mascara)</td>
+<td>0.119</td>
+<td>0.959677</td>
+<td>2.688172</td>
+<td>0.074732</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>(Eye shadow, Blush)</td>
+<td>(Mascara)</td>
+<td>0.169</td>
+<td>0.928571</td>
+<td>2.601040</td>
+<td>0.104026</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">6</td>
+<td>(Eye shadow, Nail Polish)</td>
+<td>(Mascara)</td>
+<td>0.119</td>
+<td>0.908397</td>
+<td>2.544529</td>
+<td>0.072233</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">11</td>
+<td>(Eye shadow, Concealer)</td>
+<td>(Mascara)</td>
+<td>0.179</td>
+<td>0.890547</td>
+<td>2.494530</td>
+<td>0.107243</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">13</td>
+<td>(Eye shadow, Bronzer)</td>
+<td>(Mascara)</td>
+<td>0.124</td>
+<td>0.879433</td>
+<td>2.463397</td>
+<td>0.073663</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">23</td>
+<td>(Eye shadow, Concealer, Eyeliner)</td>
+<td>(Mascara)</td>
+<td>0.114</td>
+<td>0.876923</td>
+<td>2.456367</td>
+<td>0.067590</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>(Mascara, Blush)</td>
+<td>(Eye shadow)</td>
+<td>0.169</td>
+<td>0.918478</td>
+<td>2.410704</td>
+<td>0.098896</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">17</td>
+<td>(Lipstick, Eye shadow)</td>
+<td>(Mascara)</td>
+<td>0.110</td>
+<td>0.852713</td>
+<td>2.388552</td>
+<td>0.063947</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">18</td>
+<td>(Lipstick, Mascara)</td>
+<td>(Eye shadow)</td>
+<td>0.110</td>
+<td>0.909091</td>
+<td>2.386065</td>
+<td>0.063899</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">22</td>
+<td>(Concealer, Mascara, Blush)</td>
+<td>(Eye shadow)</td>
+<td>0.119</td>
+<td>0.908397</td>
+<td>2.384244</td>
+<td>0.069089</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">14</td>
+<td>(Bronzer, Mascara)</td>
+<td>(Eye shadow)</td>
+<td>0.124</td>
+<td>0.905109</td>
+<td>2.375615</td>
+<td>0.071803</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">1</td>
+<td>(Eye shadow)</td>
+<td>(Mascara)</td>
+<td>0.321</td>
+<td>0.842520</td>
+<td>2.359999</td>
+<td>0.184983</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2</td>
+<td>(Mascara)</td>
+<td>(Eye shadow)</td>
+<td>0.321</td>
+<td>0.899160</td>
+<td>2.359999</td>
+<td>0.184983</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">7</td>
+<td>(Nail Polish, Mascara)</td>
+<td>(Eye shadow)</td>
+<td>0.119</td>
+<td>0.888060</td>
+<td>2.330865</td>
+<td>0.067946</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">19</td>
+<td>(Eye shadow, Eyeliner)</td>
+<td>(Mascara)</td>
+<td>0.151</td>
+<td>0.829670</td>
+<td>2.324007</td>
+<td>0.086026</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">12</td>
+<td>(Concealer, Mascara)</td>
+<td>(Eye shadow)</td>
+<td>0.179</td>
+<td>0.877451</td>
+<td>2.303021</td>
+<td>0.101276</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">16</td>
+<td>(Mascara, Lip Gloss)</td>
+<td>(Eye shadow)</td>
+<td>0.158</td>
+<td>0.872928</td>
+<td>2.291150</td>
+<td>0.089039</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">15</td>
+<td>(Mascara, Foundation)</td>
+<td>(Eye shadow)</td>
+<td>0.166</td>
+<td>0.864583</td>
+<td>2.269248</td>
+<td>0.092848</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">20</td>
+<td>(Mascara, Eyeliner)</td>
+<td>(Eye shadow)</td>
+<td>0.151</td>
+<td>0.862857</td>
+<td>2.264717</td>
+<td>0.084325</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<section id="solution-14.4.c.i" class="level3">
+<h3 class="anchored" data-anchor-id="solution-14.4.c.i">Solution 14.4.c.i</h3>
+<p>Interpret the first three rules in the output in words.</p>
+<div id="cell-23" class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>(rules.sort_values(by<span class="op">=</span>[<span class="st">'lift'</span>], ascending<span class="op">=</span><span class="va">False</span>).head(<span class="dv">3</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>     .drop(columns<span class="op">=</span>[<span class="st">'antecedent support'</span>, <span class="st">'consequent support'</span>, <span class="st">'conviction'</span>]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="10">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">antecedents</th>
+<th data-quarto-table-cell-role="th">consequents</th>
+<th data-quarto-table-cell-role="th">support</th>
+<th data-quarto-table-cell-role="th">confidence</th>
+<th data-quarto-table-cell-role="th">lift</th>
+<th data-quarto-table-cell-role="th">leverage</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>(Brushes)</td>
+<td>(Nail Polish)</td>
+<td>0.149</td>
+<td>1.000000</td>
+<td>3.571429</td>
+<td>0.107280</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">21</td>
+<td>(Concealer, Eye shadow, Blush)</td>
+<td>(Mascara)</td>
+<td>0.119</td>
+<td>0.959677</td>
+<td>2.688172</td>
+<td>0.074732</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>(Eye shadow, Blush)</td>
+<td>(Mascara)</td>
+<td>0.169</td>
+<td>0.928571</td>
+<td>2.601040</td>
+<td>0.104026</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<ul>
+<li><p>First row: If brushes are purchased, nail polish is purchased. This rule has 100% confidence – purchasing a brush guarantees purchase of nail polish. It has lift of 3.6, and support of about 15% (149 transactions out of 1000) for the two items together.</p></li>
+<li><p>Second row: if nail Blush, Concealer and Eye.shadow are purchased, Mascara is purchased. This rule has confidence of 96% – if Blush, Concealer and Eye.shadow are purchased, Mascara is 96% likely to be purchased as well. It has lift of 3.571, and support of about 12%.</p></li>
+<li><p>Third row: If Blush and Eye.shadow are purchased, Mascara is also purchased. This rule has confidence of 93%, lift of 2.6, and support of about 17%.</p></li>
+</ul>
+</section>
+<section id="solution-14.4.c.ii" class="level3">
+<h3 class="anchored" data-anchor-id="solution-14.4.c.ii">Solution 14.4.c.ii</h3>
+<p>Reviewing the first couple of dozen rules, comment on their redundancy and how you would assess their utility.</p>
+<p>First, a note about utility. From a static retail presentation perspective (buy X together with Y), the shopper’s attention can probably only handle a couple of rules. Coupon and web offer generating systems have no such limit, because, while one or two offers are presented to a give customer at a given time, other customers, and this customer at a different time may receive different offers.</p>
+<p>Many rules come in pairs that are mirror images of one another, so we can tackle them that way.</p>
+<p>The first rule is certain so no need to make an offer.</p>
+<p>All remaining rules involve mascara, mostly as a consequent. Mascara is a good bet as a companion product in general – say for a retail display.</p>
+<p>Rules 2-10 could be consolidated into a general offer covering the 5 products that keep reappearing in these “multi-item” rules: eyeliner, mascara, concealer, eyeshadow, and blush. These seem to be the favorites of big spenders, so a “buy 3, 50% off on two others” or something similar might work.</p>
+</section>
+</section>
+</section>
+<section id="problem-14.5-course-ratings" class="level1">
+<h1>Problem 14.5: Course ratings</h1>
+<p>The Institute for Statistics Education at Statistics.com asks students to rate a variety of aspects of a course as soon as the student completes it. The Institute is contemplating instituting a recommendation system that would provide students with recommendations for additional courses as soon as they submit their rating for a completed course. Consider the excerpt from student ratings of online statistics courses shown in Table 14.7, and the problem of what to recommend to student E.N.</p>
+<div id="cell-26" class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>rating_df <span class="op">=</span> pd.read_csv(DATA <span class="op">/</span> <span class="st">'courserating.csv'</span>)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>rating_df <span class="op">=</span> rating_df.set_index(<span class="st">'Unnamed: 0'</span>)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>rating_df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="11">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">SQL</th>
+<th data-quarto-table-cell-role="th">Spatial</th>
+<th data-quarto-table-cell-role="th">PA1</th>
+<th data-quarto-table-cell-role="th">DM in R</th>
+<th data-quarto-table-cell-role="th">Python</th>
+<th data-quarto-table-cell-role="th">Forecast</th>
+<th data-quarto-table-cell-role="th">R Prog</th>
+<th data-quarto-table-cell-role="th">Hadoop</th>
+<th data-quarto-table-cell-role="th">Regression</th>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">Unnamed: 0</th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">LN</td>
+<td>4.0</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>3.0</td>
+<td>2.0</td>
+<td>4.0</td>
+<td>NaN</td>
+<td>2.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">MH</td>
+<td>3.0</td>
+<td>4.0</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>4.0</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">JH</td>
+<td>2.0</td>
+<td>2.0</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">EN</td>
+<td>4.0</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>4.0</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>4.0</td>
+<td>NaN</td>
+<td>3.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">DU</td>
+<td>4.0</td>
+<td>4.0</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">FL</td>
+<td>NaN</td>
+<td>4.0</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">GL</td>
+<td>NaN</td>
+<td>4.0</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">AH</td>
+<td>NaN</td>
+<td>3.0</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">SA</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>4.0</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">RW</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>2.0</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>4.0</td>
+<td>NaN</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">BA</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>4.0</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">MG</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>4.0</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>4.0</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">AF</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>4.0</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">KG</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>3.0</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">DS</td>
+<td>4.0</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>2.0</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>4.0</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<section id="solution-14.5.a" class="level2">
+<h2 class="anchored" data-anchor-id="solution-14.5.a">Solution 14.5.a</h2>
+<p>First consider a user-based collaborative filter. This requires computing correlations between all student pairs. For which students is it possible to compute correlations with E.N.? Compute them.</p>
+<p>We need to identify the users that share ratings with E.N. These are: L.N., M.H., J.H., D.U., and D.S. However, only L.N. and D.S. share more than one rating with E.N.</p>
+<p>To compute this correlation, we first compute average rating by each of these students. Note that the average is computed over a different number of courses for each of these students, because they each rated a different set of courses.</p>
+<p>Average ratings:</p>
+<ul>
+<li>LN: (4 + 3 + 2 + 4 + 2) / 5 = 3</li>
+<li>EN: (4 + 4 + 4 + 3) / 4 = 3.75</li>
+<li>DS: (4 + 2 + 4) / 3 = 3.33</li>
+</ul>
+<p>Co-rated courses for users EN and LN: SQL, R Prog, Regression.</p>
+<ul>
+<li>Denominator LN: sqrt((4-3)^2 + (4-3)^2 + (2-3)^2) = 1.732051</li>
+<li>Denominator EN: sqrt((4-3.75)^2 + (4-3.75)^2 + (3-3.75)^2) = 0.8291562</li>
+</ul>
+<p><strong>Corr(LN, EN) = ((4-3)<em>(4-3.75) + (4-3)</em>(4-3.75) + (2-3)<em>(3-3.75)) / (1.732051 </em> 0.8291562) = 0.8703882</strong></p>
+<p>Co-rated courses for users EN and LN: SQL, DM in R, R Prog.</p>
+<ul>
+<li>Denominator EN: sqrt((4-3.75)^2 + (4-3.75)^2 + (4-3.75)^2) = 0.4330127</li>
+<li>Denominator DS: sqrt((4-3.33)^2 + (2-3.33)^2 + (4-3.33)^2) = 1.633003</li>
+</ul>
+<p><strong>Corr(EN, DS) = ((4-3.75)<em>(4-3.33) + (4-3.75)</em>(2-3.33) + (4-3.75)<em>(4-3.33)) / (0.4330127 </em> 1.633003) = 0.003535513</strong></p>
+</section>
+<section id="solution-14.5.b" class="level2">
+<h2 class="anchored" data-anchor-id="solution-14.5.b">Solution 14.5.b</h2>
+<p>Based on the single nearest student to E.N., which single course should we recommend to E.N.? Explain why.</p>
+<p>From the correlations computed in (a) above, student LN is nearest to EN. Among the courses that LN has taken (but not taken by EN), Python is highly preferred by LN. So Python should be recommended to EN.</p>
+</section>
+<section id="solution-14.5.c" class="level2">
+<h2 class="anchored" data-anchor-id="solution-14.5.c">Solution 14.5.c</h2>
+<p>Use <em>scikit-learn</em> function <code>sklearn.metrics.pairwise.cosine_similarity</code> to compute the cosine similarity between users.</p>
+<p>Co-rated courses for users EN and LN: SQL, R Prog, Regression.</p>
+<ul>
+<li>Denominator LN: sqrt(4^2 + 4^2 + 2^2) = 6</li>
+<li>Denominator EN: sqrt(4^2 + 4^2 + 3^2) = 6.403124</li>
+</ul>
+<p><strong>Cosine(LN, EN) = (4<em>4 + 4</em>4 + 2<em>3) / (6 </em> 6.403124) = 0.9891005</strong></p>
+<p>Co-rated courses for users EN and LN: SQL, DM in R, R Prog.</p>
+<ul>
+<li>Denominator EN: sqrt(4^2 + 4^2 + 4^2) = 6.928203</li>
+<li>Denominator DS: sqrt(4^2 + 2^2 + 4^2) = 6</li>
+</ul>
+<p><strong>Cosine(EN, DS) = (4<em>4 + 4</em>2 + 4<em>4) / (6.928203 </em> 6) = 0.9622505</strong></p>
+<div id="cell-29" class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'cosine(LN, EN) = '</span>,cosine_similarity(rating_df.loc[[<span class="st">'LN'</span>, <span class="st">'EN'</span>], [<span class="st">'SQL'</span>, <span class="st">'R Prog'</span>, <span class="st">'Regression'</span>]])[<span class="dv">0</span>, <span class="dv">1</span>])</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'cosine(EN, DS) = '</span>,cosine_similarity(rating_df.loc[[<span class="st">'EN'</span>, <span class="st">'DS'</span>], [<span class="st">'SQL'</span>, <span class="st">'DM in R'</span>, <span class="st">'R Prog'</span>]])[<span class="dv">0</span>, <span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>cosine(LN, EN) =  0.9891004919611718
+cosine(EN, DS) =  0.9622504486493764</code></pre>
+</div>
+</div>
+<p>Here is an implementation of cosine similarity that handles NaN data.</p>
+<div id="cell-31" class="cell" data-scrolled="false" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> cosine_similarity_NA(data):</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    m <span class="op">=</span> data.shape[<span class="dv">0</span>]</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Initialize the similarity matrix to np.nan</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    result <span class="op">=</span> np.full((m, m), np.nan)</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Iterate over all pairs of columns</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(m):</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>        <span class="co"># maski is true if a value exists in column i</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>        maski <span class="op">=</span> <span class="op">~</span>np.isnan(data.iloc[i])</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(i, m):</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>            <span class="co"># maskij is true if a value exists in both column i and j</span></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>            maskij <span class="op">=</span> maski <span class="op">&amp;</span> <span class="op">~</span>np.isnan(data.iloc[j])</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> np.<span class="bu">any</span>(maskij):</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>                <span class="co"># if there are values in both columns, calculate the cosine similarity</span></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>                <span class="co"># for these</span></span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>                result[i, j] <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> cosine(data.iloc[i][maskij], data.iloc[j][maskij])</span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>                result[j, i] <span class="op">=</span> result[i, j]</span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> pd.DataFrame(result, columns<span class="op">=</span>data.index, index<span class="op">=</span>data.index)</span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>cosineSimilarity <span class="op">=</span> cosine_similarity_NA(rating_df)</span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>cosineSimilarity</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="13">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th">Unnamed: 0</th>
+<th data-quarto-table-cell-role="th">LN</th>
+<th data-quarto-table-cell-role="th">MH</th>
+<th data-quarto-table-cell-role="th">JH</th>
+<th data-quarto-table-cell-role="th">EN</th>
+<th data-quarto-table-cell-role="th">DU</th>
+<th data-quarto-table-cell-role="th">FL</th>
+<th data-quarto-table-cell-role="th">GL</th>
+<th data-quarto-table-cell-role="th">AH</th>
+<th data-quarto-table-cell-role="th">SA</th>
+<th data-quarto-table-cell-role="th">RW</th>
+<th data-quarto-table-cell-role="th">BA</th>
+<th data-quarto-table-cell-role="th">MG</th>
+<th data-quarto-table-cell-role="th">AF</th>
+<th data-quarto-table-cell-role="th">KG</th>
+<th data-quarto-table-cell-role="th">DS</th>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">Unnamed: 0</th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">LN</td>
+<td>1.0000</td>
+<td>0.960000</td>
+<td>1.000000</td>
+<td>0.98910</td>
+<td>1.000000</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>1.0</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>1.00000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">MH</td>
+<td>0.9600</td>
+<td>1.000000</td>
+<td>0.989949</td>
+<td>1.00000</td>
+<td>0.989949</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>1.00000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">JH</td>
+<td>1.0000</td>
+<td>0.989949</td>
+<td>1.000000</td>
+<td>1.00000</td>
+<td>1.000000</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>1.00000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">EN</td>
+<td>0.9891</td>
+<td>1.000000</td>
+<td>1.000000</td>
+<td>1.00000</td>
+<td>1.000000</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>0.96225</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">DU</td>
+<td>1.0000</td>
+<td>0.989949</td>
+<td>1.000000</td>
+<td>1.00000</td>
+<td>1.000000</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>1.00000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">FL</td>
+<td>NaN</td>
+<td>1.000000</td>
+<td>1.000000</td>
+<td>NaN</td>
+<td>1.000000</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">GL</td>
+<td>NaN</td>
+<td>1.000000</td>
+<td>1.000000</td>
+<td>NaN</td>
+<td>1.000000</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">AH</td>
+<td>NaN</td>
+<td>1.000000</td>
+<td>1.000000</td>
+<td>NaN</td>
+<td>1.000000</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">SA</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">RW</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>NaN</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">BA</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">MG</td>
+<td>1.0000</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>NaN</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">AF</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">KG</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>NaN</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">DS</td>
+<td>1.0000</td>
+<td>1.000000</td>
+<td>1.000000</td>
+<td>0.96225</td>
+<td>1.000000</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>1.00000</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>We can also calculate the cosine similarity after converting the rating matrix into binary form (course taken or not). In this case, we get:</p>
+<div id="cell-33" class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>binary_df <span class="op">=</span> rating_df.copy()</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>binary_df[<span class="op">~</span>np.isnan(binary_df)] <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>binary_df[np.isnan(binary_df)] <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'cosine(LN, EN) = '</span>, cosine_similarity(binary_df)[<span class="dv">0</span>, <span class="dv">3</span>])</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'cosine(EN, DS) = '</span>, cosine_similarity(binary_df)[<span class="dv">3</span>, <span class="dv">14</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>cosine(LN, EN) =  0.6708203932499369
+cosine(EN, DS) =  0.8660254037844388</code></pre>
+</div>
+</div>
+</section>
+<section id="solution-14.5.d" class="level2">
+<h2 class="anchored" data-anchor-id="solution-14.5.d">Solution 14.5.d</h2>
+<p>Based on the cosine similarities of the nearest students to E.N., which course should be recommended to E.N.?</p>
+<p>From the cosine similarities based on course ratings, student LN is nearest to EN. Among the courses that LN has taken (but not taken by EN), Python is highly preferred by LN. So Python should be recommended to EN.</p>
+<p>If we use the binary matrix, student DS is more similar to EN based on courses taken. However, as DS hasn’t taken any courses other than the ones EN already took, we cannot make a recommendation in this case.</p>
+</section>
+<section id="solution-14.5.e" class="level2">
+<h2 class="anchored" data-anchor-id="solution-14.5.e">Solution 14.5.e</h2>
+<p>What is the conceptual difference between using the correlation as opposed to cosine similarities? [<em>Hint</em>: how are the missing values in the matrix handled in each case?]</p>
+<p>If we consider the rating matrix, both methods basically only consider co-rated items. Correlation uses the not co-rated items to calculate the averages which will impact the correlation.</p>
+<p>If we calculate the cosine-similarity after converting to a binary form, we use all items in the similarity calculation. Using the actual ratings only on co-rated items does not take into consideration items that are not co-rated, which may be useful information.</p>
+<p>Using the binary form, is more useful if not all items are rated by most users. On the other hand, if most items are rated by most users, using the actual ratings will add power to the analysis, compared to just using binary data.</p>
+</section>
+<section id="solution-14.5.f" class="level2">
+<h2 class="anchored" data-anchor-id="solution-14.5.f">Solution 14.5.f</h2>
+<p>With large datasets, it is computationally difficult to compute user-based recommendations in real time, and an item-based approach is used instead. Returning to the rating data (not the binary matrix), let’s now take that approach.</p>
+<section id="solution-14.5.f.i" class="level3">
+<h3 class="anchored" data-anchor-id="solution-14.5.f.i">Solution 14.5.f.i</h3>
+<p>If the goal is still to find a recommendation for E.N., for which course pairs is it possible and useful to calculate correlations?</p>
+<p>There is enough data to find correlations for the following pairs:<br>
+- SQL - Spatial<br>
+- SQL - DM in R<br>
+- SQL - Python<br>
+- DM in R - R Prog<br>
+- Spatial - Python</p>
+<p>However, EN has already taken SQL, DM in R, and R Prog. Hence, only the Spatial and Python correlations are useful.</p>
+</section>
+<section id="solution-14.5.f.ii" class="level3">
+<h3 class="anchored" data-anchor-id="solution-14.5.f.ii">Solution 14.5.f.ii</h3>
+<p>Just looking at the data, and without yet calculating course pair correlations, which course would you recommend to E.N., relying on item-based filtering? Calculate two course pair correlations involving your guess and report the results.</p>
+<p>The SQL - Spatial ratings match the best, and there are more co-rated items, so Spatial would be the best guess.</p>
+<div id="cell-36" class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(cosine_similarity(rating_df.loc[[<span class="st">'MH'</span>, <span class="st">'JH'</span>, <span class="st">'DU'</span>], [<span class="st">'SQL'</span>, <span class="st">'Spatial'</span>]].transpose()))</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>cosine_similarity_NA(rating_df.transpose())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1.         0.99037514]
+ [0.99037514 1.        ]]</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="15">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">SQL</th>
+<th data-quarto-table-cell-role="th">Spatial</th>
+<th data-quarto-table-cell-role="th">PA1</th>
+<th data-quarto-table-cell-role="th">DM in R</th>
+<th data-quarto-table-cell-role="th">Python</th>
+<th data-quarto-table-cell-role="th">Forecast</th>
+<th data-quarto-table-cell-role="th">R Prog</th>
+<th data-quarto-table-cell-role="th">Hadoop</th>
+<th data-quarto-table-cell-role="th">Regression</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">SQL</td>
+<td>1.000000</td>
+<td>0.990375</td>
+<td>NaN</td>
+<td>0.948683</td>
+<td>0.96</td>
+<td>1.0</td>
+<td>1.000000</td>
+<td>NaN</td>
+<td>0.980581</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Spatial</td>
+<td>0.990375</td>
+<td>1.000000</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>1.00</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">PA1</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>1.0</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>1.0</td>
+<td>NaN</td>
+<td>1.0</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">DM in R</td>
+<td>0.948683</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>1.000000</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>0.948683</td>
+<td>NaN</td>
+<td>1.000000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Python</td>
+<td>0.960000</td>
+<td>1.000000</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>1.00</td>
+<td>1.0</td>
+<td>1.000000</td>
+<td>NaN</td>
+<td>1.000000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Forecast</td>
+<td>1.000000</td>
+<td>NaN</td>
+<td>1.0</td>
+<td>NaN</td>
+<td>1.00</td>
+<td>1.0</td>
+<td>1.000000</td>
+<td>NaN</td>
+<td>1.000000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">R Prog</td>
+<td>1.000000</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>0.948683</td>
+<td>1.00</td>
+<td>1.0</td>
+<td>1.000000</td>
+<td>NaN</td>
+<td>0.980581</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Hadoop</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>1.0</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>1.0</td>
+<td>NaN</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Regression</td>
+<td>0.980581</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>1.000000</td>
+<td>1.00</td>
+<td>1.0</td>
+<td>0.980581</td>
+<td>NaN</td>
+<td>1.000000</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="solution-14.5.g" class="level2">
+<h2 class="anchored" data-anchor-id="solution-14.5.g">Solution 14.5.g</h2>
+<p>Apply item-based collaborative filtering to this dataset (using Python) and based on the results, recommend a course to E.N.</p>
+<div id="cell-38" class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># convert the rating_df dataframe into a format suitable for the Surprise package</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>ratings <span class="op">=</span> []</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> customer, row <span class="kw">in</span> rating_df.iterrows():</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> course, value <span class="kw">in</span> row.iteritems():</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> np.isnan(value): <span class="cf">continue</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>        ratings.append([customer, course, value])</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>ratings <span class="op">=</span> pd.DataFrame(ratings, columns<span class="op">=</span>[<span class="st">'customer'</span>, <span class="st">'course'</span>, <span class="st">'rating'</span>])</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>reader <span class="op">=</span> Reader(rating_scale<span class="op">=</span>(<span class="dv">1</span>, <span class="dv">4</span>))</span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> Dataset.load_from_df(ratings, reader)</span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>trainset <span class="op">=</span> data.build_full_trainset()</span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a><span class="co"># compute cosine similarities between items</span></span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>sim_options <span class="op">=</span> {<span class="st">'name'</span>: <span class="st">'cosine'</span>, <span class="st">'user_based'</span>: <span class="va">False</span>}  </span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>algo <span class="op">=</span> KNNBasic(sim_options<span class="op">=</span>sim_options)</span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>algo.fit(trainset)</span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a>courses <span class="op">=</span> rating_df.columns</span>
+<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> course <span class="kw">in</span> courses: </span>
+<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(course, algo.predict(<span class="st">'EN'</span>, course).est)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Computing the cosine similarity matrix...
+Done computing similarity matrix.
+SQL 3.7504416393899813
+Spatial 4
+PA1 3.433333333333333
+DM in R 3.743416490252569
+Python 3.6621621621621623
+Forecast 3.6666666666666665
+R Prog 3.7504416393899813
+Hadoop 3.433333333333333
+Regression 3.747548783981962</code></pre>
+</div>
+</div>
+<p>The item-based collaborative filtering recommends the <strong>Spatial</strong> course to E.N.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

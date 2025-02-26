@@ -1,0 +1,9 @@
+.Rproj.user
+.quarto
+.DS_store
+.Rhistory
+_git
+_quarto.yml
+Course.Rproj
+/.quarto/
+/Course/

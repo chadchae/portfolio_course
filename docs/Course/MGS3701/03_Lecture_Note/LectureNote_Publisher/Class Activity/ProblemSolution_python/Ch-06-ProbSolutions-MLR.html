@@ -1,0 +1,3118 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.40">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Chapter 6: Multiple Linear Regression - Solution – Chad’s Course Portfolio</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../../../../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../../../../">
+<script src="../../../../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../../../../site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../../../../site_libs/bootstrap/bootstrap-6bd9cfa162949bde0a231f530c97869d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+<link rel="stylesheet" href="../../../../../../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../../../../../index.html">
+    <span class="navbar-title">Chad’s Course Portfolio</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../../../Course/GE2021/03_Lecture_Note/LectureNote_Chad/PPT/chapter0/chapter0.html"> 
+<span class="menu-text">test</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#problem-6.1-predicting-bostom-housing-prices" id="toc-problem-6.1-predicting-bostom-housing-prices" class="nav-link active" data-scroll-target="#problem-6.1-predicting-bostom-housing-prices">Problem 6.1 Predicting Bostom Housing Prices</a></li>
+  <li><a href="#problem-6.2-predicting-software-reselling-profits." id="toc-problem-6.2-predicting-software-reselling-profits." class="nav-link" data-scroll-target="#problem-6.2-predicting-software-reselling-profits.">Problem 6.2 Predicting Software Reselling Profits.</a></li>
+  <li><a href="#problem-6.3-predicting-airfare-on-new-routes." id="toc-problem-6.3-predicting-airfare-on-new-routes." class="nav-link" data-scroll-target="#problem-6.3-predicting-airfare-on-new-routes.">Problem 6.3 Predicting Airfare on New Routes.</a></li>
+  <li><a href="#problem-6.4-predicting-prices-of-used-cars." id="toc-problem-6.4-predicting-prices-of-used-cars." class="nav-link" data-scroll-target="#problem-6.4-predicting-prices-of-used-cars.">Problem 6.4 Predicting Prices of Used Cars.</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Chapter 6: Multiple Linear Regression - Solution</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<blockquote class="blockquote">
+<ol start="3" type="a">
+<li>2019-2020 Galit Shmueli, Peter C. Bruce, Peter Gedeck</li>
+</ol>
+<p><em>Data Mining for Business Analytics: Concepts, Techniques, and Applications in Python</em> (First Edition) Galit Shmueli, Peter C. Bruce, Peter Gedeck, and Nitin R. Patel. 2019.</p>
+<p>Date: 2020-03-08</p>
+<p>Python Version: 3.8.2 Jupyter Notebook Version: 5.6.1</p>
+<p>Packages: - dmba: 0.0.12 - matplotlib: 3.2.0 - numpy: 1.18.1 - pandas: 1.0.1 - seaborn: 0.10.0 - scikit-learn: 0.22.2 - statsmodels: 0.11.1</p>
+<p>The assistance from Mr.&nbsp;Kuber Deokar and Ms.&nbsp;Anuja Kulkarni in preparing these solutions is gratefully acknowledged.</p>
+</blockquote>
+<div id="cell-3" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># import required functionality for this chapter</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LinearRegression</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.formula.api <span class="im">as</span> sm</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pylab <span class="im">as</span> plt</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dmba <span class="im">import</span> regressionSummary, exhaustive_search</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dmba <span class="im">import</span> backward_elimination, forward_selection, stepwise_selection</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dmba <span class="im">import</span> adjusted_r2_score, AIC_score <span class="co">#, BIC_score</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>matplotlib inline</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-4" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Working directory:</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># We assume that data are kept in the same directory as the notebook. If you keep your </span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># data in a different folder, replace the argument of the `Path`</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>DATA <span class="op">=</span> Path(<span class="st">'.'</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co"># and then load data using </span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co"># pd.read_csv(DATA / ‘filename.csv’)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="problem-6.1-predicting-bostom-housing-prices" class="level1">
+<h1>Problem 6.1 Predicting Bostom Housing Prices</h1>
+<p>The file <em>BostonHousing.csv</em> contains information collected by the US Bureau of the Census concerning housing in the area of Boston, Massachusetts. The dataset includes information on 506 census housing tracts in the Boston area. The goal is to predict the median house price in new tracts based on information such as crime rate, pollution, and number of rooms. The dataset contains 13 predictors, and the outcome variable is the median house price (MEDV). Table 6.11 describes each of the predictors and the outcome variable.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/TABLE_6.11.PNG" class="img-fluid figure-img"></p>
+<figcaption>TABLE_6.11</figcaption>
+</figure>
+</div>
+<div id="cell-7" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load the data</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>housing_df <span class="op">=</span> pd.read_csv(DATA <span class="op">/</span> <span class="st">'BostonHousing.csv'</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># display column/variable names</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>columns <span class="op">=</span> <span class="bu">list</span>(housing_df.columns)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Variables in the data are: "</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(columns)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># review first 5 records in the data</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">First 5 records in the data are:"</span>)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>housing_df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Variables in the data are: 
+['CRIM', 'ZN', 'INDUS', 'CHAS', 'NOX', 'RM', 'AGE', 'DIS', 'RAD', 'TAX', 'PTRATIO', 'LSTAT', 'MEDV', 'CAT. MEDV']
+
+First 5 records in the data are:</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="3">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">CRIM</th>
+<th data-quarto-table-cell-role="th">ZN</th>
+<th data-quarto-table-cell-role="th">INDUS</th>
+<th data-quarto-table-cell-role="th">CHAS</th>
+<th data-quarto-table-cell-role="th">NOX</th>
+<th data-quarto-table-cell-role="th">RM</th>
+<th data-quarto-table-cell-role="th">AGE</th>
+<th data-quarto-table-cell-role="th">DIS</th>
+<th data-quarto-table-cell-role="th">RAD</th>
+<th data-quarto-table-cell-role="th">TAX</th>
+<th data-quarto-table-cell-role="th">PTRATIO</th>
+<th data-quarto-table-cell-role="th">LSTAT</th>
+<th data-quarto-table-cell-role="th">MEDV</th>
+<th data-quarto-table-cell-role="th">CAT. MEDV</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>0.00632</td>
+<td>18.0</td>
+<td>2.31</td>
+<td>0</td>
+<td>0.538</td>
+<td>6.575</td>
+<td>65.2</td>
+<td>4.0900</td>
+<td>1</td>
+<td>296</td>
+<td>15.3</td>
+<td>4.98</td>
+<td>24.0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>0.02731</td>
+<td>0.0</td>
+<td>7.07</td>
+<td>0</td>
+<td>0.469</td>
+<td>6.421</td>
+<td>78.9</td>
+<td>4.9671</td>
+<td>2</td>
+<td>242</td>
+<td>17.8</td>
+<td>9.14</td>
+<td>21.6</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>0.02729</td>
+<td>0.0</td>
+<td>7.07</td>
+<td>0</td>
+<td>0.469</td>
+<td>7.185</td>
+<td>61.1</td>
+<td>4.9671</td>
+<td>2</td>
+<td>242</td>
+<td>17.8</td>
+<td>4.03</td>
+<td>34.7</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>0.03237</td>
+<td>0.0</td>
+<td>2.18</td>
+<td>0</td>
+<td>0.458</td>
+<td>6.998</td>
+<td>45.8</td>
+<td>6.0622</td>
+<td>3</td>
+<td>222</td>
+<td>18.7</td>
+<td>2.94</td>
+<td>33.4</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>0.06905</td>
+<td>0.0</td>
+<td>2.18</td>
+<td>0</td>
+<td>0.458</td>
+<td>7.147</td>
+<td>54.2</td>
+<td>6.0622</td>
+<td>3</td>
+<td>222</td>
+<td>18.7</td>
+<td>5.33</td>
+<td>36.2</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p><strong>6.1.a.</strong> Why should the data be partitioned into training and validation sets? What will the training set be used for? What will the validation set be used for?</p>
+<p><strong>Answer:</strong> 1. The data should be partitioned into training and validation sets because we need two sets of data: one to build the model that depicts the relationship between the predictor variables and the predicted variable, and another to validate the model’s predictive accuracy. 2. The training data set is used to build the model. The algorithm ‘discovers’ the model using this data set. 3. The validation data is used to ‘validate’ the model. In this process, the model (built using the training data set) is used to make predictions with the validation data - data that were not used to fit the model. In this way we get an unbiased estimate of how well the model performs. We compute measures of ‘error’, which reflect the prediction accuracy.</p>
+<p><strong>6.1.b.</strong> Fit a multiple linear regression model to the median house price (MEDV) as a function of CRIM, CHAS, and RM. Write the equation for predicting the median house price from the predictors in the model.</p>
+<p><strong>Answer:</strong></p>
+<div id="cell-10" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># select columns for regression analysis</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>housing_df.columns</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>outcome <span class="op">=</span> <span class="st">'MEDV'</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>predictors <span class="op">=</span> [<span class="st">'CRIM'</span>, <span class="st">'CHAS'</span>, <span class="st">'RM'</span>]</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> housing_df[predictors]</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> housing_df[outcome]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-11" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># fit the regression model y on x</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>housing_lm <span class="op">=</span> LinearRegression()</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>housing_lm.fit(x,y)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co"># regression model, print coefficients</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'intercept '</span>, housing_lm.intercept_)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(pd.DataFrame({<span class="st">'Predictor'</span>: x.columns, <span class="st">'coefficient'</span>: housing_lm.coef_}))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>intercept  -28.810682506359125
+  Predictor  coefficient
+0      CRIM    -0.260724
+1      CHAS     3.763037
+2        RM     8.278180</code></pre>
+</div>
+</div>
+<p><strong>6.1.c.</strong> Using the estimated regression model, what median house price is predicted for a tract in the Boston area that does not bound the Charles River, has a crime rate of 0.1, and where the average number of rooms per house is 6?</p>
+<p><strong>Answer:</strong></p>
+<div id="cell-14" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>new_df <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    [[<span class="fl">0.1</span>, <span class="dv">0</span>, <span class="dv">6</span>]],</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    columns<span class="op">=</span>[<span class="st">'CRIM'</span>, <span class="st">'CHAS'</span>, <span class="st">'RM'</span>])</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>new_df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="6">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">CRIM</th>
+<th data-quarto-table-cell-role="th">CHAS</th>
+<th data-quarto-table-cell-role="th">RM</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>0.1</td>
+<td>0</td>
+<td>6</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="cell-15" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>housing_lm_pred <span class="op">=</span> housing_lm.predict(new_df)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Predicted value for median house price based on the model built using  dataset is:'</span>, housing_lm_pred)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Predicted value for median house price based on the model built using  dataset is: [20.83232392]</code></pre>
+</div>
+</div>
+<p>The predicted value of median house price based on the model built using training dataset is $20832.32.</p>
+<p><strong>6.1.d.i.</strong> Reduce the number of predictors: Which predictors are likely to be measuring the same thing among the 13 predictors? Discuss the relationships among INDUS, NOX, and TAX.</p>
+<p><strong>Answer:</strong> There are several variables that measure levels of industrialization, which are expected to be positively correlated. These include INDUS, NOX (pollution), and TAX.</p>
+<p>We expect a positive relationship between NOX (nitric oxides concentration, a pollutant), INDUS (proportion of non-retail business acres per town) and TAX (tax rate), because areas that have a high proportion of non-retail businesses tend to have higher taxes and more pollution.</p>
+<p><strong>6.1.d.ii.</strong> Compute the correlation table for the 12 numerical predictors and search for highly correlated pairs. These have potential redundancy and can cause multicollinearity. Choose which ones to remove based on this table.</p>
+<p><strong>Answer:</strong></p>
+<div id="cell-19" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># variables in the data</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>housing_df.columns</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="8">
+<pre><code>Index(['CRIM', 'ZN', 'INDUS', 'CHAS', 'NOX', 'RM', 'AGE', 'DIS', 'RAD', 'TAX',
+       'PTRATIO', 'LSTAT', 'MEDV', 'CAT. MEDV'],
+      dtype='object')</code></pre>
+</div>
+</div>
+<div id="cell-20" class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a new dataframe with predictors</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>predictors_df <span class="op">=</span> housing_df</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>columns <span class="op">=</span> <span class="bu">list</span>(housing_df.columns)</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>columns.remove(<span class="st">'CHAS'</span>)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>columns.remove(<span class="st">'MEDV'</span>)</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>columns.remove(<span class="st">'CAT. MEDV'</span>)</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>predictors_df <span class="op">=</span> predictors_df[columns]</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>predictors_df.columns</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="9">
+<pre><code>Index(['CRIM', 'ZN', 'INDUS', 'NOX', 'RM', 'AGE', 'DIS', 'RAD', 'TAX',
+       'PTRATIO', 'LSTAT'],
+      dtype='object')</code></pre>
+</div>
+</div>
+<div id="cell-21" class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>corr <span class="op">=</span> predictors_df.corr()</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co"># corr.style.background_gradient()</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>_ <span class="op">=</span> sns.heatmap(corr, xticklabels<span class="op">=</span>corr.columns, yticklabels<span class="op">=</span>corr.columns, vmin<span class="op">=-</span><span class="dv">1</span>, vmax<span class="op">=</span><span class="dv">1</span>, </span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>            cmap<span class="op">=</span><span class="st">"RdBu"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Ch-06-ProbSolutions-MLR_files/figure-html/cell-11-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="cell-22" class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># correlation table</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>corr</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="11">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">CRIM</th>
+<th data-quarto-table-cell-role="th">ZN</th>
+<th data-quarto-table-cell-role="th">INDUS</th>
+<th data-quarto-table-cell-role="th">NOX</th>
+<th data-quarto-table-cell-role="th">RM</th>
+<th data-quarto-table-cell-role="th">AGE</th>
+<th data-quarto-table-cell-role="th">DIS</th>
+<th data-quarto-table-cell-role="th">RAD</th>
+<th data-quarto-table-cell-role="th">TAX</th>
+<th data-quarto-table-cell-role="th">PTRATIO</th>
+<th data-quarto-table-cell-role="th">LSTAT</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">CRIM</td>
+<td>1.000000</td>
+<td>-0.200469</td>
+<td>0.406583</td>
+<td>0.420972</td>
+<td>-0.219247</td>
+<td>0.352734</td>
+<td>-0.379670</td>
+<td>0.625505</td>
+<td>0.582764</td>
+<td>0.289946</td>
+<td>0.455621</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">ZN</td>
+<td>-0.200469</td>
+<td>1.000000</td>
+<td>-0.533828</td>
+<td>-0.516604</td>
+<td>0.311991</td>
+<td>-0.569537</td>
+<td>0.664408</td>
+<td>-0.311948</td>
+<td>-0.314563</td>
+<td>-0.391679</td>
+<td>-0.412995</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">INDUS</td>
+<td>0.406583</td>
+<td>-0.533828</td>
+<td>1.000000</td>
+<td>0.763651</td>
+<td>-0.391676</td>
+<td>0.644779</td>
+<td>-0.708027</td>
+<td>0.595129</td>
+<td>0.720760</td>
+<td>0.383248</td>
+<td>0.603800</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">NOX</td>
+<td>0.420972</td>
+<td>-0.516604</td>
+<td>0.763651</td>
+<td>1.000000</td>
+<td>-0.302188</td>
+<td>0.731470</td>
+<td>-0.769230</td>
+<td>0.611441</td>
+<td>0.668023</td>
+<td>0.188933</td>
+<td>0.590879</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">RM</td>
+<td>-0.219247</td>
+<td>0.311991</td>
+<td>-0.391676</td>
+<td>-0.302188</td>
+<td>1.000000</td>
+<td>-0.240265</td>
+<td>0.205246</td>
+<td>-0.209847</td>
+<td>-0.292048</td>
+<td>-0.355501</td>
+<td>-0.613808</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">AGE</td>
+<td>0.352734</td>
+<td>-0.569537</td>
+<td>0.644779</td>
+<td>0.731470</td>
+<td>-0.240265</td>
+<td>1.000000</td>
+<td>-0.747881</td>
+<td>0.456022</td>
+<td>0.506456</td>
+<td>0.261515</td>
+<td>0.602339</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">DIS</td>
+<td>-0.379670</td>
+<td>0.664408</td>
+<td>-0.708027</td>
+<td>-0.769230</td>
+<td>0.205246</td>
+<td>-0.747881</td>
+<td>1.000000</td>
+<td>-0.494588</td>
+<td>-0.534432</td>
+<td>-0.232471</td>
+<td>-0.496996</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">RAD</td>
+<td>0.625505</td>
+<td>-0.311948</td>
+<td>0.595129</td>
+<td>0.611441</td>
+<td>-0.209847</td>
+<td>0.456022</td>
+<td>-0.494588</td>
+<td>1.000000</td>
+<td>0.910228</td>
+<td>0.464741</td>
+<td>0.488676</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">TAX</td>
+<td>0.582764</td>
+<td>-0.314563</td>
+<td>0.720760</td>
+<td>0.668023</td>
+<td>-0.292048</td>
+<td>0.506456</td>
+<td>-0.534432</td>
+<td>0.910228</td>
+<td>1.000000</td>
+<td>0.460853</td>
+<td>0.543993</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">PTRATIO</td>
+<td>0.289946</td>
+<td>-0.391679</td>
+<td>0.383248</td>
+<td>0.188933</td>
+<td>-0.355501</td>
+<td>0.261515</td>
+<td>-0.232471</td>
+<td>0.464741</td>
+<td>0.460853</td>
+<td>1.000000</td>
+<td>0.374044</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">LSTAT</td>
+<td>0.455621</td>
+<td>-0.412995</td>
+<td>0.603800</td>
+<td>0.590879</td>
+<td>-0.613808</td>
+<td>0.602339</td>
+<td>-0.496996</td>
+<td>0.488676</td>
+<td>0.543993</td>
+<td>0.374044</td>
+<td>1.000000</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>If the correlation between variables if greater than 0.7 we can say that the two variables are highly correlated. From the above table, the pairs of highly correlated variables are:</p>
+<ol type="1">
+<li><p>NOX and INDUS: Correlation coefficient = 0.763651</p></li>
+<li><p>TAX and INDUS: Correlation coefficient = 0.72076</p></li>
+<li><p>AGE and NOX: Correlation coefficient = 0.73147</p></li>
+<li><p>DIS and NOX: Correlation coefficient = -0.76923</p></li>
+<li><p>DIS and AGE: Correlation coefficient = -0.747881</p></li>
+<li><p>TAX and RAD: Correlation coefficient = 0.910228</p></li>
+</ol>
+<p>According to the correlation table, we might be able to remove some variables that do not add much information to others that we keep. We might remove INDUS, AGE and TAX.</p>
+<p><strong>6.1.d.iii.</strong> Use stepwise regression with the three options (backward, forward, both) to reduce the remaining predictors as follows: Run stepwise on the training set. Choose the top model from each stepwise run. Then use each of these models separately to predict the validation set. Compare RMSE, MAPE, and mean error, as well as lift charts. Finally, describe the best model.</p>
+<p><strong>Answer:</strong></p>
+<div id="cell-25" class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># partition the data into training (60%) and validation (40%) sets</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>predictors <span class="op">=</span> [<span class="st">'CRIM'</span>, <span class="st">'ZN'</span>, <span class="st">'INDUS'</span>, <span class="st">'CHAS'</span>, <span class="st">'NOX'</span>, <span class="st">'RM'</span>, <span class="st">'AGE'</span>, <span class="st">'DIS'</span>, <span class="st">'RAD'</span>, <span class="st">'TAX'</span>, <span class="st">'PTRATIO'</span>, <span class="st">'LSTAT'</span>]</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>outcome <span class="op">=</span> <span class="st">'MEDV'</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="co"># partition the data</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> pd.get_dummies(housing_df[predictors], drop_first<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> housing_df[outcome]</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>train_X, valid_X, train_y, valid_y <span class="op">=</span> train_test_split(X, y, test_size<span class="op">=</span><span class="fl">0.4</span>, random_state<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Training set:'</span>, train_X.shape, <span class="st">'Validation set:'</span>, valid_X.shape)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Training set: (303, 12) Validation set: (203, 12)</code></pre>
+</div>
+</div>
+<p>NOTE: There is currently no support in scikit-learn or statsmodels for stepwise regression. It is however straightforward to implement such an approach in a few lines of code using the <code>dmba</code> implementation.</p>
+<div id="cell-27" class="cell" data-scrolled="true" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># backward elimination</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> train_model(variables):</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    model <span class="op">=</span> LinearRegression()</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>    model.fit(train_X[variables], train_y)</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> model</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> score_model(model, variables):</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> AIC_score(train_y, model.predict(train_X[variables]), model)</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>best_model, best_variables <span class="op">=</span> backward_elimination(train_X.columns, train_model, score_model, verbose<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Best Subset:"</span>, best_variables)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Variables: CRIM, ZN, INDUS, CHAS, NOX, RM, AGE, DIS, RAD, TAX, PTRATIO, LSTAT
+Start: score=1807.23
+Step: score=1805.30, remove AGE
+Step: score=1803.57, remove INDUS
+Step: score=1803.57, remove None
+Best Subset: ['CRIM', 'ZN', 'CHAS', 'NOX', 'RM', 'DIS', 'RAD', 'TAX', 'PTRATIO', 'LSTAT']</code></pre>
+</div>
+</div>
+<div id="cell-28" class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># forward selection</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="co"># The initial model is the constant model - this requires special handling in train_model and score_model</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> train_model(variables):</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">len</span>(variables) <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">None</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>    model <span class="op">=</span> LinearRegression()</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>    model.fit(train_X[variables], train_y)</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> model</span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> score_model(model, variables):</span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">len</span>(variables) <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> AIC_score(train_y, [train_y.mean()] <span class="op">*</span> <span class="bu">len</span>(train_y), model, df<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> AIC_score(train_y, model.predict(train_X[variables]), model)</span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>best_model, best_variables <span class="op">=</span> forward_selection(train_X.columns, train_model, score_model, verbose<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Best Subset:"</span>, best_variables)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Variables: CRIM, ZN, INDUS, CHAS, NOX, RM, AGE, DIS, RAD, TAX, PTRATIO, LSTAT
+Start: score=2191.75, constant
+Step: score=1934.91, add LSTAT
+Step: score=1874.18, add RM
+Step: score=1842.54, add PTRATIO
+Step: score=1837.69, add CHAS
+Step: score=1835.00, add NOX
+Step: score=1817.90, add DIS
+Step: score=1811.82, add ZN
+Step: score=1810.16, add CRIM
+Step: score=1808.01, add RAD
+Step: score=1803.57, add TAX
+Step: score=1803.57, add None
+Best Subset: ['LSTAT', 'RM', 'PTRATIO', 'CHAS', 'NOX', 'DIS', 'ZN', 'CRIM', 'RAD', 'TAX']</code></pre>
+</div>
+</div>
+<div id="cell-29" class="cell" data-scrolled="true" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># stepwise (both) method</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>best_model, best_variables <span class="op">=</span> stepwise_selection(train_X.columns, train_model, score_model, verbose<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Best Subset:"</span>, best_variables)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Variables: CRIM, ZN, INDUS, CHAS, NOX, RM, AGE, DIS, RAD, TAX, PTRATIO, LSTAT
+Start: score=2191.75, constant
+Step: score=1934.91, add LSTAT
+Step: score=1874.18, add RM
+Step: score=1842.54, add PTRATIO
+Step: score=1837.69, add CHAS
+Step: score=1835.00, add NOX
+Step: score=1817.90, add DIS
+Step: score=1811.82, add ZN
+Step: score=1810.16, add CRIM
+Step: score=1808.01, add RAD
+Step: score=1803.57, add TAX
+Step: score=1803.57, unchanged None
+Best Subset: ['LSTAT', 'RM', 'PTRATIO', 'CHAS', 'NOX', 'DIS', 'ZN', 'CRIM', 'RAD', 'TAX']</code></pre>
+</div>
+</div>
+<p>Above we see that all three subset selection methods gave the same best subset/model: Each model is designed using the following 10 variables: LSTAT, RM, PTRATIO, CHAS, NOX, DIS, ZN, CRIM, RAD, TAX.</p>
+<div id="cell-31" class="cell" data-scrolled="true" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># fit the model with best subset variables</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>outcome <span class="op">=</span> <span class="st">'MEDV'</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>predictors <span class="op">=</span> [<span class="st">'LSTAT'</span>, <span class="st">'RM'</span>, <span class="st">'PTRATIO'</span>, <span class="st">'CHAS'</span>, <span class="st">'NOX'</span>, <span class="st">'DIS'</span>, <span class="st">'ZN'</span>, <span class="st">'CRIM'</span>, <span class="st">'RAD'</span>, <span class="st">'TAX'</span>]</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> train_X[predictors]</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> train_y</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a><span class="co"># fit the regression model y on X</span></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>house_lm <span class="op">=</span> LinearRegression()</span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>house_lm.fit(X,y)</span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a><span class="co"># regression model, print coefficients</span></span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'intercept'</span>, house_lm.intercept_)</span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(pd.DataFrame({<span class="st">'Predictor'</span>: X.columns, <span class="st">'coefficient'</span>: house_lm.coef_}))</span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a><span class="co"># print performance measures (training set)</span></span>
+<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Model performance on training data:"</span>)</span>
+<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a>regressionSummary(train_y, house_lm.predict(train_X[predictors]))</span>
+<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a><span class="co"># predict prices in validation set, print first few predicted/actual values and residuals</span></span>
+<span id="cb25-21"><a href="#cb25-21" aria-hidden="true" tabindex="-1"></a>house_lm_pred <span class="op">=</span> house_lm.predict(valid_X[predictors])</span>
+<span id="cb25-22"><a href="#cb25-22" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> pd.DataFrame({<span class="st">'Predicted'</span>: house_lm_pred, <span class="st">'Actual'</span>: valid_y, <span class="st">'Residual'</span>: valid_y <span class="op">-</span> house_lm_pred})</span>
+<span id="cb25-23"><a href="#cb25-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-24"><a href="#cb25-24" aria-hidden="true" tabindex="-1"></a><span class="co"># print performance measures (validation set)</span></span>
+<span id="cb25-25"><a href="#cb25-25" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Model performance on validation data:"</span>)</span>
+<span id="cb25-26"><a href="#cb25-26" aria-hidden="true" tabindex="-1"></a>regressionSummary(valid_y, house_lm_pred)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>intercept 38.95615649828216
+  Predictor  coefficient
+0     LSTAT    -0.514444
+1        RM     3.480964
+2   PTRATIO    -0.804964
+3      CHAS     2.359986
+4       NOX   -17.866926
+5       DIS    -1.438596
+6        ZN     0.066221
+7      CRIM    -0.114137
+8       RAD     0.262455
+9       TAX    -0.011166
+
+Model performance on training data:
+
+Regression statistics
+
+                      Mean Error (ME) : -0.0000
+       Root Mean Squared Error (RMSE) : 4.5615
+            Mean Absolute Error (MAE) : 3.1662
+          Mean Percentage Error (MPE) : -3.4181
+Mean Absolute Percentage Error (MAPE) : 16.4898
+
+Model performance on validation data:
+
+Regression statistics
+
+                      Mean Error (ME) : -0.0393
+       Root Mean Squared Error (RMSE) : 5.0771
+            Mean Absolute Error (MAE) : 3.5746
+          Mean Percentage Error (MPE) : -5.1561
+Mean Absolute Percentage Error (MAPE) : 16.9733</code></pre>
+</div>
+</div>
+</section>
+<section id="problem-6.2-predicting-software-reselling-profits." class="level1">
+<h1>Problem 6.2 Predicting Software Reselling Profits.</h1>
+<p>Tayko Software is a software catalog firm that sells games and educational software. It started out as a software manufacturer and then added third-party titles to its oﬀerings. It recently revised its collection of items in a new catalog, which it mailed out to its customers. This mailing yielded 2000 purchases. Based on these data, Tayko wants to devise a model for predicting the spending amount that a purchasing customer will yield. The file <em>Tayko.csv</em> contains information on 2000 purchases. Table 6.12 describes the variables to be used in the problem (the Excel file contains additional variables).</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/TABLE_6.12.PNG" class="img-fluid figure-img"></p>
+<figcaption>TABLE 6.12</figcaption>
+</figure>
+</div>
+<div id="cell-33" class="cell" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load the data</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>tayko_df <span class="op">=</span> pd.read_csv(DATA <span class="op">/</span> <span class="st">'Tayko.csv'</span>)</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="co"># check data dimension</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>tayko_df.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="17">
+<pre><code>(2000, 25)</code></pre>
+</div>
+</div>
+<div id="cell-34" class="cell" data-execution_count="18">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># check variable names</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="bu">list</span>(tayko_df.columns)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="18">
+<pre><code>['sequence_number',
+ 'US',
+ 'source_a',
+ 'source_c',
+ 'source_b',
+ 'source_d',
+ 'source_e',
+ 'source_m',
+ 'source_o',
+ 'source_h',
+ 'source_r',
+ 'source_s',
+ 'source_t',
+ 'source_u',
+ 'source_p',
+ 'source_x',
+ 'source_w',
+ 'Freq',
+ 'last_update_days_ago',
+ '1st_update_days_ago',
+ 'Web order',
+ 'Gender=male',
+ 'Address_is_res',
+ 'Purchase',
+ 'Spending']</code></pre>
+</div>
+</div>
+<div id="cell-35" class="cell" data-execution_count="19">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># modify column names</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>tayko_df.columns <span class="op">=</span> [c.replace(<span class="st">' '</span>, <span class="st">'_'</span>).replace(<span class="st">'='</span>, <span class="st">'_'</span>) <span class="cf">for</span> c <span class="kw">in</span> tayko_df.columns]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-36" class="cell" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># review first few record</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>tayko_df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="20">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">sequence_number</th>
+<th data-quarto-table-cell-role="th">US</th>
+<th data-quarto-table-cell-role="th">source_a</th>
+<th data-quarto-table-cell-role="th">source_c</th>
+<th data-quarto-table-cell-role="th">source_b</th>
+<th data-quarto-table-cell-role="th">source_d</th>
+<th data-quarto-table-cell-role="th">source_e</th>
+<th data-quarto-table-cell-role="th">source_m</th>
+<th data-quarto-table-cell-role="th">source_o</th>
+<th data-quarto-table-cell-role="th">source_h</th>
+<th data-quarto-table-cell-role="th">...</th>
+<th data-quarto-table-cell-role="th">source_x</th>
+<th data-quarto-table-cell-role="th">source_w</th>
+<th data-quarto-table-cell-role="th">Freq</th>
+<th data-quarto-table-cell-role="th">last_update_days_ago</th>
+<th data-quarto-table-cell-role="th">1st_update_days_ago</th>
+<th data-quarto-table-cell-role="th">Web_order</th>
+<th data-quarto-table-cell-role="th">Gender_male</th>
+<th data-quarto-table-cell-role="th">Address_is_res</th>
+<th data-quarto-table-cell-role="th">Purchase</th>
+<th data-quarto-table-cell-role="th">Spending</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>...</td>
+<td>0</td>
+<td>0</td>
+<td>2</td>
+<td>3662</td>
+<td>3662</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>128</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>2</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>...</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>2900</td>
+<td>2900</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>3</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>...</td>
+<td>0</td>
+<td>0</td>
+<td>2</td>
+<td>3883</td>
+<td>3914</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>127</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>4</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>...</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>829</td>
+<td>829</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>5</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>...</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>869</td>
+<td>869</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+
+<p>5 rows × 25 columns</p>
+</div>
+</div>
+</div>
+<div id="cell-37" class="cell" data-execution_count="21">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># check data types of variables in the data</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>tayko_df.dtypes</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="21">
+<pre><code>sequence_number         int64
+US                      int64
+source_a                int64
+source_c                int64
+source_b                int64
+source_d                int64
+source_e                int64
+source_m                int64
+source_o                int64
+source_h                int64
+source_r                int64
+source_s                int64
+source_t                int64
+source_u                int64
+source_p                int64
+source_x                int64
+source_w                int64
+Freq                    int64
+last_update_days_ago    int64
+1st_update_days_ago     int64
+Web_order               int64
+Gender_male             int64
+Address_is_res          int64
+Purchase                int64
+Spending                int64
+dtype: object</code></pre>
+</div>
+</div>
+<p><strong>6.2.a</strong> Explore the spending amount by creating a pivot table for the categorical variables and computing the average and standard deviation of spending in each category.</p>
+<p><strong>Answer:</strong></p>
+<div id="cell-40" class="cell" data-execution_count="22">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># select only required variables</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>selected_var <span class="op">=</span> [<span class="st">'US'</span>, <span class="st">'Freq'</span>, <span class="st">'last_update_days_ago'</span>, <span class="st">'Web_order'</span>, <span class="st">'Gender_male'</span>, <span class="st">'Address_is_res'</span>, <span class="st">'Spending'</span>]</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>tayko_df <span class="op">=</span> tayko_df[selected_var]</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="bu">list</span>(selected_var)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="22">
+<pre><code>['US',
+ 'Freq',
+ 'last_update_days_ago',
+ 'Web_order',
+ 'Gender_male',
+ 'Address_is_res',
+ 'Spending']</code></pre>
+</div>
+</div>
+<div id="cell-41" class="cell" data-execution_count="23">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># pivot table: spending by gender</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>pd.pivot_table(tayko_df, index<span class="op">=</span> <span class="st">'Gender_male'</span>, values<span class="op">=</span> <span class="st">"Spending"</span>,</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>               aggfunc<span class="op">=</span> [np.mean, np.std])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="23">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">mean</th>
+<th data-quarto-table-cell-role="th">std</th>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Spending</th>
+<th data-quarto-table-cell-role="th">Spending</th>
+</tr>
+<tr class="header">
+<th data-quarto-table-cell-role="th">Gender_male</th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>107.339642</td>
+<td>190.83233</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>98.350810</td>
+<td>183.02006</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="cell-42" class="cell" data-execution_count="24">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># pivot table: spending by web order</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>pd.pivot_table(tayko_df, index<span class="op">=</span> <span class="st">'Web_order'</span>, values<span class="op">=</span> <span class="st">"Spending"</span>,</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>               aggfunc<span class="op">=</span> [np.mean, np.std])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="24">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">mean</th>
+<th data-quarto-table-cell-role="th">std</th>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Spending</th>
+<th data-quarto-table-cell-role="th">Spending</th>
+</tr>
+<tr class="header">
+<th data-quarto-table-cell-role="th">Web_order</th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>82.902439</td>
+<td>173.417088</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>129.199531</td>
+<td>200.463840</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="cell-43" class="cell" data-execution_count="25">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># pivot table: spending by adress</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>pd.pivot_table(tayko_df, index<span class="op">=</span> <span class="st">'Address_is_res'</span>, values<span class="op">=</span> <span class="st">"Spending"</span>,</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>               aggfunc<span class="op">=</span> [np.mean, np.std])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="25">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">mean</th>
+<th data-quarto-table-cell-role="th">std</th>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Spending</th>
+<th data-quarto-table-cell-role="th">Spending</th>
+</tr>
+<tr class="header">
+<th data-quarto-table-cell-role="th">Address_is_res</th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>105.306162</td>
+<td>199.521159</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>93.174208</td>
+<td>132.204281</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="cell-44" class="cell" data-execution_count="26">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># pivot table: spending by whether it is US address</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>pd.pivot_table(tayko_df, index<span class="op">=</span> <span class="st">'US'</span>, values<span class="op">=</span> <span class="st">"Spending"</span>,</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>               aggfunc<span class="op">=</span> [np.mean, np.std])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="26">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">mean</th>
+<th data-quarto-table-cell-role="th">std</th>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Spending</th>
+<th data-quarto-table-cell-role="th">Spending</th>
+</tr>
+<tr class="header">
+<th data-quarto-table-cell-role="th">US</th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>101.216524</td>
+<td>174.844401</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>102.924803</td>
+<td>189.275664</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p><strong>6.2.b.</strong> Explore the relationship between spending and each of the two continuous predictors by creating two scatterplots (Spending vs.&nbsp;Freq, and Spending vs.&nbsp;last_update_days_ago. Does there seem to be a linear relationship?</p>
+<p><strong>Answer:</strong></p>
+<div id="cell-47" class="cell" data-execution_count="27">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot of spending against frequency</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>plt.scatter(tayko_df.Freq, tayko_df.Spending)</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Scatter plot showing Spending against Frequency'</span>)</span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Spending'</span>)</span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Frequency'</span>)</span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Ch-06-ProbSolutions-MLR_files/figure-html/cell-28-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The overall relationship between Spending and Freq does not appear to be linear. However, there do appear to be two groups of points (Spending &lt; 800 and Spending &gt; 800), and within each group there appears to be a linear relationship between SPENDING and FREQ.</p>
+<div id="cell-49" class="cell" data-scrolled="true" data-execution_count="28">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot Spending against last_update_days_ago</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>plt.scatter(tayko_df.last_update_days_ago, tayko_df.Spending)</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Scatter plot showing Spending against last_update_days_ago'</span>)</span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Spending'</span>)</span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'last_update_days_ago'</span>)</span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Ch-06-ProbSolutions-MLR_files/figure-html/cell-29-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>There appears to be no relationship between Spending and Last_Update but two grous of points similar to what we seen in case of Spending and Frequency above.</p>
+<p><strong>6.2.c.</strong> To fit a predictive model for spending:</p>
+<p><strong>6.2.c.i.</strong> Partition the 2000 records into training and validation sets.</p>
+<p><strong>Answer:</strong></p>
+<div id="cell-53" class="cell" data-execution_count="29">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># predictors and outcome</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>predictors <span class="op">=</span> [<span class="st">'US'</span>, <span class="st">'Freq'</span>, <span class="st">'last_update_days_ago'</span>, <span class="st">'Web_order'</span>, <span class="st">'Gender_male'</span>, <span class="st">'Address_is_res'</span>]</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>outcome <span class="op">=</span> <span class="st">'Spending'</span></span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> tayko_df[predictors]</span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> tayko_df[outcome]</span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a><span class="co"># partition data</span></span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a>train_X, valid_X, train_y, valid_y <span class="op">=</span> train_test_split(X, y, test_size <span class="op">=</span> <span class="fl">0.4</span>, random_state <span class="op">=</span> <span class="dv">1</span>)</span>
+<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Training set:'</span>, train_X.shape, <span class="st">'Validation set:'</span>, valid_X.shape)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Training set: (1200, 6) Validation set: (800, 6)</code></pre>
+</div>
+</div>
+<p><strong>6.2.c.ii.</strong> Run a multiple linear regression model for Spending vs.&nbsp;all six predictors. Give the estimated predictive equation.</p>
+<p><strong>Answer:</strong></p>
+<div id="cell-56" class="cell" data-execution_count="30">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># fit the regression model</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>tayko_lm <span class="op">=</span> LinearRegression()</span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>tayko_lm.fit(train_X, train_y)</span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a><span class="co"># print coefficients</span></span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Intercept'</span>, tayko_lm.intercept_)</span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(pd.DataFrame({<span class="st">'Predictor'</span>: X.columns, <span class="st">'coefficient'</span>: tayko_lm.coef_}))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Intercept 10.17629741458822
+              Predictor  coefficient
+0                    US    -4.620293
+1                  Freq    91.274450
+2  last_update_days_ago    -0.010374
+3             Web_order    18.628731
+4           Gender_male    -9.111366
+5        Address_is_res   -75.815354</code></pre>
+</div>
+</div>
+<p>The Regression equation is:</p>
+<p>Spending = 10.176297 + (-4.620293 * US) + (91.274450 * Freq) + (-0.010347 * last_update_days_ago) + (18.628731 * Web_order) + (-9.111366 * Gender_male) + (-75.815354 * Address_is_res)</p>
+<p><strong>6.2.c.iii.</strong> Based on this model, what type of purchaser is most likely to spend a large amount of money?</p>
+<p><strong>Answer:</strong></p>
+<p>A purchaser with frequent catalog transactions in the last year and who has purchased by Web order at least once. This is based on the signs of the coefficients and on their statistical significance (low p-values).</p>
+<div id="cell-60" class="cell" data-execution_count="31">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># here we use sm.ols method in statsmodels which provides more information (P-values etc.) on model fit </span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="co"># run a linear regression of Spending on the predictors in the training set</span></span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>train_df <span class="op">=</span> train_X.join(train_y)</span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>predictors <span class="op">=</span> train_X.columns</span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a>formula <span class="op">=</span> <span class="st">'Spending ~ '</span> <span class="op">+</span> <span class="st">' + '</span>.join(predictors)</span>
+<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a>tayko_lm <span class="op">=</span> sm.ols(formula<span class="op">=</span>formula, data<span class="op">=</span>train_df).fit()</span>
+<span id="cb47-9"><a href="#cb47-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(tayko_lm.summary())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:               Spending   R-squared:                       0.525
+Model:                            OLS   Adj. R-squared:                  0.522
+Method:                 Least Squares   F-statistic:                     219.3
+Date:                Sun, 08 Mar 2020   Prob (F-statistic):          1.26e-188
+Time:                        20:19:30   Log-Likelihood:                -7506.3
+No. Observations:                1200   AIC:                         1.503e+04
+Df Residuals:                    1193   BIC:                         1.506e+04
+Df Model:                           6                                         
+Covariance Type:            nonrobust                                         
+========================================================================================
+                           coef    std err          t      P&gt;|t|      [0.025      0.975]
+----------------------------------------------------------------------------------------
+Intercept               10.1763     13.543      0.751      0.453     -16.395      36.747
+US                      -4.6203      9.636     -0.479      0.632     -23.526      14.285
+Freq                    91.2744      2.809     32.490      0.000      85.763      96.786
+last_update_days_ago    -0.0104      0.003     -3.029      0.003      -0.017      -0.004
+Web_order               18.6287      7.526      2.475      0.013       3.863      33.394
+Gender_male             -9.1114      7.318     -1.245      0.213     -23.468       5.245
+Address_is_res         -75.8154      9.162     -8.275      0.000     -93.790     -57.841
+==============================================================================
+Omnibus:                      956.068   Durbin-Watson:                   1.989
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):            32247.650
+Skew:                           3.402   Prob(JB):                         0.00
+Kurtosis:                      27.468   Cond. No.                     1.01e+04
+==============================================================================
+
+Warnings:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+[2] The condition number is large, 1.01e+04. This might indicate that there are
+strong multicollinearity or other numerical problems.</code></pre>
+</div>
+</div>
+<p><strong>6.2.c.iv.</strong> If we used backward elimination to reduce the number of predictors, which predictor would be dropped first from the model?</p>
+<p><strong>Answer:</strong></p>
+<p>Based on the above model, US has the highest p-value. Therefore backward elimination would drop “US” first from the model.</p>
+<p><strong>6.2.c.v.</strong> Show how the prediction and the prediction error are computed for the first purchase in the validation set.</p>
+<p><strong>Answer:</strong></p>
+<div id="cell-64" class="cell" data-scrolled="true" data-execution_count="32">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>valid_df <span class="op">=</span> valid_X.join(valid_y)</span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>first_obs_valid <span class="op">=</span> valid_df.head(<span class="dv">1</span>)</span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(first_obs_valid)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     US  Freq  last_update_days_ago  Web_order  Gender_male  Address_is_res  \
+674   1     2                  1346          0            1               1   
+
+     Spending  
+674         0  </code></pre>
+</div>
+</div>
+<p>Here, we need to calculate the predicted value for the first observation of validation set. The values corresponding to the first observation of validation set are:</p>
+<div id="cell-66" class="cell" data-execution_count="33">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>US <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> Freq <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> last_update_days_ago <span class="op">=</span> <span class="dv">869</span><span class="op">;</span> Web_order <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> Gender_male <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> Address_is_res <span class="op">=</span> <span class="dv">0</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-67" class="cell" data-execution_count="34">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>Spending <span class="op">=</span> <span class="fl">10.176297</span><span class="op">+</span>(<span class="op">-</span><span class="fl">4.620293</span><span class="op">*</span>US)<span class="op">+</span>(<span class="fl">91.274450</span><span class="op">*</span>Freq)<span class="op">+</span>(<span class="op">-</span><span class="fl">0.010347</span><span class="op">*</span>last_update_days_ago)<span class="op">+</span>(<span class="fl">18.628731</span><span class="op">*</span>Web_order)<span class="op">+</span> (<span class="op">-</span><span class="fl">9.111366</span><span class="op">*</span>Gender_male)<span class="op">+</span>(<span class="op">-</span><span class="fl">75.815354</span><span class="op">*</span>Address_is_res)</span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(Spending)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>87.838911</code></pre>
+</div>
+</div>
+<div id="cell-68" class="cell" data-execution_count="35">
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="co"># prediction error. subtract 0 from predicted value as response (Spending) value for the first record in the validation data</span></span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="co"># is zero.</span></span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Prediction Error = '</span>,Spending <span class="op">-</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Prediction Error =  87.838911</code></pre>
+</div>
+</div>
+<p><strong>6.2.c.vi.</strong> Evaluate the predictive accuracy of the model by examining its performance on the validation set.</p>
+<p><strong>Answer:</strong></p>
+<p>The Average error is 7 dollars, with an RMSE of 137.7 dollars. This level of error is practically small given that values of spending in the data are in the range 0 - 1500 dollars. We also see that the validation set performance is approximately similar to the training set performance, indicating no overfitting.</p>
+<div id="cell-70" class="cell" data-execution_count="36">
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="co"># print performance measures (training set)</span></span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Model performance on training data:"</span>)</span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>regressionSummary(train_y, tayko_lm.predict(train_X[predictors]))</span>
+<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-5"><a href="#cb56-5" aria-hidden="true" tabindex="-1"></a><span class="co"># predict prices in validation set, print first few predicted/actual values and residuals</span></span>
+<span id="cb56-6"><a href="#cb56-6" aria-hidden="true" tabindex="-1"></a><span class="co"># we go back to the model we fitted using sklearn</span></span>
+<span id="cb56-7"><a href="#cb56-7" aria-hidden="true" tabindex="-1"></a>tayko_lm_pred <span class="op">=</span> tayko_lm.predict(valid_X[predictors])</span>
+<span id="cb56-8"><a href="#cb56-8" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> pd.DataFrame({<span class="st">'Predicted'</span>: tayko_lm_pred, <span class="st">'Actual'</span>: valid_y, <span class="st">'Residual'</span>: valid_y <span class="op">-</span> tayko_lm_pred})</span>
+<span id="cb56-9"><a href="#cb56-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"First few  predicted/actual values and residuals:</span><span class="ch">\n</span><span class="st">"</span>)</span>
+<span id="cb56-10"><a href="#cb56-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(result.head(<span class="dv">5</span>))</span>
+<span id="cb56-11"><a href="#cb56-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-12"><a href="#cb56-12" aria-hidden="true" tabindex="-1"></a><span class="co"># print performance measures (validation set)</span></span>
+<span id="cb56-13"><a href="#cb56-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Model performance on validation data:"</span>)</span>
+<span id="cb56-14"><a href="#cb56-14" aria-hidden="true" tabindex="-1"></a>regressionSummary(valid_y, tayko_lm_pred)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Model performance on training data:
+
+Regression statistics
+
+               Mean Error (ME) : 0.0000
+Root Mean Squared Error (RMSE) : 125.9999
+     Mean Absolute Error (MAE) : 79.4772
+First few  predicted/actual values and residuals:
+
+       Predicted  Actual    Residual
+674    89.214915       0  -89.214915
+1699  202.231362     184  -18.231362
+1282   49.159303       0  -49.159303
+1315  824.841659    1289  464.158341
+1210    0.121196       0   -0.121196
+
+Model performance on validation data:
+
+Regression statistics
+
+               Mean Error (ME) : 7.1933
+Root Mean Squared Error (RMSE) : 136.7397
+     Mean Absolute Error (MAE) : 83.6010</code></pre>
+</div>
+</div>
+<p><strong>6.2.c.vii.</strong> Create a histogram of the model residuals. Do they appear to follow a normal distribution? How does this aﬀect the predictive performance of the model?</p>
+<p><strong>Answer:</strong></p>
+<p>The histogram of residuals doesn’t appear to be normal. However, this is not a great handicap – the assumption of normally distributed residuals is required for classically-derived confidence intervals, but not so much in data mining, where redictive accuracy is assessed in another way (evaluating performance on the validation data).</p>
+<div id="cell-72" class="cell" data-execution_count="37">
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="co"># compute and plot the residuals for validation data</span></span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>all_residuals <span class="op">=</span> valid_y <span class="op">-</span> tayko_lm_pred</span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>pd.DataFrame({<span class="st">'Residuals'</span>: all_residuals}).hist(bins<span class="op">=</span><span class="dv">30</span>)</span>
+<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Ch-06-ProbSolutions-MLR_files/figure-html/cell-38-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="problem-6.3-predicting-airfare-on-new-routes." class="level1">
+<h1>Problem 6.3 Predicting Airfare on New Routes.</h1>
+<p>The following problem takes place in the United States in the late 1990s, when many major US cities were facing issues with airport congestion, partly as a result of the 1978 deregulation of airlines. Both fares and routes were freed from regulation, and low-fare carriers such as Southwest (SW) began competing on existing routes and starting nonstop service on routes that previously lacked it. Building completely new airports is generally not feasible, but sometimes decommissioned military bases or smaller municipal airports can be reconfgured as regional or larger commercial airports. There are numerous players and interests involved in the issue (airlines, city, state and federal authorities, civic groups, the military, airport operators), and an aviation consulting firm is seeking advisory contracts with these players. The frm needs predictive models to support its consulting service. One thing the frm might want to be able to predict is fares, in the event a new airport is brought into service. The frm starts with the fle Airfares.csv, which contains real data that were collected between Q3-1996 and Q2-1997. The variables in these data are listed in Table 6.13, and are believed to be important in predicting FARE. Some airport-to-airport data are available, but most data are at the city-to-city level. One question that will be of interest in the analysis is the eﬀect that the presence or absence of Southwest has on FARE.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img\TABLE_6.13.PNG" class="img-fluid figure-img"></p>
+<figcaption>TABLE6.13</figcaption>
+</figure>
+</div>
+<div id="cell-74" class="cell" data-execution_count="38">
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load the data and review</span></span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>airfares_df <span class="op">=</span> pd.read_csv(DATA <span class="op">/</span> <span class="st">'Airfares.csv'</span>)</span>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a><span class="co"># check data dimension</span></span>
+<span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'</span><span class="ch">\n</span><span class="st">dimension</span><span class="ch">\n</span><span class="st">'</span>,airfares_df.shape)</span>
+<span id="cb59-5"><a href="#cb59-5" aria-hidden="true" tabindex="-1"></a><span class="co"># view few records</span></span>
+<span id="cb59-6"><a href="#cb59-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'</span><span class="ch">\n</span><span class="st">first five record</span><span class="ch">\n</span><span class="st">'</span>)</span>
+<span id="cb59-7"><a href="#cb59-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(airfares_df.head())</span>
+<span id="cb59-8"><a href="#cb59-8" aria-hidden="true" tabindex="-1"></a><span class="co"># variable types</span></span>
+<span id="cb59-9"><a href="#cb59-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'</span><span class="ch">\n</span><span class="st">Data Type'</span>)</span>
+<span id="cb59-10"><a href="#cb59-10" aria-hidden="true" tabindex="-1"></a>airfares_df.dtypes</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+dimension
+ (638, 18)
+
+first five record
+
+  S_CODE                  S_CITY E_CODE                  E_CITY  COUPON  NEW  \
+0      *  Dallas/Fort Worth   TX      *  Amarillo            TX    1.00    3   
+1      *  Atlanta             GA      *  Baltimore/Wash Intl MD    1.06    3   
+2      *  Boston              MA      *  Baltimore/Wash Intl MD    1.06    3   
+3    ORD  Chicago             IL      *  Baltimore/Wash Intl MD    1.06    3   
+4    MDW  Chicago             IL      *  Baltimore/Wash Intl MD    1.06    3   
+
+  VACATION   SW       HI  S_INCOME  E_INCOME    S_POP    E_POP        SLOT  \
+0       No  Yes  5291.99   28637.0   21112.0  3036732   205711        Free   
+1       No   No  5419.16   26993.0   29838.0  3532657  7145897        Free   
+2       No   No  9185.28   30124.0   29838.0  5787293  7145897        Free   
+3       No  Yes  2657.35   29260.0   29838.0  7830332  7145897  Controlled   
+4       No  Yes  2657.35   29260.0   29838.0  7830332  7145897        Free   
+
+   GATE  DISTANCE    PAX    FARE  
+0  Free       312   7864   64.11  
+1  Free       576   8820  174.47  
+2  Free       364   6452  207.76  
+3  Free       612  25144   85.47  
+4  Free       612  25144   85.47  
+
+Data Type</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="38">
+<pre><code>S_CODE       object
+S_CITY       object
+E_CODE       object
+E_CITY       object
+COUPON      float64
+NEW           int64
+VACATION     object
+SW           object
+HI          float64
+S_INCOME    float64
+E_INCOME    float64
+S_POP         int64
+E_POP         int64
+SLOT         object
+GATE         object
+DISTANCE      int64
+PAX           int64
+FARE        float64
+dtype: object</code></pre>
+</div>
+</div>
+<div id="cell-75" class="cell" data-execution_count="39">
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="co"># preprocess</span></span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a><span class="co"># remove first four variables 'S_CODE', 'S_CITY', 'E_CODE', 'E_CITY'</span></span>
+<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a>selected_var <span class="op">=</span> [<span class="st">'COUPON'</span>, <span class="st">'NEW'</span>, <span class="st">'VACATION'</span>, <span class="st">'SW'</span>, <span class="st">'HI'</span>, <span class="st">'S_INCOME'</span>, <span class="st">'E_INCOME'</span>, <span class="st">'S_POP'</span>, <span class="st">'E_POP'</span>, <span class="st">'SLOT'</span>, <span class="st">'GATE'</span>,</span>
+<span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a>                <span class="st">'DISTANCE'</span>, <span class="st">'PAX'</span>, <span class="st">'FARE'</span>]</span>
+<span id="cb62-5"><a href="#cb62-5" aria-hidden="true" tabindex="-1"></a>airfares_df <span class="op">=</span> airfares_df[selected_var]</span>
+<span id="cb62-6"><a href="#cb62-6" aria-hidden="true" tabindex="-1"></a>airfares_df.dtypes</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="39">
+<pre><code>COUPON      float64
+NEW           int64
+VACATION     object
+SW           object
+HI          float64
+S_INCOME    float64
+E_INCOME    float64
+S_POP         int64
+E_POP         int64
+SLOT         object
+GATE         object
+DISTANCE      int64
+PAX           int64
+FARE        float64
+dtype: object</code></pre>
+</div>
+</div>
+<p><strong>6.3.a.</strong> Explore the numerical predictors and response (FARE) by creating a correlation table and examining some scatterplots between FARE and those predictors. What seems to be the best single predictor of FARE?</p>
+<p><strong>Answer:</strong></p>
+<div id="cell-78" class="cell" data-execution_count="40">
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create a new dataframe with numerical predictors</span></span>
+<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a>predictors_df <span class="op">=</span> airfares_df</span>
+<span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb64-4"><a href="#cb64-4" aria-hidden="true" tabindex="-1"></a>columns <span class="op">=</span> <span class="bu">list</span>(airfares_df.columns)</span>
+<span id="cb64-5"><a href="#cb64-5" aria-hidden="true" tabindex="-1"></a>columns.remove(<span class="st">'VACATION'</span>)</span>
+<span id="cb64-6"><a href="#cb64-6" aria-hidden="true" tabindex="-1"></a>columns.remove(<span class="st">'SW'</span>)</span>
+<span id="cb64-7"><a href="#cb64-7" aria-hidden="true" tabindex="-1"></a>columns.remove(<span class="st">'SLOT'</span>)</span>
+<span id="cb64-8"><a href="#cb64-8" aria-hidden="true" tabindex="-1"></a>columns.remove(<span class="st">'GATE'</span>)</span>
+<span id="cb64-9"><a href="#cb64-9" aria-hidden="true" tabindex="-1"></a>predictors_df <span class="op">=</span> predictors_df[columns]</span>
+<span id="cb64-10"><a href="#cb64-10" aria-hidden="true" tabindex="-1"></a>predictors_df.columns</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="40">
+<pre><code>Index(['COUPON', 'NEW', 'HI', 'S_INCOME', 'E_INCOME', 'S_POP', 'E_POP',
+       'DISTANCE', 'PAX', 'FARE'],
+      dtype='object')</code></pre>
+</div>
+</div>
+<div id="cell-79" class="cell" data-scrolled="true" data-execution_count="41">
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="co">#correlation table</span></span>
+<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a>predictors_df.corr()</span>
+<span id="cb66-3"><a href="#cb66-3" aria-hidden="true" tabindex="-1"></a><span class="co">#corr.style.background_gradient()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="41">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">COUPON</th>
+<th data-quarto-table-cell-role="th">NEW</th>
+<th data-quarto-table-cell-role="th">HI</th>
+<th data-quarto-table-cell-role="th">S_INCOME</th>
+<th data-quarto-table-cell-role="th">E_INCOME</th>
+<th data-quarto-table-cell-role="th">S_POP</th>
+<th data-quarto-table-cell-role="th">E_POP</th>
+<th data-quarto-table-cell-role="th">DISTANCE</th>
+<th data-quarto-table-cell-role="th">PAX</th>
+<th data-quarto-table-cell-role="th">FARE</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">COUPON</td>
+<td>1.000000</td>
+<td>0.020223</td>
+<td>-0.347252</td>
+<td>-0.088403</td>
+<td>0.046889</td>
+<td>-0.107763</td>
+<td>0.094970</td>
+<td>0.746805</td>
+<td>-0.336974</td>
+<td>0.496537</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">NEW</td>
+<td>0.020223</td>
+<td>1.000000</td>
+<td>0.054147</td>
+<td>0.026597</td>
+<td>0.113377</td>
+<td>-0.016672</td>
+<td>0.058568</td>
+<td>0.080965</td>
+<td>0.010495</td>
+<td>0.091730</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">HI</td>
+<td>-0.347252</td>
+<td>0.054147</td>
+<td>1.000000</td>
+<td>-0.027382</td>
+<td>0.082393</td>
+<td>-0.172495</td>
+<td>-0.062456</td>
+<td>-0.312375</td>
+<td>-0.168961</td>
+<td>0.025195</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">S_INCOME</td>
+<td>-0.088403</td>
+<td>0.026597</td>
+<td>-0.027382</td>
+<td>1.000000</td>
+<td>-0.138864</td>
+<td>0.517187</td>
+<td>-0.272280</td>
+<td>0.028153</td>
+<td>0.138197</td>
+<td>0.209135</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">E_INCOME</td>
+<td>0.046889</td>
+<td>0.113377</td>
+<td>0.082393</td>
+<td>-0.138864</td>
+<td>1.000000</td>
+<td>-0.144059</td>
+<td>0.458418</td>
+<td>0.176531</td>
+<td>0.259961</td>
+<td>0.326092</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">S_POP</td>
+<td>-0.107763</td>
+<td>-0.016672</td>
+<td>-0.172495</td>
+<td>0.517187</td>
+<td>-0.144059</td>
+<td>1.000000</td>
+<td>-0.280143</td>
+<td>0.018437</td>
+<td>0.284611</td>
+<td>0.145097</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">E_POP</td>
+<td>0.094970</td>
+<td>0.058568</td>
+<td>-0.062456</td>
+<td>-0.272280</td>
+<td>0.458418</td>
+<td>-0.280143</td>
+<td>1.000000</td>
+<td>0.115640</td>
+<td>0.314698</td>
+<td>0.285043</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">DISTANCE</td>
+<td>0.746805</td>
+<td>0.080965</td>
+<td>-0.312375</td>
+<td>0.028153</td>
+<td>0.176531</td>
+<td>0.018437</td>
+<td>0.115640</td>
+<td>1.000000</td>
+<td>-0.102482</td>
+<td>0.670016</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">PAX</td>
+<td>-0.336974</td>
+<td>0.010495</td>
+<td>-0.168961</td>
+<td>0.138197</td>
+<td>0.259961</td>
+<td>0.284611</td>
+<td>0.314698</td>
+<td>-0.102482</td>
+<td>1.000000</td>
+<td>-0.090705</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">FARE</td>
+<td>0.496537</td>
+<td>0.091730</td>
+<td>0.025195</td>
+<td>0.209135</td>
+<td>0.326092</td>
+<td>0.145097</td>
+<td>0.285043</td>
+<td>0.670016</td>
+<td>-0.090705</td>
+<td>1.000000</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>DISTANCE is the best single predictor of FARE with correlation coefficient of 0.67.</p>
+<div id="cell-81" class="cell" data-execution_count="42">
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot of coupon against fare</span></span>
+<span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a>plt.scatter(airfares_df.COUPON, airfares_df.FARE)</span>
+<span id="cb67-3"><a href="#cb67-3" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Scatter plot showing COUPON against Fare'</span>)</span>
+<span id="cb67-4"><a href="#cb67-4" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Coupon'</span>)</span>
+<span id="cb67-5"><a href="#cb67-5" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Fare'</span>)</span>
+<span id="cb67-6"><a href="#cb67-6" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Ch-06-ProbSolutions-MLR_files/figure-html/cell-43-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="cell-82" class="cell" data-execution_count="43">
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot of distance against fare</span></span>
+<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a>plt.scatter(airfares_df.DISTANCE, airfares_df.FARE)</span>
+<span id="cb68-3"><a href="#cb68-3" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Scatter plot showing Distance against Fare'</span>)</span>
+<span id="cb68-4"><a href="#cb68-4" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Distance'</span>)</span>
+<span id="cb68-5"><a href="#cb68-5" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Fare'</span>)</span>
+<span id="cb68-6"><a href="#cb68-6" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Ch-06-ProbSolutions-MLR_files/figure-html/cell-44-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>6.3.b.</strong> Explore the categorical predictors (excluding the first four) by computing the percentage of ﬂights in each category. Create a pivot table with the average fare in each category. Which categorical predictor seems best for predicting FARE?</p>
+<p><strong>Answer:</strong></p>
+<div id="cell-85" class="cell" data-execution_count="44">
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a>pivot1 <span class="op">=</span> pd.pivot_table(airfares_df, index<span class="op">=</span> <span class="st">'VACATION'</span>, values<span class="op">=</span> <span class="st">"FARE"</span>,</span>
+<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a>               aggfunc<span class="op">=</span> [np.mean])</span>
+<span id="cb69-3"><a href="#cb69-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(pivot1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                mean
+                FARE
+VACATION            
+No        173.552500
+Yes       125.980882</code></pre>
+</div>
+</div>
+<div id="cell-86" class="cell" data-execution_count="45">
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a>pd.pivot_table(airfares_df, index<span class="op">=</span> <span class="st">'SW'</span>, values<span class="op">=</span> <span class="st">"FARE"</span>,</span>
+<span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a>               aggfunc<span class="op">=</span> [np.mean])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="45">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">mean</th>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">FARE</th>
+</tr>
+<tr class="header">
+<th data-quarto-table-cell-role="th">SW</th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">No</td>
+<td>188.182793</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Yes</td>
+<td>98.382268</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="cell-87" class="cell" data-execution_count="46">
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a>pd.pivot_table(airfares_df, index<span class="op">=</span> <span class="st">'SLOT'</span>, values<span class="op">=</span> <span class="st">"FARE"</span>,</span>
+<span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a>               aggfunc<span class="op">=</span> [np.mean])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="46">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">mean</th>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">FARE</th>
+</tr>
+<tr class="header">
+<th data-quarto-table-cell-role="th">SLOT</th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Controlled</td>
+<td>186.059396</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Free</td>
+<td>150.825680</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="cell-88" class="cell" data-execution_count="47">
+<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a>pd.pivot_table(airfares_df, index<span class="op">=</span> <span class="st">'GATE'</span>, values<span class="op">=</span> <span class="st">"FARE"</span>,</span>
+<span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a>               aggfunc<span class="op">=</span> [np.mean])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="47">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">mean</th>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">FARE</th>
+</tr>
+<tr class="header">
+<th data-quarto-table-cell-role="th">GATE</th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Constrained</td>
+<td>193.129032</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Free</td>
+<td>153.095953</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>SW is the single best categorical predictor of FARE.</p>
+<p><strong>6.3.c.</strong> Find a model for predicting the average fare on a new route:</p>
+<p><strong>6.3.c.i.</strong> Convert categorical variables (e.g., SW) into dummy variables. Then, partition the data into training and validation sets. The model will be fit to the training data and evaluated on the validation set.</p>
+<p><strong>Answer:</strong></p>
+<p>The columns VACATION, SW, SLOT, and GATE are not numeric. Convert them to numeric.</p>
+<div id="cell-93" class="cell" data-execution_count="48">
+<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a>airfares_df[<span class="st">'VACATION'</span>] <span class="op">=</span> [<span class="dv">1</span> <span class="cf">if</span> v <span class="op">==</span> <span class="st">'Yes'</span> <span class="cf">else</span> <span class="dv">0</span> <span class="cf">for</span> v <span class="kw">in</span> airfares_df[<span class="st">'VACATION'</span>]]</span>
+<span id="cb74-2"><a href="#cb74-2" aria-hidden="true" tabindex="-1"></a>airfares_df[<span class="st">'SW'</span>] <span class="op">=</span> [<span class="dv">1</span> <span class="cf">if</span> v <span class="op">==</span> <span class="st">'Yes'</span> <span class="cf">else</span> <span class="dv">0</span> <span class="cf">for</span> v <span class="kw">in</span> airfares_df[<span class="st">'SW'</span>]]</span>
+<span id="cb74-3"><a href="#cb74-3" aria-hidden="true" tabindex="-1"></a>airfares_df[<span class="st">'SLOT'</span>] <span class="op">=</span> [<span class="dv">1</span> <span class="cf">if</span> v <span class="op">==</span> <span class="st">'Controlled'</span> <span class="cf">else</span> <span class="dv">0</span> <span class="cf">for</span> v <span class="kw">in</span> airfares_df[<span class="st">'SLOT'</span>]]</span>
+<span id="cb74-4"><a href="#cb74-4" aria-hidden="true" tabindex="-1"></a>airfares_df[<span class="st">'GATE'</span>] <span class="op">=</span> [<span class="dv">1</span> <span class="cf">if</span> v <span class="op">==</span> <span class="st">'Constrained'</span> <span class="cf">else</span> <span class="dv">0</span> <span class="cf">for</span> v <span class="kw">in</span> airfares_df[<span class="st">'GATE'</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-94" class="cell" data-execution_count="49">
+<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="co">#partition the data into training (60%) and validation (40%) sets</span></span>
+<span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a>predictors <span class="op">=</span> [<span class="st">'COUPON'</span>, <span class="st">'NEW'</span>, <span class="st">'VACATION'</span>, <span class="st">'SW'</span>, <span class="st">'HI'</span>, <span class="st">'S_INCOME'</span>, <span class="st">'E_INCOME'</span>, <span class="st">'S_POP'</span>, <span class="st">'E_POP'</span>, <span class="st">'SLOT'</span>, <span class="st">'GATE'</span>, <span class="st">'DISTANCE'</span>,</span>
+<span id="cb75-3"><a href="#cb75-3" aria-hidden="true" tabindex="-1"></a>              <span class="st">'PAX'</span>]</span>
+<span id="cb75-4"><a href="#cb75-4" aria-hidden="true" tabindex="-1"></a>outcome <span class="op">=</span> <span class="st">'FARE'</span></span>
+<span id="cb75-5"><a href="#cb75-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb75-6"><a href="#cb75-6" aria-hidden="true" tabindex="-1"></a><span class="co"># partition the data</span></span>
+<span id="cb75-7"><a href="#cb75-7" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> pd.get_dummies(airfares_df[predictors], drop_first<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb75-8"><a href="#cb75-8" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> airfares_df[outcome]</span>
+<span id="cb75-9"><a href="#cb75-9" aria-hidden="true" tabindex="-1"></a>train_X, valid_X, train_y, valid_y <span class="op">=</span> train_test_split(X, y, test_size<span class="op">=</span><span class="fl">0.4</span>, random_state<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb75-10"><a href="#cb75-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb75-11"><a href="#cb75-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Training set:'</span>, train_X.shape, <span class="st">'Validation set:'</span>, valid_X.shape)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Training set: (382, 13) Validation set: (256, 13)</code></pre>
+</div>
+</div>
+<p><strong>6.3.c.ii.</strong> Use stepwise regression to reduce the number of predictors. You can ignore the frst four predictors (S_CODE, S_CITY, E_CODE, E_CITY). Report the estimated model selected.</p>
+<p><strong>Answer:</strong></p>
+<div id="cell-97" class="cell" data-execution_count="50">
+<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="co"># stepwise regression</span></span>
+<span id="cb77-2"><a href="#cb77-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> train_model(variables):</span>
+<span id="cb77-3"><a href="#cb77-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">len</span>(variables) <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb77-4"><a href="#cb77-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">None</span></span>
+<span id="cb77-5"><a href="#cb77-5" aria-hidden="true" tabindex="-1"></a>    model <span class="op">=</span> LinearRegression()</span>
+<span id="cb77-6"><a href="#cb77-6" aria-hidden="true" tabindex="-1"></a>    model.fit(train_X[variables], train_y)</span>
+<span id="cb77-7"><a href="#cb77-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> model</span>
+<span id="cb77-8"><a href="#cb77-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-9"><a href="#cb77-9" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> score_model(model, variables):</span>
+<span id="cb77-10"><a href="#cb77-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">len</span>(variables) <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb77-11"><a href="#cb77-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> AIC_score(train_y, [train_y.mean()] <span class="op">*</span> <span class="bu">len</span>(train_y), model, df<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb77-12"><a href="#cb77-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> AIC_score(train_y, model.predict(train_X[variables]), model)</span>
+<span id="cb77-13"><a href="#cb77-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-14"><a href="#cb77-14" aria-hidden="true" tabindex="-1"></a>best_model, best_variables <span class="op">=</span> stepwise_selection(train_X.columns, train_model, score_model, verbose<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb77-15"><a href="#cb77-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Best Subset:"</span>, best_variables)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Variables: COUPON, NEW, VACATION, SW, HI, S_INCOME, E_INCOME, S_POP, E_POP, SLOT, GATE, DISTANCE, PAX
+Start: score=4379.42, constant
+Step: score=4149.88, add DISTANCE
+Step: score=4025.89, add SW
+Step: score=3913.59, add VACATION
+Step: score=3890.27, add HI
+Step: score=3873.33, add GATE
+Step: score=3852.81, add SLOT
+Step: score=3850.30, add PAX
+Step: score=3844.58, add E_POP
+Step: score=3826.43, add S_POP
+Step: score=3821.88, add E_INCOME
+Step: score=3821.88, unchanged None
+Best Subset: ['DISTANCE', 'SW', 'VACATION', 'HI', 'GATE', 'SLOT', 'PAX', 'E_POP', 'S_POP', 'E_INCOME']</code></pre>
+</div>
+</div>
+<p>According to the output the model with 10 predictors (11 coefficients) is the best one.</p>
+<p><strong>6.3.c.iii.</strong> Repeat (ii) using exhaustive search instead of stepwise regression. Compare the resulting best model to the one you obtained in (ii) in terms of the predictors that are in the model.</p>
+<p><strong>Answer:</strong></p>
+<div id="cell-101" class="cell" data-execution_count="51">
+<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="co"># exhaustive search</span></span>
+<span id="cb79-2"><a href="#cb79-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> train_model(variables):</span>
+<span id="cb79-3"><a href="#cb79-3" aria-hidden="true" tabindex="-1"></a>    model <span class="op">=</span> LinearRegression()</span>
+<span id="cb79-4"><a href="#cb79-4" aria-hidden="true" tabindex="-1"></a>    model.fit(train_X[variables], train_y)</span>
+<span id="cb79-5"><a href="#cb79-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> model</span>
+<span id="cb79-6"><a href="#cb79-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb79-7"><a href="#cb79-7" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> score_model(model, variables):</span>
+<span id="cb79-8"><a href="#cb79-8" aria-hidden="true" tabindex="-1"></a>    pred_y <span class="op">=</span> model.predict(train_X[variables])</span>
+<span id="cb79-9"><a href="#cb79-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># we negate as score is optimized to be as low as possible</span></span>
+<span id="cb79-10"><a href="#cb79-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">-</span>adjusted_r2_score(train_y, pred_y, model)</span>
+<span id="cb79-11"><a href="#cb79-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb79-12"><a href="#cb79-12" aria-hidden="true" tabindex="-1"></a>allVariables <span class="op">=</span> train_X.columns</span>
+<span id="cb79-13"><a href="#cb79-13" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> exhaustive_search(allVariables, train_model, score_model)</span>
+<span id="cb79-14"><a href="#cb79-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb79-15"><a href="#cb79-15" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> []</span>
+<span id="cb79-16"><a href="#cb79-16" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> result <span class="kw">in</span> results:</span>
+<span id="cb79-17"><a href="#cb79-17" aria-hidden="true" tabindex="-1"></a>    model <span class="op">=</span> result[<span class="st">'model'</span>]</span>
+<span id="cb79-18"><a href="#cb79-18" aria-hidden="true" tabindex="-1"></a>    variables <span class="op">=</span> result[<span class="st">'variables'</span>]</span>
+<span id="cb79-19"><a href="#cb79-19" aria-hidden="true" tabindex="-1"></a>    AIC <span class="op">=</span> AIC_score(train_y, model.predict(train_X[variables]), model)</span>
+<span id="cb79-20"><a href="#cb79-20" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb79-21"><a href="#cb79-21" aria-hidden="true" tabindex="-1"></a>    d <span class="op">=</span> {<span class="st">'n'</span>: result[<span class="st">'n'</span>], <span class="st">'r2adj'</span>: <span class="op">-</span>result[<span class="st">'score'</span>], <span class="st">'AIC'</span>: AIC}</span>
+<span id="cb79-22"><a href="#cb79-22" aria-hidden="true" tabindex="-1"></a>    d.update({var: var <span class="kw">in</span> result[<span class="st">'variables'</span>] <span class="cf">for</span> var <span class="kw">in</span> allVariables})</span>
+<span id="cb79-23"><a href="#cb79-23" aria-hidden="true" tabindex="-1"></a>    data.append(d)</span>
+<span id="cb79-24"><a href="#cb79-24" aria-hidden="true" tabindex="-1"></a>pd.set_option(<span class="st">'display.width'</span>, <span class="dv">100</span>)</span>
+<span id="cb79-25"><a href="#cb79-25" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(pd.DataFrame(data, columns<span class="op">=</span>(<span class="st">'n'</span>, <span class="st">'r2adj'</span>, <span class="st">'AIC'</span>) <span class="op">+</span> <span class="bu">tuple</span>(<span class="bu">sorted</span>(allVariables))))</span>
+<span id="cb79-26"><a href="#cb79-26" aria-hidden="true" tabindex="-1"></a>pd.reset_option(<span class="st">'display.width'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     n     r2adj          AIC  COUPON  DISTANCE  E_INCOME  E_POP   GATE     HI    NEW    PAX  \
+0    1  0.453107  4149.881509   False      True     False  False  False  False  False  False   
+1    2  0.605715  4025.892420   False      True     False  False  False  False  False  False   
+2    3  0.706909  3913.585125   False      True     False  False  False  False  False  False   
+3    4  0.724977  3890.268211   False      True     False  False  False   True  False  False   
+4    5  0.737584  3873.328296   False      True     False  False   True   True  False  False   
+5    6  0.751947  3852.808698   False      True     False  False   True   True  False  False   
+6    7  0.758747  3843.170960   False      True     False   True  False   True  False   True   
+7    8  0.765105  3833.945866   False      True     False   True   True   True  False   True   
+8    9  0.770266  3826.433471   False      True     False   True   True   True  False   True   
+9   10  0.773567  3821.876901   False      True      True   True   True   True  False   True   
+10  11  0.773595  3822.798222   False      True      True   True   True   True  False   True   
+11  12  0.773559  3823.825398   False      True      True   True   True   True   True   True   
+12  13  0.773292  3825.237680    True      True      True   True   True   True   True   True   
+
+     SLOT     SW  S_INCOME  S_POP  VACATION  
+0   False  False     False  False     False  
+1   False   True     False  False     False  
+2   False   True     False  False      True  
+3   False   True     False  False      True  
+4   False   True     False  False      True  
+5    True   True     False  False      True  
+6   False   True     False   True      True  
+7   False   True     False   True      True  
+8    True   True     False   True      True  
+9    True   True     False   True      True  
+10   True   True      True   True      True  
+11   True   True      True   True      True  
+12   True   True      True   True      True  </code></pre>
+</div>
+</div>
+<p>Stepwise selection produced best model with these 10 variables (11 coefficients): ‘DISTANCE’, ‘SW’, ‘VACATION’, ‘HI’, ‘GATE’, ‘SLOT’, ‘PAX’, ‘E_POP’, ‘S_POP’, ‘E_INCOME’. It excluded variables named COUPON, NEW and S_INCOME.</p>
+<p>Exhaustive search also produced a model with 10 predictors (11 coefficients) which is the best one (according to adjusted R-squared and AIC values). It excluded the same variables named COUPON, NEW and S_INCOME.</p>
+<p><strong>6.3.c.iv.</strong> Compare the predictive accuracy of both models (ii) and (iii) using measures such as RMSE and average error and lift charts.</p>
+<p><strong>Answer:</strong></p>
+<p>Since models are same they will have the same predictive accuracy.</p>
+<div id="cell-105" class="cell" data-execution_count="52">
+<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="co"># predictors and outcome</span></span>
+<span id="cb81-2"><a href="#cb81-2" aria-hidden="true" tabindex="-1"></a>predictors <span class="op">=</span> [<span class="st">'DISTANCE'</span>, <span class="st">'SW'</span>, <span class="st">'VACATION'</span>, <span class="st">'HI'</span>, <span class="st">'GATE'</span>, <span class="st">'SLOT'</span>, <span class="st">'PAX'</span>, <span class="st">'E_POP'</span>, <span class="st">'S_POP'</span>, <span class="st">'E_INCOME'</span>]</span>
+<span id="cb81-3"><a href="#cb81-3" aria-hidden="true" tabindex="-1"></a>outcome <span class="op">=</span> <span class="st">'FARE'</span></span>
+<span id="cb81-4"><a href="#cb81-4" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> train_X[predictors]</span>
+<span id="cb81-5"><a href="#cb81-5" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> train_y</span>
+<span id="cb81-6"><a href="#cb81-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb81-7"><a href="#cb81-7" aria-hidden="true" tabindex="-1"></a><span class="co"># fit the regression model y on x</span></span>
+<span id="cb81-8"><a href="#cb81-8" aria-hidden="true" tabindex="-1"></a>airfares_lm <span class="op">=</span> LinearRegression()</span>
+<span id="cb81-9"><a href="#cb81-9" aria-hidden="true" tabindex="-1"></a>airfares_lm.fit(X,y)</span>
+<span id="cb81-10"><a href="#cb81-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb81-11"><a href="#cb81-11" aria-hidden="true" tabindex="-1"></a><span class="co"># print coefficients</span></span>
+<span id="cb81-12"><a href="#cb81-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'intercept '</span>, airfares_lm.intercept_)</span>
+<span id="cb81-13"><a href="#cb81-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(pd.DataFrame({<span class="st">'Predictor'</span>: X.columns, <span class="st">'coefficient'</span>: airfares_lm.coef_}))</span>
+<span id="cb81-14"><a href="#cb81-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb81-15"><a href="#cb81-15" aria-hidden="true" tabindex="-1"></a><span class="co"># print performance measures (training set)</span></span>
+<span id="cb81-16"><a href="#cb81-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Model performance on training data:"</span>)</span>
+<span id="cb81-17"><a href="#cb81-17" aria-hidden="true" tabindex="-1"></a>regressionSummary(train_y, airfares_lm.predict(train_X[predictors]))</span>
+<span id="cb81-18"><a href="#cb81-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb81-19"><a href="#cb81-19" aria-hidden="true" tabindex="-1"></a><span class="co"># predict prices in validation set, print first few predicted/actual values and residuals</span></span>
+<span id="cb81-20"><a href="#cb81-20" aria-hidden="true" tabindex="-1"></a>airfares_lm_pred <span class="op">=</span> airfares_lm.predict(valid_X[predictors])</span>
+<span id="cb81-21"><a href="#cb81-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb81-22"><a href="#cb81-22" aria-hidden="true" tabindex="-1"></a><span class="co"># print performance measures (validation set)</span></span>
+<span id="cb81-23"><a href="#cb81-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Model performance on validation data:"</span>)</span>
+<span id="cb81-24"><a href="#cb81-24" aria-hidden="true" tabindex="-1"></a>regressionSummary(valid_y, airfares_lm_pred)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>intercept  17.56489387958925
+  Predictor  coefficient
+0  DISTANCE     0.075558
+1        SW   -43.031272
+2  VACATION   -35.865596
+3        HI     0.007188
+4      GATE    21.410803
+5      SLOT    13.915304
+6       PAX    -0.000829
+7     E_POP     0.000004
+8     S_POP     0.000004
+9  E_INCOME     0.001148
+
+Model performance on training data:
+
+Regression statistics
+
+                      Mean Error (ME) : -0.0000
+       Root Mean Squared Error (RMSE) : 34.8867
+            Mean Absolute Error (MAE) : 27.1374
+          Mean Percentage Error (MPE) : -4.5313
+Mean Absolute Percentage Error (MAPE) : 20.1672
+
+Model performance on validation data:
+
+Regression statistics
+
+                      Mean Error (ME) : -1.8591
+       Root Mean Squared Error (RMSE) : 36.1129
+            Mean Absolute Error (MAE) : 28.5252
+          Mean Percentage Error (MPE) : -6.7084
+Mean Absolute Percentage Error (MAPE) : 21.7198</code></pre>
+</div>
+</div>
+<p><strong>6.3.c.v.</strong> Using model (iii), predict the average fare on a route with the following characteristics: COUPON = 1.202, NEW = 3, VACATION = No, SW = No, HI = 4442.141, S_INCOME = 28,760, E_INCOME = 27,664, S_POP = 4,557,004, E_POP = 3,195,503, SLOT = Free, GATE = Free, PAX = 12,782, DISTANCE = 1976 miles.</p>
+<p><strong>Answer:</strong></p>
+<div id="cell-108" class="cell" data-execution_count="53">
+<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fare when SW does not cover this route</span></span>
+<span id="cb83-2"><a href="#cb83-2" aria-hidden="true" tabindex="-1"></a><span class="co"># enter new data in data frame format</span></span>
+<span id="cb83-3"><a href="#cb83-3" aria-hidden="true" tabindex="-1"></a>new_data <span class="op">=</span> pd.DataFrame([</span>
+<span id="cb83-4"><a href="#cb83-4" aria-hidden="true" tabindex="-1"></a>    {<span class="st">'VACATION'</span>: <span class="dv">0</span>, <span class="st">'SW'</span>: <span class="dv">0</span>, <span class="st">'HI'</span>: <span class="fl">4442.141</span>, <span class="st">'E_INCOME'</span>: <span class="dv">27664</span>, <span class="st">'S_POP'</span>: <span class="dv">4557004</span>, <span class="st">'E_POP'</span>: <span class="dv">3195503</span>, <span class="st">'SLOT'</span>: <span class="dv">1</span>, <span class="st">'GATE'</span>: <span class="dv">1</span>,</span>
+<span id="cb83-5"><a href="#cb83-5" aria-hidden="true" tabindex="-1"></a>     <span class="st">'PAX'</span>: <span class="dv">12782</span>, <span class="st">'DISTANCE'</span>: <span class="dv">1976</span>}])</span>
+<span id="cb83-6"><a href="#cb83-6" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb83-7"><a href="#cb83-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(new_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   VACATION  SW        HI  E_INCOME    S_POP    E_POP  SLOT  GATE    PAX  \
+0         0   0  4442.141     27664  4557004  3195503     1     1  12782   
+
+   DISTANCE  
+0      1976  </code></pre>
+</div>
+</div>
+<div id="cell-109" class="cell" data-execution_count="54">
+<div class="sourceCode cell-code" id="cb85"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="co"># predict Fare when SW does not cover this route</span></span>
+<span id="cb85-2"><a href="#cb85-2" aria-hidden="true" tabindex="-1"></a>pred <span class="op">=</span> airfares_lm.predict(new_data[predictors])</span>
+<span id="cb85-3"><a href="#cb85-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(pred)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[287.04763737]</code></pre>
+</div>
+</div>
+<p><strong>6.3.c.vi.</strong> Predict the reduction in average fare on the route in (v) if Southwest decides to cover this route [using model (iii)].</p>
+<p><strong>Answer:</strong></p>
+<div id="cell-112" class="cell" data-execution_count="55">
+<div class="sourceCode cell-code" id="cb87"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a><span class="co"># predict Fare when SW decides to cover this route</span></span>
+<span id="cb87-2"><a href="#cb87-2" aria-hidden="true" tabindex="-1"></a>new_data <span class="op">=</span> pd.DataFrame([</span>
+<span id="cb87-3"><a href="#cb87-3" aria-hidden="true" tabindex="-1"></a>    {<span class="st">'VACATION'</span>: <span class="dv">0</span>, <span class="st">'SW'</span>: <span class="dv">1</span>, <span class="st">'HI'</span>: <span class="fl">4442.141</span>, <span class="st">'S_INCOME'</span>: <span class="dv">28760</span>, <span class="st">'E_INCOME'</span>: <span class="dv">27664</span>, <span class="st">'S_POP'</span>: <span class="dv">4557004</span>, <span class="st">'E_POP'</span>: <span class="dv">3195503</span>, <span class="st">'SLOT'</span>: <span class="dv">1</span>, <span class="st">'GATE'</span>: <span class="dv">1</span>,</span>
+<span id="cb87-4"><a href="#cb87-4" aria-hidden="true" tabindex="-1"></a>     <span class="st">'PAX'</span>: <span class="dv">12782</span>, <span class="st">'DISTANCE'</span>: <span class="dv">1976</span>}])</span>
+<span id="cb87-5"><a href="#cb87-5" aria-hidden="true" tabindex="-1"></a>pred1 <span class="op">=</span> airfares_lm.predict(new_data[predictors])</span>
+<span id="cb87-6"><a href="#cb87-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(pred1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[244.01636531]</code></pre>
+</div>
+</div>
+<div id="cell-113" class="cell" data-execution_count="56">
+<div class="sourceCode cell-code" id="cb89"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a><span class="co"># reduction in average fare after southwest decided to cover this route</span></span>
+<span id="cb89-2"><a href="#cb89-2" aria-hidden="true" tabindex="-1"></a>reduction <span class="op">=</span> pred <span class="op">-</span> pred1</span>
+<span id="cb89-3"><a href="#cb89-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(reduction)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[43.03127206]</code></pre>
+</div>
+</div>
+<p>So the reduction in average fare after southwest decided to cover this route is $43.</p>
+<p><strong>6.3.c.vii.</strong> In reality, which of the factors will not be available for predicting the average fare from a new airport (i.e., before ﬂights start operating on those routes)? Which ones can be estimated? How?</p>
+<p><strong>Answer:</strong></p>
+<p>Several of the variables would not be available until after flights start operating on the route.</p>
+<p>COUPON - Not Available<br>
+NEW - Not Available<br>
+VACATION - Available<br>
+SW - Not Available<br>
+HI - Not Available<br>
+S_INCOME - Available<br>
+E_INCOME - Available<br>
+S_POP - Available<br>
+E_POP - Available<br>
+SLOT - Available<br>
+GATE - Available<br>
+DISTANCE - Available<br>
+PAX - Not Available</p>
+<p><strong>6.3.c.viii.</strong> Select a model that includes only factors that are available before ﬂights begin to operate on the new route. Use an exhaustive search to fnd such a model.</p>
+<p><strong>Answer:</strong></p>
+<div id="cell-118" class="cell" data-execution_count="57">
+<div class="sourceCode cell-code" id="cb91"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true" tabindex="-1"></a><span class="co"># partition the data into training (60%) and validation (40%) sets</span></span>
+<span id="cb91-2"><a href="#cb91-2" aria-hidden="true" tabindex="-1"></a>predictors <span class="op">=</span> [<span class="st">'VACATION'</span>, <span class="st">'S_INCOME'</span>, <span class="st">'E_INCOME'</span>, <span class="st">'S_POP'</span>, <span class="st">'E_POP'</span>, <span class="st">'SLOT'</span>, <span class="st">'GATE'</span>, <span class="st">'DISTANCE'</span>]</span>
+<span id="cb91-3"><a href="#cb91-3" aria-hidden="true" tabindex="-1"></a>outcome <span class="op">=</span> <span class="st">'FARE'</span></span>
+<span id="cb91-4"><a href="#cb91-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb91-5"><a href="#cb91-5" aria-hidden="true" tabindex="-1"></a><span class="co"># partition the data</span></span>
+<span id="cb91-6"><a href="#cb91-6" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> pd.get_dummies(airfares_df[predictors], drop_first<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb91-7"><a href="#cb91-7" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> airfares_df[outcome]</span>
+<span id="cb91-8"><a href="#cb91-8" aria-hidden="true" tabindex="-1"></a>train_X, valid_X, train_y, valid_y <span class="op">=</span> train_test_split(X, y, test_size<span class="op">=</span><span class="fl">0.4</span>, random_state<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb91-9"><a href="#cb91-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb91-10"><a href="#cb91-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Training set:'</span>, train_X.shape, <span class="st">'Validation set:'</span>, valid_X.shape)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Training set: (382, 8) Validation set: (256, 8)</code></pre>
+</div>
+</div>
+<div id="cell-119" class="cell" data-execution_count="58">
+<div class="sourceCode cell-code" id="cb93"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a><span class="co"># exhaustive search</span></span>
+<span id="cb93-2"><a href="#cb93-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> train_model(variables):</span>
+<span id="cb93-3"><a href="#cb93-3" aria-hidden="true" tabindex="-1"></a>    model <span class="op">=</span> LinearRegression()</span>
+<span id="cb93-4"><a href="#cb93-4" aria-hidden="true" tabindex="-1"></a>    model.fit(train_X[variables], train_y)</span>
+<span id="cb93-5"><a href="#cb93-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> model</span>
+<span id="cb93-6"><a href="#cb93-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb93-7"><a href="#cb93-7" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> score_model(model, variables):</span>
+<span id="cb93-8"><a href="#cb93-8" aria-hidden="true" tabindex="-1"></a>    pred_y <span class="op">=</span> model.predict(train_X[variables])</span>
+<span id="cb93-9"><a href="#cb93-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># we negate as score is optimized to be as low as possible</span></span>
+<span id="cb93-10"><a href="#cb93-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">-</span>adjusted_r2_score(train_y, pred_y, model)</span>
+<span id="cb93-11"><a href="#cb93-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb93-12"><a href="#cb93-12" aria-hidden="true" tabindex="-1"></a>allVariables <span class="op">=</span> train_X.columns</span>
+<span id="cb93-13"><a href="#cb93-13" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> exhaustive_search(allVariables, train_model, score_model)</span>
+<span id="cb93-14"><a href="#cb93-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb93-15"><a href="#cb93-15" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> []</span>
+<span id="cb93-16"><a href="#cb93-16" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> result <span class="kw">in</span> results:</span>
+<span id="cb93-17"><a href="#cb93-17" aria-hidden="true" tabindex="-1"></a>    model <span class="op">=</span> result[<span class="st">'model'</span>]</span>
+<span id="cb93-18"><a href="#cb93-18" aria-hidden="true" tabindex="-1"></a>    variables <span class="op">=</span> result[<span class="st">'variables'</span>]</span>
+<span id="cb93-19"><a href="#cb93-19" aria-hidden="true" tabindex="-1"></a>    AIC <span class="op">=</span> AIC_score(train_y, model.predict(train_X[variables]), model)</span>
+<span id="cb93-20"><a href="#cb93-20" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb93-21"><a href="#cb93-21" aria-hidden="true" tabindex="-1"></a>    d <span class="op">=</span> {<span class="st">'n'</span>: result[<span class="st">'n'</span>], <span class="st">'r2adj'</span>: <span class="op">-</span>result[<span class="st">'score'</span>], <span class="st">'AIC'</span>: AIC}</span>
+<span id="cb93-22"><a href="#cb93-22" aria-hidden="true" tabindex="-1"></a>    d.update({var: var <span class="kw">in</span> result[<span class="st">'variables'</span>] <span class="cf">for</span> var <span class="kw">in</span> allVariables})</span>
+<span id="cb93-23"><a href="#cb93-23" aria-hidden="true" tabindex="-1"></a>    data.append(d)</span>
+<span id="cb93-24"><a href="#cb93-24" aria-hidden="true" tabindex="-1"></a>pd.set_option(<span class="st">'display.width'</span>, <span class="dv">100</span>)</span>
+<span id="cb93-25"><a href="#cb93-25" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(pd.DataFrame(data, columns<span class="op">=</span>(<span class="st">'n'</span>, <span class="st">'r2adj'</span>, <span class="st">'AIC'</span>) <span class="op">+</span> <span class="bu">tuple</span>(<span class="bu">sorted</span>(allVariables))))</span>
+<span id="cb93-26"><a href="#cb93-26" aria-hidden="true" tabindex="-1"></a>pd.reset_option(<span class="st">'display.width'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   n     r2adj          AIC  DISTANCE  E_INCOME  E_POP   GATE   SLOT  S_INCOME  S_POP  VACATION
+0  1  0.453107  4149.881509      True     False  False  False  False     False  False     False
+1  2  0.562472  4065.645719      True     False  False  False  False     False  False      True
+2  3  0.607897  4024.763754      True     False  False   True  False     False  False      True
+3  4  0.639707  3993.431429      True     False  False   True   True     False  False      True
+4  5  0.655706  3977.066487      True      True  False   True   True     False  False      True
+5  6  0.660329  3972.885153      True      True  False   True   True      True  False      True
+6  7  0.664409  3969.248469      True      True   True   True   True      True  False      True
+7  8  0.663807  3970.910599      True      True   True   True   True      True   True      True</code></pre>
+</div>
+</div>
+<p>Model with 7 predictors (8 coefficients) is the best one among other models in this case. That excludes the predictor S_POP.</p>
+<p><strong>6.3.c.ix.</strong> Use the model in (viii) to predict the average fare on a route with characteristics COUPON = 1.202, NEW = 3, VACATION = No, SW = No, HI = 4442.141, S_INCOME = 28,760, E_INCOME = 27,664, S_ POP = 4,557,004, E_POP = 3,195,503, SLOT = Free, GATE = Free, PAX = 12782, DISTANCE = 1976 miles.</p>
+<p><strong>Answer:</strong></p>
+<div id="cell-123" class="cell" data-execution_count="59">
+<div class="sourceCode cell-code" id="cb95"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb95-1"><a href="#cb95-1" aria-hidden="true" tabindex="-1"></a><span class="co"># predictors and outcome</span></span>
+<span id="cb95-2"><a href="#cb95-2" aria-hidden="true" tabindex="-1"></a>predictors <span class="op">=</span> [<span class="st">'DISTANCE'</span>, <span class="st">'VACATION'</span>, <span class="st">'GATE'</span>, <span class="st">'SLOT'</span>, <span class="st">'E_POP'</span>, <span class="st">'E_INCOME'</span>, <span class="st">'S_INCOME'</span>]</span>
+<span id="cb95-3"><a href="#cb95-3" aria-hidden="true" tabindex="-1"></a>outcome <span class="op">=</span> <span class="st">'FARE'</span></span>
+<span id="cb95-4"><a href="#cb95-4" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> train_X[predictors]</span>
+<span id="cb95-5"><a href="#cb95-5" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> train_y</span>
+<span id="cb95-6"><a href="#cb95-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb95-7"><a href="#cb95-7" aria-hidden="true" tabindex="-1"></a><span class="co">#fit the regression model y on x</span></span>
+<span id="cb95-8"><a href="#cb95-8" aria-hidden="true" tabindex="-1"></a>airfares_lm <span class="op">=</span> LinearRegression()</span>
+<span id="cb95-9"><a href="#cb95-9" aria-hidden="true" tabindex="-1"></a>airfares_lm.fit(X,y)</span>
+<span id="cb95-10"><a href="#cb95-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb95-11"><a href="#cb95-11" aria-hidden="true" tabindex="-1"></a><span class="co"># print coefficients</span></span>
+<span id="cb95-12"><a href="#cb95-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'intercept '</span>, airfares_lm.intercept_)</span>
+<span id="cb95-13"><a href="#cb95-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(pd.DataFrame({<span class="st">'Predictor'</span>: X.columns, <span class="st">'coefficient'</span>: airfares_lm.coef_}))</span>
+<span id="cb95-14"><a href="#cb95-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb95-15"><a href="#cb95-15" aria-hidden="true" tabindex="-1"></a><span class="co"># print performance measures (training set)</span></span>
+<span id="cb95-16"><a href="#cb95-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Model performance on training data:"</span>)</span>
+<span id="cb95-17"><a href="#cb95-17" aria-hidden="true" tabindex="-1"></a>regressionSummary(train_y, airfares_lm.predict(train_X[predictors]))</span>
+<span id="cb95-18"><a href="#cb95-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb95-19"><a href="#cb95-19" aria-hidden="true" tabindex="-1"></a><span class="co"># predict prices in validation set, print first few predicted/actual values and residuals</span></span>
+<span id="cb95-20"><a href="#cb95-20" aria-hidden="true" tabindex="-1"></a>airfares_lm_pred <span class="op">=</span> airfares_lm.predict(valid_X[predictors])</span>
+<span id="cb95-21"><a href="#cb95-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb95-22"><a href="#cb95-22" aria-hidden="true" tabindex="-1"></a><span class="co"># print performance measures (validation set)</span></span>
+<span id="cb95-23"><a href="#cb95-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Model performance on validation data:"</span>)</span>
+<span id="cb95-24"><a href="#cb95-24" aria-hidden="true" tabindex="-1"></a>regressionSummary(valid_y, airfares_lm_pred)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>intercept  -40.8073738366258
+  Predictor  coefficient
+0  DISTANCE     0.077434
+1  VACATION   -41.230763
+2      GATE    38.056133
+3      SLOT    18.903701
+4     E_POP     0.000002
+5  E_INCOME     0.001974
+6  S_INCOME     0.002240
+
+Model performance on training data:
+
+Regression statistics
+
+                      Mean Error (ME) : -0.0000
+       Root Mean Squared Error (RMSE) : 42.6426
+            Mean Absolute Error (MAE) : 33.6897
+          Mean Percentage Error (MPE) : -8.2491
+Mean Absolute Percentage Error (MAPE) : 25.3452
+
+Model performance on validation data:
+
+Regression statistics
+
+                      Mean Error (ME) : 0.3728
+       Root Mean Squared Error (RMSE) : 43.8816
+            Mean Absolute Error (MAE) : 35.2079
+          Mean Percentage Error (MPE) : -9.9589
+Mean Absolute Percentage Error (MAPE) : 26.4530</code></pre>
+</div>
+</div>
+<div id="cell-124" class="cell" data-scrolled="true" data-execution_count="60">
+<div class="sourceCode cell-code" id="cb97"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb97-1"><a href="#cb97-1" aria-hidden="true" tabindex="-1"></a><span class="co"># predict Fare for new data</span></span>
+<span id="cb97-2"><a href="#cb97-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(airfares_lm.predict(new_data[predictors]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[295.58795228]</code></pre>
+</div>
+</div>
+<p>So the average fare on this route is $295.59.</p>
+<p><strong>6.3.c.x.</strong> Compare the predictive accuracy of this model with model (iii). Is this model good enough, or is it worthwhile reevaluating the model once ﬂights begin on the new route?</p>
+<p><strong>Answer:</strong></p>
+<p>RMS error is higher in model (viii). We need to reevaluate the model once flights commence on the new routes.</p>
+<p><strong>6.3.d.</strong> In competitive industries, a new entrant with a novel business plan can have a disruptive eﬀect on existing firms. If a new entrant’s business model is sustainable, other players are forced to respond by changing their business practices. If the goal of the analysis was to evaluate the eﬀect of Southwest Airlines’ presence on the airline industry rather than predicting fares on new routes, how would the analysis be diﬀerent? Describe technical and conceptual aspects.</p>
+<p><strong>Answer:</strong></p>
+<p>The analysis might look also at fares overall, instead of just on the new routes, PAX overall instead of just on the new routes; both are available.</p>
+<p>Also industry profit, which is not among the variables.</p>
+<p>Other differences would be:</p>
+<ol type="1">
+<li><p>In an explanatory model, we would include predictors even if they are only known retrospectively (such predictors cannot be used in a predictive model).</p></li>
+<li><p>Although predictive accuracy is important for validating the usefulness of an explanatory model, the focus in explanatory modeling is on the correct specification of the model in the sense that the “right model” was fit to the data.</p></li>
+</ol>
+<p>Since explanatory models can be conducted with relatively small data sets, it is common not to partition the data, but rather use the same set of data to fit the model and to assess goodness-of-fit (with measures like R-squared, and residual analysis).</p>
+<ol start="3" type="1">
+<li>The emphasis in an explanatory model would be on the interpretation of the regression coefficients, in contrast to the predictive model that concentrates on predictive accuracy.</li>
+</ol>
+</section>
+<section id="problem-6.4-predicting-prices-of-used-cars." class="level1">
+<h1>Problem 6.4 Predicting Prices of Used Cars.</h1>
+<p>The file <em>ToyotaCorolla.csv</em> contains data on used cars (Toyota Corolla) on sale during late summer of 2004 in the Netherlands. It has 1436 records containing details on 38 attributes, including Price, Age, Kilometers, HP, and other specifcations. The goal is to predict the price of a used Toyota Corolla based on its specifcations. (The example in Section 6.3 is a subset of this dataset.)</p>
+<p>Split the data into training (50%), validation (30%), and test (20%) datasets.</p>
+<p>Run a multiple linear regression with the outcome variable Price and predictor variables Age_08_04, KM, Fuel_Type, HP, Automatic, Doors, Quarterly_Tax, Mfr_Guarantee, Guarantee_Period, Airco, Automatic_airco, CD_Player, Powered_Windows, Sport_Model, and Tow_Bar.</p>
+<div id="cell-130" class="cell" data-execution_count="61">
+<div class="sourceCode cell-code" id="cb99"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb99-1"><a href="#cb99-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load the data</span></span>
+<span id="cb99-2"><a href="#cb99-2" aria-hidden="true" tabindex="-1"></a>car_df <span class="op">=</span> pd.read_csv(DATA <span class="op">/</span> <span class="st">'ToyotaCorolla.csv'</span>)</span>
+<span id="cb99-3"><a href="#cb99-3" aria-hidden="true" tabindex="-1"></a><span class="co"># review first five records</span></span>
+<span id="cb99-4"><a href="#cb99-4" aria-hidden="true" tabindex="-1"></a>car_df.head(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="61">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Id</th>
+<th data-quarto-table-cell-role="th">Model</th>
+<th data-quarto-table-cell-role="th">Price</th>
+<th data-quarto-table-cell-role="th">Age_08_04</th>
+<th data-quarto-table-cell-role="th">Mfg_Month</th>
+<th data-quarto-table-cell-role="th">Mfg_Year</th>
+<th data-quarto-table-cell-role="th">KM</th>
+<th data-quarto-table-cell-role="th">Fuel_Type</th>
+<th data-quarto-table-cell-role="th">HP</th>
+<th data-quarto-table-cell-role="th">Met_Color</th>
+<th data-quarto-table-cell-role="th">...</th>
+<th data-quarto-table-cell-role="th">Powered_Windows</th>
+<th data-quarto-table-cell-role="th">Power_Steering</th>
+<th data-quarto-table-cell-role="th">Radio</th>
+<th data-quarto-table-cell-role="th">Mistlamps</th>
+<th data-quarto-table-cell-role="th">Sport_Model</th>
+<th data-quarto-table-cell-role="th">Backseat_Divider</th>
+<th data-quarto-table-cell-role="th">Metallic_Rim</th>
+<th data-quarto-table-cell-role="th">Radio_cassette</th>
+<th data-quarto-table-cell-role="th">Parking_Assistant</th>
+<th data-quarto-table-cell-role="th">Tow_Bar</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>1</td>
+<td>TOYOTA Corolla 2.0 D4D HATCHB TERRA 2/3-Doors</td>
+<td>13500</td>
+<td>23</td>
+<td>10</td>
+<td>2002</td>
+<td>46986</td>
+<td>Diesel</td>
+<td>90</td>
+<td>1</td>
+<td>...</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>2</td>
+<td>TOYOTA Corolla 2.0 D4D HATCHB TERRA 2/3-Doors</td>
+<td>13750</td>
+<td>23</td>
+<td>10</td>
+<td>2002</td>
+<td>72937</td>
+<td>Diesel</td>
+<td>90</td>
+<td>1</td>
+<td>...</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>3</td>
+<td>TOYOTA Corolla 2.0 D4D HATCHB TERRA 2/3-Doors</td>
+<td>13950</td>
+<td>24</td>
+<td>9</td>
+<td>2002</td>
+<td>41711</td>
+<td>Diesel</td>
+<td>90</td>
+<td>1</td>
+<td>...</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>4</td>
+<td>TOYOTA Corolla 2.0 D4D HATCHB TERRA 2/3-Doors</td>
+<td>14950</td>
+<td>26</td>
+<td>7</td>
+<td>2002</td>
+<td>48000</td>
+<td>Diesel</td>
+<td>90</td>
+<td>0</td>
+<td>...</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>5</td>
+<td>TOYOTA Corolla 2.0 D4D HATCHB SOL 2/3-Doors</td>
+<td>13750</td>
+<td>30</td>
+<td>3</td>
+<td>2002</td>
+<td>38500</td>
+<td>Diesel</td>
+<td>90</td>
+<td>0</td>
+<td>...</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+
+<p>5 rows × 39 columns</p>
+</div>
+</div>
+</div>
+<div id="cell-131" class="cell" data-execution_count="62">
+<div class="sourceCode cell-code" id="cb100"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb100-1"><a href="#cb100-1" aria-hidden="true" tabindex="-1"></a><span class="co"># data dimension</span></span>
+<span id="cb100-2"><a href="#cb100-2" aria-hidden="true" tabindex="-1"></a>car_df.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="62">
+<pre><code>(1436, 39)</code></pre>
+</div>
+</div>
+<div id="cell-132" class="cell" data-execution_count="63">
+<div class="sourceCode cell-code" id="cb102"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb102-1"><a href="#cb102-1" aria-hidden="true" tabindex="-1"></a><span class="co"># variable dat types</span></span>
+<span id="cb102-2"><a href="#cb102-2" aria-hidden="true" tabindex="-1"></a>car_df.dtypes</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="63">
+<pre><code>Id                    int64
+Model                object
+Price                 int64
+Age_08_04             int64
+Mfg_Month             int64
+Mfg_Year              int64
+KM                    int64
+Fuel_Type            object
+HP                    int64
+Met_Color             int64
+Color                object
+Automatic             int64
+CC                    int64
+Doors                 int64
+Cylinders             int64
+Gears                 int64
+Quarterly_Tax         int64
+Weight                int64
+Mfr_Guarantee         int64
+BOVAG_Guarantee       int64
+Guarantee_Period      int64
+ABS                   int64
+Airbag_1              int64
+Airbag_2              int64
+Airco                 int64
+Automatic_airco       int64
+Boardcomputer         int64
+CD_Player             int64
+Central_Lock          int64
+Powered_Windows       int64
+Power_Steering        int64
+Radio                 int64
+Mistlamps             int64
+Sport_Model           int64
+Backseat_Divider      int64
+Metallic_Rim          int64
+Radio_cassette        int64
+Parking_Assistant     int64
+Tow_Bar               int64
+dtype: object</code></pre>
+</div>
+</div>
+<div id="cell-133" class="cell" data-execution_count="64">
+<div class="sourceCode cell-code" id="cb104"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb104-1"><a href="#cb104-1" aria-hidden="true" tabindex="-1"></a><span class="co"># partition the data into training (50%), validation (30%) and test (20%) sets</span></span>
+<span id="cb104-2"><a href="#cb104-2" aria-hidden="true" tabindex="-1"></a>predictors <span class="op">=</span> [<span class="st">'Age_08_04'</span>, <span class="st">'KM'</span>, <span class="st">'Fuel_Type'</span>, <span class="st">'HP'</span>, <span class="st">'Automatic'</span>, <span class="st">'Doors'</span>, <span class="st">'Quarterly_Tax'</span>, <span class="st">'Mfr_Guarantee'</span>, <span class="st">'Guarantee_Period'</span>, </span>
+<span id="cb104-3"><a href="#cb104-3" aria-hidden="true" tabindex="-1"></a>              <span class="st">'Airco'</span>, <span class="st">'Automatic_airco'</span>, <span class="st">'CD_Player'</span>, <span class="st">'Powered_Windows'</span>, <span class="st">'Sport_Model'</span>, <span class="st">'Tow_Bar'</span>]</span>
+<span id="cb104-4"><a href="#cb104-4" aria-hidden="true" tabindex="-1"></a>outcome <span class="op">=</span> <span class="st">'Price'</span></span>
+<span id="cb104-5"><a href="#cb104-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb104-6"><a href="#cb104-6" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> pd.get_dummies(car_df[predictors], drop_first<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb104-7"><a href="#cb104-7" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> car_df[outcome]</span>
+<span id="cb104-8"><a href="#cb104-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb104-9"><a href="#cb104-9" aria-hidden="true" tabindex="-1"></a>train_X, temp_X, train_y, temp_y <span class="op">=</span> train_test_split(X, y, test_size<span class="op">=</span><span class="fl">0.5</span>, random_state<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb104-10"><a href="#cb104-10" aria-hidden="true" tabindex="-1"></a>valid_X, test_X, valid_y, test_y <span class="op">=</span> train_test_split(temp_X, temp_y, test_size<span class="op">=</span><span class="fl">0.4</span>, random_state<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb104-11"><a href="#cb104-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb104-12"><a href="#cb104-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Training : '</span>, train_X.shape)</span>
+<span id="cb104-13"><a href="#cb104-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Validation : '</span>, valid_X.shape)</span>
+<span id="cb104-14"><a href="#cb104-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Test : '</span>, test_X.shape)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Training :  (718, 16)
+Validation :  (430, 16)
+Test :  (288, 16)</code></pre>
+</div>
+</div>
+<div id="cell-134" class="cell" data-scrolled="true" data-execution_count="65">
+<div class="sourceCode cell-code" id="cb106"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb106-1"><a href="#cb106-1" aria-hidden="true" tabindex="-1"></a><span class="co"># we fit the model </span></span>
+<span id="cb106-2"><a href="#cb106-2" aria-hidden="true" tabindex="-1"></a>car_lm <span class="op">=</span> LinearRegression(normalize<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb106-3"><a href="#cb106-3" aria-hidden="true" tabindex="-1"></a>car_lm.fit(train_X, train_y)</span>
+<span id="cb106-4"><a href="#cb106-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb106-5"><a href="#cb106-5" aria-hidden="true" tabindex="-1"></a><span class="co"># print coefficients</span></span>
+<span id="cb106-6"><a href="#cb106-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'intercept '</span>, car_lm.intercept_)</span>
+<span id="cb106-7"><a href="#cb106-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(pd.DataFrame({<span class="st">'Predictor'</span>: X.columns, <span class="st">'coefficient'</span>: car_lm.coef_}))</span>
+<span id="cb106-8"><a href="#cb106-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb106-9"><a href="#cb106-9" aria-hidden="true" tabindex="-1"></a><span class="co"># print performance measures</span></span>
+<span id="cb106-10"><a href="#cb106-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Training set'</span>)</span>
+<span id="cb106-11"><a href="#cb106-11" aria-hidden="true" tabindex="-1"></a>regressionSummary(train_y, car_lm.predict(train_X))</span>
+<span id="cb106-12"><a href="#cb106-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Validation set'</span>)</span>
+<span id="cb106-13"><a href="#cb106-13" aria-hidden="true" tabindex="-1"></a>regressionSummary(valid_y, car_lm.predict(valid_X))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>intercept  8998.52855293567
+           Predictor  coefficient
+0          Age_08_04  -112.139772
+1                 KM    -0.019437
+2                 HP    39.474311
+3          Automatic   583.265499
+4              Doors   214.445095
+5      Quarterly_Tax    17.192451
+6      Mfr_Guarantee   129.110109
+7   Guarantee_Period    77.305623
+8              Airco    45.831357
+9    Automatic_airco  2956.041165
+10         CD_Player   276.496513
+11   Powered_Windows   521.606032
+12       Sport_Model   517.807321
+13           Tow_Bar  -267.478660
+14  Fuel_Type_Diesel  2163.735433
+15  Fuel_Type_Petrol  1968.284558
+Training set
+
+Regression statistics
+
+                      Mean Error (ME) : -0.0000
+       Root Mean Squared Error (RMSE) : 1235.9139
+            Mean Absolute Error (MAE) : 914.8383
+          Mean Percentage Error (MPE) : -0.9286
+Mean Absolute Percentage Error (MAPE) : 8.9407
+Validation set
+
+Regression statistics
+
+                      Mean Error (ME) : -69.0074
+       Root Mean Squared Error (RMSE) : 1135.0299
+            Mean Absolute Error (MAE) : 909.1486
+          Mean Percentage Error (MPE) : -1.4502
+Mean Absolute Percentage Error (MAPE) : 9.3849</code></pre>
+</div>
+</div>
+<p>The coefficients are for unscaled predictors; this makes them hard to interpret. Build the second model using standardized predictors.</p>
+<div id="cell-136" class="cell" data-execution_count="66">
+<div class="sourceCode cell-code" id="cb108"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb108-1"><a href="#cb108-1" aria-hidden="true" tabindex="-1"></a>scaler <span class="op">=</span> StandardScaler()</span>
+<span id="cb108-2"><a href="#cb108-2" aria-hidden="true" tabindex="-1"></a>scaler.fit(train_X <span class="op">*</span> <span class="fl">1.0</span>)</span>
+<span id="cb108-3"><a href="#cb108-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb108-4"><a href="#cb108-4" aria-hidden="true" tabindex="-1"></a>car_lm_2 <span class="op">=</span> LinearRegression(normalize<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb108-5"><a href="#cb108-5" aria-hidden="true" tabindex="-1"></a>car_lm_2.fit(scaler.transform(train_X <span class="op">*</span> <span class="fl">1.0</span>), train_y)</span>
+<span id="cb108-6"><a href="#cb108-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb108-7"><a href="#cb108-7" aria-hidden="true" tabindex="-1"></a><span class="co"># print coefficients</span></span>
+<span id="cb108-8"><a href="#cb108-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'intercept '</span>, car_lm_2.intercept_)</span>
+<span id="cb108-9"><a href="#cb108-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(pd.DataFrame({<span class="st">'Predictor'</span>: X.columns, <span class="st">'coefficient'</span>: car_lm_2.coef_}))</span>
+<span id="cb108-10"><a href="#cb108-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb108-11"><a href="#cb108-11" aria-hidden="true" tabindex="-1"></a><span class="co"># print performance measures</span></span>
+<span id="cb108-12"><a href="#cb108-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'</span><span class="ch">\n</span><span class="st">Training set'</span>)</span>
+<span id="cb108-13"><a href="#cb108-13" aria-hidden="true" tabindex="-1"></a>regressionSummary(train_y, car_lm_2.predict(scaler.transform(train_X <span class="op">*</span> <span class="fl">1.0</span>)))</span>
+<span id="cb108-14"><a href="#cb108-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'</span><span class="ch">\n</span><span class="st">Validation set'</span>)</span>
+<span id="cb108-15"><a href="#cb108-15" aria-hidden="true" tabindex="-1"></a>regressionSummary(valid_y, car_lm_2.predict(scaler.transform(valid_X <span class="op">*</span> <span class="fl">1.0</span>)))</span>
+<span id="cb108-16"><a href="#cb108-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'</span><span class="ch">\n</span><span class="st">Test set'</span>)</span>
+<span id="cb108-17"><a href="#cb108-17" aria-hidden="true" tabindex="-1"></a>regressionSummary(test_y, car_lm_2.predict(scaler.transform(test_X <span class="op">*</span> <span class="fl">1.0</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>intercept  10819.600278551532
+           Predictor  coefficient
+0          Age_08_04 -2147.646599
+1                 KM  -733.233815
+2                 HP   561.560105
+3          Automatic   138.397408
+4              Doors   204.115796
+5      Quarterly_Tax   736.625704
+6      Mfr_Guarantee    63.736167
+7   Guarantee_Period   236.425907
+8              Airco    22.915589
+9    Automatic_airco   716.472989
+10         CD_Player   115.825853
+11   Powered_Windows   258.558294
+12       Sport_Model   238.405391
+13           Tow_Bar  -119.722262
+14  Fuel_Type_Diesel   669.505409
+15  Fuel_Type_Petrol   639.103514
+
+Training set
+
+Regression statistics
+
+                      Mean Error (ME) : -0.0000
+       Root Mean Squared Error (RMSE) : 1235.9139
+            Mean Absolute Error (MAE) : 914.8383
+          Mean Percentage Error (MPE) : -0.9286
+Mean Absolute Percentage Error (MAPE) : 8.9407
+
+Validation set
+
+Regression statistics
+
+                      Mean Error (ME) : -69.0074
+       Root Mean Squared Error (RMSE) : 1135.0299
+            Mean Absolute Error (MAE) : 909.1486
+          Mean Percentage Error (MPE) : -1.4502
+Mean Absolute Percentage Error (MAPE) : 9.3849
+
+Test set
+
+Regression statistics
+
+                      Mean Error (ME) : 91.2764
+       Root Mean Squared Error (RMSE) : 1271.8760
+            Mean Absolute Error (MAE) : 958.7654
+          Mean Percentage Error (MPE) : 0.3914
+Mean Absolute Percentage Error (MAPE) : 9.6015</code></pre>
+</div>
+</div>
+<p><strong>6.4.a.</strong> What appear to be the three or four most important car specifcations for predicting the car’s price?</p>
+<p><strong>Answer:</strong></p>
+<p>The four most important car specifications in predicting the car’s price are:</p>
+<p>Age_08_04</p>
+<p>KM</p>
+<p>HP</p>
+<p>Automatic_airco</p>
+<p><strong>6.4.b.</strong> Using metrics you consider useful, assess the performance of the model in predicting prices.</p>
+<p><strong>Answer:</strong></p>
+<p>The performance statistics for the training and validation sets are comparable. This indicates that the model is stable and not overfitting.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

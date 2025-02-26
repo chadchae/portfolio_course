@@ -1,0 +1,2796 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.40">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Chapter 4: Dimension Reduction – Chad’s Course Portfolio</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../../../../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../../../../">
+<script src="../../../../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../../../../site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../../../../site_libs/bootstrap/bootstrap-6bd9cfa162949bde0a231f530c97869d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+<link rel="stylesheet" href="../../../../../../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../../../../../index.html">
+    <span class="navbar-title">Chad’s Course Portfolio</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../../../Course/GE2021/03_Lecture_Note/LectureNote_Chad/PPT/chapter0/chapter0.html"> 
+<span class="menu-text">test</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#problem-4.1-breakfast-cereals" id="toc-problem-4.1-breakfast-cereals" class="nav-link active" data-scroll-target="#problem-4.1-breakfast-cereals">Problem 4.1 Breakfast Cereals</a></li>
+  <li><a href="#problem-4.2-university-rankings." id="toc-problem-4.2-university-rankings." class="nav-link" data-scroll-target="#problem-4.2-university-rankings.">Problem 4.2 University Rankings.</a></li>
+  <li><a href="#problem-4.3-sales-of-toyota-corolla-cars." id="toc-problem-4.3-sales-of-toyota-corolla-cars." class="nav-link" data-scroll-target="#problem-4.3-sales-of-toyota-corolla-cars.">Problem 4.3 Sales of Toyota Corolla Cars.</a></li>
+  <li><a href="#problem-4.4-chemical-features-of-wine." id="toc-problem-4.4-chemical-features-of-wine." class="nav-link" data-scroll-target="#problem-4.4-chemical-features-of-wine.">Problem 4.4 Chemical Features of Wine.</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Chapter 4: Dimension Reduction</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<blockquote class="blockquote">
+<ol start="3" type="a">
+<li>2019-2020 Galit Shmueli, Peter C. Bruce, Peter Gedeck</li>
+</ol>
+<p><em>Data Mining for Business Analytics: Concepts, Techniques, and Applications in Python</em> (First Edition) Galit Shmueli, Peter C. Bruce, Peter Gedeck, and Nitin R. Patel. 2019.</p>
+<p>Date: 2020-03-08</p>
+<p>Python Version: 3.8.2 Jupyter Notebook Version: 5.6.1</p>
+<p>Packages: - matplotlib: 3.2.0 - numpy: 1.18.1 - pandas: 1.0.1 - seaborn: 0.10.0 - scikit-learn: 0.22.2</p>
+<p>The assistance from Mr.&nbsp;Kuber Deokar and Ms.&nbsp;Anuja Kulkarni in preparing these solutions is gratefully acknowledged.</p>
+</blockquote>
+<div id="cell-3" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># import required packages for this chapter</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.decomposition <span class="im">import</span> PCA</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn <span class="im">import</span> preprocessing</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pylab <span class="im">as</span> plt</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>matplotlib inline</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-4" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Working directory:</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># We assume that data are kept in the same directory as the notebook. If you keep your </span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># data in a different folder, replace the argument of the `Path`</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>DATA <span class="op">=</span> Path(<span class="st">'.'</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co"># and then load data using </span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co"># pd.read_csv(DATA / ‘filename.csv’)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="problem-4.1-breakfast-cereals" class="level1">
+<h1>Problem 4.1 Breakfast Cereals</h1>
+<p>Use the data for the breakfast cereals example in Section 4.8 to explore and summarize the data as follows:</p>
+<p><strong>4.1.a.</strong> Which variables are quantitative/numerical? Which are ordinal? Which are nominal?</p>
+<div id="cell-6" class="cell" data-scrolled="true" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load the data</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>cereals_df <span class="op">=</span> pd.read_csv(DATA <span class="op">/</span> <span class="st">'cereals.csv'</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>cereals_df.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="3">
+<pre><code>(77, 16)</code></pre>
+</div>
+</div>
+<div id="cell-7" class="cell" data-scrolled="true" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># variable types</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>cereals_df.dtypes</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<pre><code>name         object
+mfr          object
+type         object
+calories      int64
+protein       int64
+fat           int64
+sodium        int64
+fiber       float64
+carbo       float64
+sugars      float64
+potass      float64
+vitamins      int64
+shelf         int64
+weight      float64
+cups        float64
+rating      float64
+dtype: object</code></pre>
+</div>
+</div>
+<p>Quantitative variables: calories, protein, fat, sodium, fiber, carbo, sugars, potass, vitamins, weight, cups, shelf, and rating.</p>
+<p>Nominal variables: type and mfr.</p>
+<p>Ordinal Variables: shelf.</p>
+<p><strong>4.1.b.</strong> Compute the mean, median, min, max, and standard deviation for each of the quantitative variables. This can be done using pandas as shown in Table 4.3.</p>
+<div id="cell-10" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># data with just quantitative variables</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>quant_vars <span class="op">=</span> [<span class="st">'calories'</span>, <span class="st">'protein'</span>, <span class="st">'fat'</span>, <span class="st">'sodium'</span>, <span class="st">'fiber'</span>, <span class="st">'carbo'</span>, <span class="st">'sugars'</span>, <span class="st">'potass'</span>, <span class="st">'vitamins'</span>, <span class="st">'weight'</span>, <span class="st">'cups'</span>, </span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>              <span class="st">'shelf'</span>, <span class="st">'rating'</span>]</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>all_numeric_df <span class="op">=</span> cereals_df[quant_vars]</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>pd.DataFrame({<span class="st">'mean'</span>: all_numeric_df.mean(),</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>              <span class="st">'mediun'</span>: all_numeric_df.median(),</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>              <span class="st">'min'</span>: all_numeric_df.<span class="bu">min</span>(),</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>              <span class="st">'max'</span>: all_numeric_df.<span class="bu">max</span>(),</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>              <span class="st">'sd'</span>: all_numeric_df.std(),</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">mean</th>
+<th data-quarto-table-cell-role="th">mediun</th>
+<th data-quarto-table-cell-role="th">min</th>
+<th data-quarto-table-cell-role="th">max</th>
+<th data-quarto-table-cell-role="th">sd</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">calories</td>
+<td>106.883117</td>
+<td>110.000000</td>
+<td>50.000000</td>
+<td>160.000000</td>
+<td>19.484119</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">protein</td>
+<td>2.545455</td>
+<td>3.000000</td>
+<td>1.000000</td>
+<td>6.000000</td>
+<td>1.094790</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">fat</td>
+<td>1.012987</td>
+<td>1.000000</td>
+<td>0.000000</td>
+<td>5.000000</td>
+<td>1.006473</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">sodium</td>
+<td>159.675325</td>
+<td>180.000000</td>
+<td>0.000000</td>
+<td>320.000000</td>
+<td>83.832295</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">fiber</td>
+<td>2.151948</td>
+<td>2.000000</td>
+<td>0.000000</td>
+<td>14.000000</td>
+<td>2.383364</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">carbo</td>
+<td>14.802632</td>
+<td>14.500000</td>
+<td>5.000000</td>
+<td>23.000000</td>
+<td>3.907326</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">sugars</td>
+<td>7.026316</td>
+<td>7.000000</td>
+<td>0.000000</td>
+<td>15.000000</td>
+<td>4.378656</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">potass</td>
+<td>98.666667</td>
+<td>90.000000</td>
+<td>15.000000</td>
+<td>330.000000</td>
+<td>70.410636</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">vitamins</td>
+<td>28.246753</td>
+<td>25.000000</td>
+<td>0.000000</td>
+<td>100.000000</td>
+<td>22.342523</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">weight</td>
+<td>1.029610</td>
+<td>1.000000</td>
+<td>0.500000</td>
+<td>1.500000</td>
+<td>0.150477</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">cups</td>
+<td>0.821039</td>
+<td>0.750000</td>
+<td>0.250000</td>
+<td>1.500000</td>
+<td>0.232716</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">shelf</td>
+<td>2.207792</td>
+<td>2.000000</td>
+<td>1.000000</td>
+<td>3.000000</td>
+<td>0.832524</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">rating</td>
+<td>42.665705</td>
+<td>40.400208</td>
+<td>18.042851</td>
+<td>93.704912</td>
+<td>14.047289</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p><strong>4.1.c.</strong> Plot a histogram for each of the quantitative variables. Based on the histograms and summary statistics, answer the following questions:</p>
+<div id="cell-12" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># histograms for quantitative variables</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> var <span class="kw">in</span> quant_vars:</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">#fig, axes = plt.subplots(nrows=1, ncols=2)</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    plt.hist(all_numeric_df[var].dropna())</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    plt.xlabel(var)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Ch-04-ProbSolutions-PCA_files/figure-html/cell-7-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Ch-04-ProbSolutions-PCA_files/figure-html/cell-7-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Ch-04-ProbSolutions-PCA_files/figure-html/cell-7-output-3.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Ch-04-ProbSolutions-PCA_files/figure-html/cell-7-output-4.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Ch-04-ProbSolutions-PCA_files/figure-html/cell-7-output-5.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Ch-04-ProbSolutions-PCA_files/figure-html/cell-7-output-6.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Ch-04-ProbSolutions-PCA_files/figure-html/cell-7-output-7.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Ch-04-ProbSolutions-PCA_files/figure-html/cell-7-output-8.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Ch-04-ProbSolutions-PCA_files/figure-html/cell-7-output-9.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Ch-04-ProbSolutions-PCA_files/figure-html/cell-7-output-10.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Ch-04-ProbSolutions-PCA_files/figure-html/cell-7-output-11.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Ch-04-ProbSolutions-PCA_files/figure-html/cell-7-output-12.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Ch-04-ProbSolutions-PCA_files/figure-html/cell-7-output-13.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>4.1.c.i.</strong> Which variables have the largest variability?</p>
+<p>Sodium and Potass have the largest variability.</p>
+<p><strong>4.1.c.ii.</strong> Which variables seem skewed?</p>
+<p>Variables Fiber, Potass and Rating are all positively skewed.</p>
+<p><strong>4.1.c.iii.</strong> Are there any values that seem extreme?</p>
+<p>For the following variables, extreme values (outliers) are present:</p>
+<p>Protein (extreme values are 5 and 6)</p>
+<p>Fat (extreme value is 5)</p>
+<p>Fiber (extreme values are 14, 10, 9 and 6)</p>
+<p>Vitamins (extreme value is 100)</p>
+<p>Weight (extreme values are 0.5, 1.33, 1.5)</p>
+<p>Rating (extreme value is 93.7)</p>
+<p><strong>4.1.d.</strong> Plot a side-by-side boxplot comparing the calories in hot vs.&nbsp;cold cereals. What does this plot show us?</p>
+<div id="cell-20" class="cell" data-scrolled="true" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># side by side boxplot of calories in hot vs. cold cereals</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> cereals_df.boxplot(column<span class="op">=</span><span class="st">'calories'</span>, by<span class="op">=</span><span class="st">'type'</span>)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">'calories'</span>)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>plt.suptitle(<span class="st">''</span>)  <span class="co"># Suppress the titles</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Distribution of Calories'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="7">
+<pre><code>Text(0.5, 1.0, 'Distribution of Calories')</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Ch-04-ProbSolutions-PCA_files/figure-html/cell-8-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>We see that in cold cereals, the different cereals vary in the amount of calories mainly between approximately 90-120, whereas all hot cereals have 100 calories.</p>
+<p><strong>4.1.e.</strong> Plot a side-by-side boxplot of consumer rating as a function of the shelf height. If we were to predict consumer rating from shelf height, does it appear that we need to keep all three categories of shelf height?</p>
+<div id="cell-23" class="cell" data-scrolled="true" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># side-by-side boxplot of consumer rating as a function of the shelf height</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> cereals_df.boxplot(column<span class="op">=</span><span class="st">'rating'</span>, by<span class="op">=</span><span class="st">'shelf'</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">'rating'</span>)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>plt.suptitle(<span class="st">''</span>)  <span class="co"># Suppress the titles</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Distribution of customer rating'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="8">
+<pre><code>Text(0.5, 1.0, 'Distribution of customer rating')</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Ch-04-ProbSolutions-PCA_files/figure-html/cell-9-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Not much of a story here - both minimum and maximum shelf height have similar ratings, middling height are rated lower.</p>
+<p><strong>4.1.f.</strong> Compute the correlation table for the quantitative variables (method corr()). In addition, generate a matrix plot for these variables (see Table 3.4 on how to do this using the seaborn library).</p>
+<div id="cell-26" class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># correlation table for the quantitative variables</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>corr <span class="op">=</span> all_numeric_df.corr()</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>corr</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="9">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">calories</th>
+<th data-quarto-table-cell-role="th">protein</th>
+<th data-quarto-table-cell-role="th">fat</th>
+<th data-quarto-table-cell-role="th">sodium</th>
+<th data-quarto-table-cell-role="th">fiber</th>
+<th data-quarto-table-cell-role="th">carbo</th>
+<th data-quarto-table-cell-role="th">sugars</th>
+<th data-quarto-table-cell-role="th">potass</th>
+<th data-quarto-table-cell-role="th">vitamins</th>
+<th data-quarto-table-cell-role="th">weight</th>
+<th data-quarto-table-cell-role="th">cups</th>
+<th data-quarto-table-cell-role="th">shelf</th>
+<th data-quarto-table-cell-role="th">rating</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">calories</td>
+<td>1.000000</td>
+<td>0.019066</td>
+<td>0.498610</td>
+<td>0.300649</td>
+<td>-0.293413</td>
+<td>0.257638</td>
+<td>0.566533</td>
+<td>-0.072063</td>
+<td>0.265356</td>
+<td>0.696091</td>
+<td>0.087200</td>
+<td>0.097234</td>
+<td>-0.689376</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">protein</td>
+<td>0.019066</td>
+<td>1.000000</td>
+<td>0.208431</td>
+<td>-0.054674</td>
+<td>0.500330</td>
+<td>-0.025012</td>
+<td>-0.291853</td>
+<td>0.563706</td>
+<td>0.007335</td>
+<td>0.216158</td>
+<td>-0.244469</td>
+<td>0.133865</td>
+<td>0.470618</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">fat</td>
+<td>0.498610</td>
+<td>0.208431</td>
+<td>1.000000</td>
+<td>-0.005407</td>
+<td>0.016719</td>
+<td>-0.300003</td>
+<td>0.302497</td>
+<td>0.200445</td>
+<td>-0.031156</td>
+<td>0.214625</td>
+<td>-0.175892</td>
+<td>0.263691</td>
+<td>-0.409284</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">sodium</td>
+<td>0.300649</td>
+<td>-0.054674</td>
+<td>-0.005407</td>
+<td>1.000000</td>
+<td>-0.070675</td>
+<td>0.297687</td>
+<td>0.058866</td>
+<td>-0.042632</td>
+<td>0.361477</td>
+<td>0.308576</td>
+<td>0.119665</td>
+<td>-0.069719</td>
+<td>-0.401295</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">fiber</td>
+<td>-0.293413</td>
+<td>0.500330</td>
+<td>0.016719</td>
+<td>-0.070675</td>
+<td>1.000000</td>
+<td>-0.380357</td>
+<td>-0.138760</td>
+<td>0.911528</td>
+<td>-0.032243</td>
+<td>0.247226</td>
+<td>-0.513061</td>
+<td>0.297539</td>
+<td>0.584160</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">carbo</td>
+<td>0.257638</td>
+<td>-0.025012</td>
+<td>-0.300003</td>
+<td>0.297687</td>
+<td>-0.380357</td>
+<td>1.000000</td>
+<td>-0.471184</td>
+<td>-0.365003</td>
+<td>0.219202</td>
+<td>0.138467</td>
+<td>0.367460</td>
+<td>-0.192650</td>
+<td>0.088712</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">sugars</td>
+<td>0.566533</td>
+<td>-0.291853</td>
+<td>0.302497</td>
+<td>0.058866</td>
+<td>-0.138760</td>
+<td>-0.471184</td>
+<td>1.000000</td>
+<td>0.001414</td>
+<td>0.098231</td>
+<td>0.455844</td>
+<td>-0.048961</td>
+<td>0.068377</td>
+<td>-0.763902</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">potass</td>
+<td>-0.072063</td>
+<td>0.563706</td>
+<td>0.200445</td>
+<td>-0.042632</td>
+<td>0.911528</td>
+<td>-0.365003</td>
+<td>0.001414</td>
+<td>1.000000</td>
+<td>-0.005427</td>
+<td>0.419933</td>
+<td>-0.501607</td>
+<td>0.385784</td>
+<td>0.416009</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">vitamins</td>
+<td>0.265356</td>
+<td>0.007335</td>
+<td>-0.031156</td>
+<td>0.361477</td>
+<td>-0.032243</td>
+<td>0.219202</td>
+<td>0.098231</td>
+<td>-0.005427</td>
+<td>1.000000</td>
+<td>0.320324</td>
+<td>0.128405</td>
+<td>0.299262</td>
+<td>-0.240544</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">weight</td>
+<td>0.696091</td>
+<td>0.216158</td>
+<td>0.214625</td>
+<td>0.308576</td>
+<td>0.247226</td>
+<td>0.138467</td>
+<td>0.455844</td>
+<td>0.419933</td>
+<td>0.320324</td>
+<td>1.000000</td>
+<td>-0.199583</td>
+<td>0.190762</td>
+<td>-0.298124</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">cups</td>
+<td>0.087200</td>
+<td>-0.244469</td>
+<td>-0.175892</td>
+<td>0.119665</td>
+<td>-0.513061</td>
+<td>0.367460</td>
+<td>-0.048961</td>
+<td>-0.501607</td>
+<td>0.128405</td>
+<td>-0.199583</td>
+<td>1.000000</td>
+<td>-0.335269</td>
+<td>-0.203160</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">shelf</td>
+<td>0.097234</td>
+<td>0.133865</td>
+<td>0.263691</td>
+<td>-0.069719</td>
+<td>0.297539</td>
+<td>-0.192650</td>
+<td>0.068377</td>
+<td>0.385784</td>
+<td>0.299262</td>
+<td>0.190762</td>
+<td>-0.335269</td>
+<td>1.000000</td>
+<td>0.025159</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">rating</td>
+<td>-0.689376</td>
+<td>0.470618</td>
+<td>-0.409284</td>
+<td>-0.401295</td>
+<td>0.584160</td>
+<td>0.088712</td>
+<td>-0.763902</td>
+<td>0.416009</td>
+<td>-0.240544</td>
+<td>-0.298124</td>
+<td>-0.203160</td>
+<td>0.025159</td>
+<td>1.000000</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p><strong>4.1.f.i.</strong> Which pair of variables is most strongly correlated?</p>
+<p>From the correlation matrix, fiber and potass are the most strongly (positively) correlated. Fat and calories are also positively correlated.</p>
+<p><strong>4.1.f.ii.</strong> How can we reduce the number of variables based on these correlations?</p>
+<p>Pairs of variables that have a very strong (positive or negative) correlation contain duplicative information. Therefore, we can omit the variables that are strongly correlated to others. This will avoid multicolinearity.</p>
+<p><strong>4.1.f.iii.</strong> How would the correlations change if we normalized the data first?</p>
+<p>Correlations are unaffected by the normalization of data.</p>
+<p><strong>4.1.g.</strong> Consider the first PC of the analysis of the 13 numerical variables in Table 4.11. Describe briefly what this PC represents.</p>
+<p>The first column is the first principal component. It shows the weights that the different variables carry. We see that it is dominated by sodium (which has the highest weight). This implies that the 1st principal component is measuring how much sodium the cereal contains.</p>
+</section>
+<section id="problem-4.2-university-rankings." class="level1">
+<h1>Problem 4.2 University Rankings.</h1>
+<p>The dataset on American college and university rankings (available from www.dataminingbook.com) contains information on 1302 American colleges and universities offering an undergraduate program. For each university, there are 17 measurements that include continuous measurements (such as tuition and graduation rate) and categorical measurements (such as location by state and whether it is a private or a public school).</p>
+<div id="cell-36" class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load the data and review</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>universities_df <span class="op">=</span> pd.read_csv(DATA <span class="op">/</span> <span class="st">'Universities.csv'</span>)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>universities_df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="10">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">College Name</th>
+<th data-quarto-table-cell-role="th">State</th>
+<th data-quarto-table-cell-role="th">Public (1)/ Private (2)</th>
+<th data-quarto-table-cell-role="th"># appli. rec'd</th>
+<th data-quarto-table-cell-role="th"># appl. accepted</th>
+<th data-quarto-table-cell-role="th"># new stud. enrolled</th>
+<th data-quarto-table-cell-role="th">% new stud. from top 10%</th>
+<th data-quarto-table-cell-role="th">% new stud. from top 25%</th>
+<th data-quarto-table-cell-role="th"># FT undergrad</th>
+<th data-quarto-table-cell-role="th"># PT undergrad</th>
+<th data-quarto-table-cell-role="th">in-state tuition</th>
+<th data-quarto-table-cell-role="th">out-of-state tuition</th>
+<th data-quarto-table-cell-role="th">room</th>
+<th data-quarto-table-cell-role="th">board</th>
+<th data-quarto-table-cell-role="th">add. fees</th>
+<th data-quarto-table-cell-role="th">estim. book costs</th>
+<th data-quarto-table-cell-role="th">estim. personal $</th>
+<th data-quarto-table-cell-role="th">% fac. w/PHD</th>
+<th data-quarto-table-cell-role="th">stud./fac. ratio</th>
+<th data-quarto-table-cell-role="th">Graduation rate</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>Alaska Pacific University</td>
+<td>AK</td>
+<td>2</td>
+<td>193.0</td>
+<td>146.0</td>
+<td>55.0</td>
+<td>16.0</td>
+<td>44.0</td>
+<td>249.0</td>
+<td>869.0</td>
+<td>7560.0</td>
+<td>7560.0</td>
+<td>1620.0</td>
+<td>2500.0</td>
+<td>130.0</td>
+<td>800.0</td>
+<td>1500.0</td>
+<td>76.0</td>
+<td>11.9</td>
+<td>15.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>University of Alaska at Fairbanks</td>
+<td>AK</td>
+<td>1</td>
+<td>1852.0</td>
+<td>1427.0</td>
+<td>928.0</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>3885.0</td>
+<td>4519.0</td>
+<td>1742.0</td>
+<td>5226.0</td>
+<td>1800.0</td>
+<td>1790.0</td>
+<td>155.0</td>
+<td>650.0</td>
+<td>2304.0</td>
+<td>67.0</td>
+<td>10.0</td>
+<td>NaN</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>University of Alaska Southeast</td>
+<td>AK</td>
+<td>1</td>
+<td>146.0</td>
+<td>117.0</td>
+<td>89.0</td>
+<td>4.0</td>
+<td>24.0</td>
+<td>492.0</td>
+<td>1849.0</td>
+<td>1742.0</td>
+<td>5226.0</td>
+<td>2514.0</td>
+<td>2250.0</td>
+<td>34.0</td>
+<td>500.0</td>
+<td>1162.0</td>
+<td>39.0</td>
+<td>9.5</td>
+<td>39.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>University of Alaska at Anchorage</td>
+<td>AK</td>
+<td>1</td>
+<td>2065.0</td>
+<td>1598.0</td>
+<td>1162.0</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>6209.0</td>
+<td>10537.0</td>
+<td>1742.0</td>
+<td>5226.0</td>
+<td>2600.0</td>
+<td>2520.0</td>
+<td>114.0</td>
+<td>580.0</td>
+<td>1260.0</td>
+<td>48.0</td>
+<td>13.7</td>
+<td>NaN</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>Alabama Agri. &amp; Mech. Univ.</td>
+<td>AL</td>
+<td>1</td>
+<td>2817.0</td>
+<td>1920.0</td>
+<td>984.0</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>3958.0</td>
+<td>305.0</td>
+<td>1700.0</td>
+<td>3400.0</td>
+<td>1108.0</td>
+<td>1442.0</td>
+<td>155.0</td>
+<td>500.0</td>
+<td>850.0</td>
+<td>53.0</td>
+<td>14.3</td>
+<td>40.0</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="cell-37" class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>var <span class="op">=</span> <span class="bu">list</span>(universities_df.columns)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>var</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="11">
+<pre><code>['College Name',
+ 'State',
+ 'Public (1)/ Private (2)',
+ "# appli. rec'd",
+ '# appl. accepted',
+ '# new stud. enrolled',
+ '% new stud. from top 10%',
+ '% new stud. from top 25%',
+ '# FT undergrad',
+ '# PT undergrad',
+ 'in-state tuition',
+ 'out-of-state tuition',
+ 'room',
+ 'board',
+ 'add. fees',
+ 'estim. book costs',
+ 'estim. personal $',
+ '% fac. w/PHD',
+ 'stud./fac. ratio',
+ 'Graduation rate']</code></pre>
+</div>
+</div>
+<div id="cell-38" class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># variable data types</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>universities_df.dtypes</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="12">
+<pre><code>College Name                 object
+State                        object
+Public (1)/ Private (2)       int64
+# appli. rec'd              float64
+# appl. accepted            float64
+# new stud. enrolled        float64
+% new stud. from top 10%    float64
+% new stud. from top 25%    float64
+# FT undergrad              float64
+# PT undergrad              float64
+in-state tuition            float64
+out-of-state tuition        float64
+room                        float64
+board                       float64
+add. fees                   float64
+estim. book costs           float64
+estim. personal $           float64
+% fac. w/PHD                float64
+stud./fac. ratio            float64
+Graduation rate             float64
+dtype: object</code></pre>
+</div>
+</div>
+<p><strong>4.2.a.</strong> Remove all categorical variables. Then remove all records with missing numerical measurements from the dataset.</p>
+<div id="cell-40" class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># remove all three categorical variables</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>var.remove(<span class="st">'College Name'</span>)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>var.remove(<span class="st">'State'</span>)</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>var.remove(<span class="st">'Public (1)/ Private (2)'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-41" class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>all_numeric_df <span class="op">=</span> universities_df[var]</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>all_numeric_df.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="14">
+<pre><code>(1302, 17)</code></pre>
+</div>
+</div>
+<div id="cell-42" class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># drop missing values</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>all_numeric_df <span class="op">=</span> all_numeric_df.dropna(how<span class="op">=</span><span class="st">'any'</span>)</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>all_numeric_df.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="15">
+<pre><code>(471, 17)</code></pre>
+</div>
+</div>
+<p><strong>4.2.b.</strong> Conduct a principal components analysis on the cleaned data and comment on the results. Should the data be normalized? Discuss what characterizes the components you consider key.</p>
+<div id="cell-44" class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># PCA</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>pcs <span class="op">=</span> PCA()</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>pcs.fit(all_numeric_df)</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="co"># view the importance of principal components</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>pcsSummary_df <span class="op">=</span> pd.DataFrame({<span class="st">'Standard deviation'</span>: np.sqrt(pcs.explained_variance_),</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>                           <span class="st">'Proportion of variance'</span>: pcs.explained_variance_ratio_,</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>                           <span class="st">'Cumulative proportion'</span>: np.cumsum(pcs.explained_variance_ratio_)})</span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>pcsSummary_df <span class="op">=</span> pcsSummary_df.transpose()</span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>pcsSummary_df.columns <span class="op">=</span> [<span class="st">'PC</span><span class="sc">{}</span><span class="st">'</span>.<span class="bu">format</span>(i) <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="bu">len</span>(pcsSummary_df.columns) <span class="op">+</span> <span class="dv">1</span>)]</span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>pcsSummary_df.<span class="bu">round</span>(<span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="16">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">PC1</th>
+<th data-quarto-table-cell-role="th">PC2</th>
+<th data-quarto-table-cell-role="th">PC3</th>
+<th data-quarto-table-cell-role="th">PC4</th>
+<th data-quarto-table-cell-role="th">PC5</th>
+<th data-quarto-table-cell-role="th">PC6</th>
+<th data-quarto-table-cell-role="th">PC7</th>
+<th data-quarto-table-cell-role="th">PC8</th>
+<th data-quarto-table-cell-role="th">PC9</th>
+<th data-quarto-table-cell-role="th">PC10</th>
+<th data-quarto-table-cell-role="th">PC11</th>
+<th data-quarto-table-cell-role="th">PC12</th>
+<th data-quarto-table-cell-role="th">PC13</th>
+<th data-quarto-table-cell-role="th">PC14</th>
+<th data-quarto-table-cell-role="th">PC15</th>
+<th data-quarto-table-cell-role="th">PC16</th>
+<th data-quarto-table-cell-role="th">PC17</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Standard deviation</td>
+<td>7430.9140</td>
+<td>5987.9890</td>
+<td>1854.6412</td>
+<td>1192.5293</td>
+<td>967.4279</td>
+<td>679.6527</td>
+<td>596.9761</td>
+<td>580.6299</td>
+<td>417.6136</td>
+<td>318.1272</td>
+<td>188.8676</td>
+<td>155.6062</td>
+<td>19.0491</td>
+<td>12.5287</td>
+<td>11.0184</td>
+<td>5.33</td>
+<td>2.9059</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Proportion of variance</td>
+<td>0.5614</td>
+<td>0.3645</td>
+<td>0.0350</td>
+<td>0.0145</td>
+<td>0.0095</td>
+<td>0.0047</td>
+<td>0.0036</td>
+<td>0.0034</td>
+<td>0.0018</td>
+<td>0.0010</td>
+<td>0.0004</td>
+<td>0.0002</td>
+<td>0.0000</td>
+<td>0.0000</td>
+<td>0.0000</td>
+<td>0.00</td>
+<td>0.0000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Cumulative proportion</td>
+<td>0.5614</td>
+<td>0.9259</td>
+<td>0.9609</td>
+<td>0.9753</td>
+<td>0.9848</td>
+<td>0.9895</td>
+<td>0.9932</td>
+<td>0.9966</td>
+<td>0.9984</td>
+<td>0.9994</td>
+<td>0.9997</td>
+<td>1.0000</td>
+<td>1.0000</td>
+<td>1.0000</td>
+<td>1.0000</td>
+<td>1.00</td>
+<td>1.0000</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="cell-45" class="cell" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Components</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'</span><span class="ch">\n</span><span class="st">Components'</span>)</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>pcsComponents_df <span class="op">=</span> pd.DataFrame(pcs.components_.transpose(),columns<span class="op">=</span>pcsSummary_df.columns, index<span class="op">=</span>[var])</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>pcsComponents_df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Components</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="17">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">PC1</th>
+<th data-quarto-table-cell-role="th">PC2</th>
+<th data-quarto-table-cell-role="th">PC3</th>
+<th data-quarto-table-cell-role="th">PC4</th>
+<th data-quarto-table-cell-role="th">PC5</th>
+<th data-quarto-table-cell-role="th">PC6</th>
+<th data-quarto-table-cell-role="th">PC7</th>
+<th data-quarto-table-cell-role="th">PC8</th>
+<th data-quarto-table-cell-role="th">PC9</th>
+<th data-quarto-table-cell-role="th">PC10</th>
+<th data-quarto-table-cell-role="th">PC11</th>
+<th data-quarto-table-cell-role="th">PC12</th>
+<th data-quarto-table-cell-role="th">PC13</th>
+<th data-quarto-table-cell-role="th">PC14</th>
+<th data-quarto-table-cell-role="th">PC15</th>
+<th data-quarto-table-cell-role="th">PC16</th>
+<th data-quarto-table-cell-role="th">PC17</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th"># appli. rec'd</td>
+<td>0.271883</td>
+<td>0.551183</td>
+<td>0.664458</td>
+<td>0.129476</td>
+<td>-0.034246</td>
+<td>0.370333</td>
+<td>-0.120305</td>
+<td>-0.097471</td>
+<td>-0.035166</td>
+<td>-0.009102</td>
+<td>-0.016696</td>
+<td>-0.008734</td>
+<td>0.005788</td>
+<td>0.000754</td>
+<td>-0.002059</td>
+<td>-0.001503</td>
+<td>-0.000081</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th"># appl. accepted</td>
+<td>0.194107</td>
+<td>0.321299</td>
+<td>0.190957</td>
+<td>-0.008357</td>
+<td>-0.076674</td>
+<td>-0.813924</td>
+<td>0.353520</td>
+<td>0.103440</td>
+<td>0.075971</td>
+<td>-0.040233</td>
+<td>0.103389</td>
+<td>0.016789</td>
+<td>-0.011578</td>
+<td>-0.002453</td>
+<td>0.003683</td>
+<td>0.003584</td>
+<td>0.000083</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th"># new stud. enrolled</td>
+<td>0.084730</td>
+<td>0.101590</td>
+<td>-0.087451</td>
+<td>-0.055253</td>
+<td>-0.036068</td>
+<td>-0.081429</td>
+<td>0.019293</td>
+<td>-0.039063</td>
+<td>0.030435</td>
+<td>0.170403</td>
+<td>-0.965233</td>
+<td>-0.008420</td>
+<td>0.013475</td>
+<td>-0.002658</td>
+<td>-0.005389</td>
+<td>-0.006643</td>
+<td>-0.000082</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">% new stud. from top 10%</td>
+<td>-0.000898</td>
+<td>0.001732</td>
+<td>0.000136</td>
+<td>-0.001906</td>
+<td>0.001236</td>
+<td>0.009145</td>
+<td>-0.003462</td>
+<td>-0.002851</td>
+<td>-0.001772</td>
+<td>0.003426</td>
+<td>-0.013176</td>
+<td>0.004417</td>
+<td>-0.511022</td>
+<td>-0.251865</td>
+<td>0.230605</td>
+<td>0.781370</td>
+<td>0.106686</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">% new stud. from top 25%</td>
+<td>-0.000811</td>
+<td>0.001925</td>
+<td>0.000040</td>
+<td>-0.002352</td>
+<td>0.001009</td>
+<td>0.007166</td>
+<td>-0.003192</td>
+<td>-0.002603</td>
+<td>-0.000749</td>
+<td>0.001050</td>
+<td>-0.006792</td>
+<td>0.007512</td>
+<td>-0.686812</td>
+<td>-0.225707</td>
+<td>0.320215</td>
+<td>-0.610197</td>
+<td>-0.047794</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th"># FT undergrad</td>
+<td>0.458121</td>
+<td>0.492263</td>
+<td>-0.635303</td>
+<td>-0.284582</td>
+<td>-0.080402</td>
+<td>0.129196</td>
+<td>-0.127077</td>
+<td>0.011595</td>
+<td>-0.021579</td>
+<td>-0.012258</td>
+<td>0.152137</td>
+<td>-0.000211</td>
+<td>0.001405</td>
+<td>0.001129</td>
+<td>0.000611</td>
+<td>0.000641</td>
+<td>-0.000148</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th"># PT undergrad</td>
+<td>0.108253</td>
+<td>0.073410</td>
+<td>-0.285353</td>
+<td>0.942562</td>
+<td>-0.051743</td>
+<td>-0.039789</td>
+<td>-0.018146</td>
+<td>-0.073893</td>
+<td>-0.044043</td>
+<td>0.031981</td>
+<td>0.001279</td>
+<td>-0.003901</td>
+<td>-0.003181</td>
+<td>0.001234</td>
+<td>0.001414</td>
+<td>0.000195</td>
+<td>0.000120</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">in-state tuition</td>
+<td>-0.670187</td>
+<td>0.382489</td>
+<td>-0.082787</td>
+<td>-0.016972</td>
+<td>-0.621759</td>
+<td>0.000517</td>
+<td>-0.060641</td>
+<td>0.006407</td>
+<td>-0.040511</td>
+<td>0.070211</td>
+<td>0.022783</td>
+<td>-0.003362</td>
+<td>0.000362</td>
+<td>-0.000392</td>
+<td>-0.002251</td>
+<td>-0.000151</td>
+<td>0.000114</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">out-of-state tuition</td>
+<td>-0.454535</td>
+<td>0.428685</td>
+<td>-0.129410</td>
+<td>0.018657</td>
+<td>0.748634</td>
+<td>0.010286</td>
+<td>0.141481</td>
+<td>-0.091839</td>
+<td>-0.000236</td>
+<td>-0.056493</td>
+<td>-0.016404</td>
+<td>0.005916</td>
+<td>0.004394</td>
+<td>-0.000145</td>
+<td>0.002655</td>
+<td>-0.000479</td>
+<td>0.000308</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">room</td>
+<td>-0.033420</td>
+<td>0.055584</td>
+<td>0.040113</td>
+<td>0.065120</td>
+<td>0.115354</td>
+<td>-0.050083</td>
+<td>-0.314426</td>
+<td>0.873995</td>
+<td>-0.318999</td>
+<td>-0.053459</td>
+<td>-0.065262</td>
+<td>-0.050179</td>
+<td>-0.001090</td>
+<td>-0.000420</td>
+<td>0.000894</td>
+<td>-0.000278</td>
+<td>0.000364</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">board</td>
+<td>-0.034236</td>
+<td>0.040897</td>
+<td>-0.008232</td>
+<td>0.067313</td>
+<td>0.006301</td>
+<td>0.067317</td>
+<td>-0.145646</td>
+<td>0.276553</td>
+<td>0.938293</td>
+<td>-0.095646</td>
+<td>-0.008915</td>
+<td>-0.025704</td>
+<td>-0.000158</td>
+<td>-0.002073</td>
+<td>0.002044</td>
+<td>0.000795</td>
+<td>-0.000196</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">add. fees</td>
+<td>0.013209</td>
+<td>0.008746</td>
+<td>0.032868</td>
+<td>-0.012755</td>
+<td>0.103097</td>
+<td>-0.024987</td>
+<td>-0.043534</td>
+<td>0.068703</td>
+<td>0.076206</td>
+<td>0.972820</td>
+<td>0.168601</td>
+<td>0.001859</td>
+<td>0.002655</td>
+<td>-0.002461</td>
+<td>0.002785</td>
+<td>-0.001050</td>
+<td>0.000424</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">estim. book costs</td>
+<td>-0.000058</td>
+<td>0.003291</td>
+<td>0.000316</td>
+<td>0.010795</td>
+<td>-0.005223</td>
+<td>0.034097</td>
+<td>0.011155</td>
+<td>0.064045</td>
+<td>0.006482</td>
+<td>-0.002434</td>
+<td>-0.014164</td>
+<td>0.997041</td>
+<td>0.005360</td>
+<td>0.001904</td>
+<td>-0.009205</td>
+<td>0.000856</td>
+<td>0.000313</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">estim. personal $</td>
+<td>0.037557</td>
+<td>0.001185</td>
+<td>-0.054659</td>
+<td>0.031666</td>
+<td>-0.106952</td>
+<td>0.407928</td>
+<td>0.835394</td>
+<td>0.339141</td>
+<td>0.002346</td>
+<td>0.039237</td>
+<td>-0.013501</td>
+<td>-0.046075</td>
+<td>-0.001610</td>
+<td>0.000984</td>
+<td>-0.000207</td>
+<td>-0.000442</td>
+<td>0.000687</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">% fac. w/PHD</td>
+<td>-0.000205</td>
+<td>0.001564</td>
+<td>-0.000995</td>
+<td>-0.000055</td>
+<td>0.004822</td>
+<td>0.000925</td>
+<td>-0.001184</td>
+<td>-0.000218</td>
+<td>0.001612</td>
+<td>0.002839</td>
+<td>0.000403</td>
+<td>-0.006167</td>
+<td>-0.396144</td>
+<td>-0.066826</td>
+<td>-0.915632</td>
+<td>-0.009347</td>
+<td>-0.007621</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">stud./fac. ratio</td>
+<td>0.000295</td>
+<td>-0.000159</td>
+<td>0.000025</td>
+<td>-0.000135</td>
+<td>-0.000201</td>
+<td>-0.000748</td>
+<td>-0.000397</td>
+<td>-0.000359</td>
+<td>0.000470</td>
+<td>-0.000638</td>
+<td>0.000849</td>
+<td>-0.000424</td>
+<td>0.012433</td>
+<td>0.033745</td>
+<td>-0.014961</td>
+<td>-0.112121</td>
+<td>0.992930</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Graduation rate</td>
+<td>-0.001072</td>
+<td>0.001397</td>
+<td>0.000920</td>
+<td>-0.002172</td>
+<td>0.001129</td>
+<td>0.001077</td>
+<td>-0.001994</td>
+<td>-0.000387</td>
+<td>0.001937</td>
+<td>0.004057</td>
+<td>-0.007366</td>
+<td>0.000551</td>
+<td>-0.331120</td>
+<td>0.938075</td>
+<td>0.074297</td>
+<td>0.066329</td>
+<td>-0.019117</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="cell-46" class="cell" data-execution_count="18">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># PCA after normalizatin</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>pcs <span class="op">=</span> PCA()</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>pcs.fit(preprocessing.scale(all_numeric_df))</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="co"># view the importance of principal components</span></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>pcsSummary_df <span class="op">=</span> pd.DataFrame({<span class="st">'Standard deviation'</span>: np.sqrt(pcs.explained_variance_),</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>                           <span class="st">'Proportion of variance'</span>: pcs.explained_variance_ratio_,</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>                           <span class="st">'Cumulative proportion'</span>: np.cumsum(pcs.explained_variance_ratio_)})</span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>pcsSummary_df <span class="op">=</span> pcsSummary_df.transpose()</span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>pcsSummary_df.columns <span class="op">=</span> [<span class="st">'PC</span><span class="sc">{}</span><span class="st">'</span>.<span class="bu">format</span>(i) <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="bu">len</span>(pcsSummary_df.columns) <span class="op">+</span> <span class="dv">1</span>)]</span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>pcsSummary_df.<span class="bu">round</span>(<span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="18">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">PC1</th>
+<th data-quarto-table-cell-role="th">PC2</th>
+<th data-quarto-table-cell-role="th">PC3</th>
+<th data-quarto-table-cell-role="th">PC4</th>
+<th data-quarto-table-cell-role="th">PC5</th>
+<th data-quarto-table-cell-role="th">PC6</th>
+<th data-quarto-table-cell-role="th">PC7</th>
+<th data-quarto-table-cell-role="th">PC8</th>
+<th data-quarto-table-cell-role="th">PC9</th>
+<th data-quarto-table-cell-role="th">PC10</th>
+<th data-quarto-table-cell-role="th">PC11</th>
+<th data-quarto-table-cell-role="th">PC12</th>
+<th data-quarto-table-cell-role="th">PC13</th>
+<th data-quarto-table-cell-role="th">PC14</th>
+<th data-quarto-table-cell-role="th">PC15</th>
+<th data-quarto-table-cell-role="th">PC16</th>
+<th data-quarto-table-cell-role="th">PC17</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Standard deviation</td>
+<td>2.2773</td>
+<td>2.1449</td>
+<td>1.0995</td>
+<td>1.0336</td>
+<td>0.9770</td>
+<td>0.8738</td>
+<td>0.8041</td>
+<td>0.7736</td>
+<td>0.7039</td>
+<td>0.6629</td>
+<td>0.6285</td>
+<td>0.5503</td>
+<td>0.4388</td>
+<td>0.3042</td>
+<td>0.2002</td>
+<td>0.1745</td>
+<td>0.1440</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Proportion of variance</td>
+<td>0.3044</td>
+<td>0.2700</td>
+<td>0.0710</td>
+<td>0.0627</td>
+<td>0.0560</td>
+<td>0.0448</td>
+<td>0.0380</td>
+<td>0.0351</td>
+<td>0.0291</td>
+<td>0.0258</td>
+<td>0.0232</td>
+<td>0.0178</td>
+<td>0.0113</td>
+<td>0.0054</td>
+<td>0.0024</td>
+<td>0.0018</td>
+<td>0.0012</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Cumulative proportion</td>
+<td>0.3044</td>
+<td>0.5745</td>
+<td>0.6454</td>
+<td>0.7081</td>
+<td>0.7642</td>
+<td>0.8090</td>
+<td>0.8469</td>
+<td>0.8821</td>
+<td>0.9111</td>
+<td>0.9369</td>
+<td>0.9601</td>
+<td>0.9779</td>
+<td>0.9892</td>
+<td>0.9946</td>
+<td>0.9970</td>
+<td>0.9988</td>
+<td>1.0000</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="cell-47" class="cell" data-execution_count="19">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Components</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'</span><span class="ch">\n</span><span class="st">Components'</span>)</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>pcsComponents_df <span class="op">=</span> pd.DataFrame(pcs.components_.transpose(),columns<span class="op">=</span>pcsSummary_df.columns, index<span class="op">=</span>[var])</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>pcsComponents_df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Components</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="19">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">PC1</th>
+<th data-quarto-table-cell-role="th">PC2</th>
+<th data-quarto-table-cell-role="th">PC3</th>
+<th data-quarto-table-cell-role="th">PC4</th>
+<th data-quarto-table-cell-role="th">PC5</th>
+<th data-quarto-table-cell-role="th">PC6</th>
+<th data-quarto-table-cell-role="th">PC7</th>
+<th data-quarto-table-cell-role="th">PC8</th>
+<th data-quarto-table-cell-role="th">PC9</th>
+<th data-quarto-table-cell-role="th">PC10</th>
+<th data-quarto-table-cell-role="th">PC11</th>
+<th data-quarto-table-cell-role="th">PC12</th>
+<th data-quarto-table-cell-role="th">PC13</th>
+<th data-quarto-table-cell-role="th">PC14</th>
+<th data-quarto-table-cell-role="th">PC15</th>
+<th data-quarto-table-cell-role="th">PC16</th>
+<th data-quarto-table-cell-role="th">PC17</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th"># appli. rec'd</td>
+<td>0.078361</td>
+<td>0.420164</td>
+<td>-0.031982</td>
+<td>0.072621</td>
+<td>-0.016694</td>
+<td>0.112320</td>
+<td>-0.268145</td>
+<td>-0.093570</td>
+<td>0.039628</td>
+<td>-0.087361</td>
+<td>-0.073021</td>
+<td>-0.009995</td>
+<td>0.602996</td>
+<td>0.198790</td>
+<td>0.346774</td>
+<td>-0.344637</td>
+<td>-0.246354</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th"># appl. accepted</td>
+<td>0.023659</td>
+<td>0.434471</td>
+<td>-0.031423</td>
+<td>0.118128</td>
+<td>-0.089073</td>
+<td>0.114381</td>
+<td>-0.266285</td>
+<td>-0.080991</td>
+<td>0.022795</td>
+<td>0.035197</td>
+<td>-0.166046</td>
+<td>-0.062100</td>
+<td>0.251257</td>
+<td>-0.240232</td>
+<td>-0.452347</td>
+<td>0.429830</td>
+<td>0.392238</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th"># new stud. enrolled</td>
+<td>-0.028802</td>
+<td>0.445556</td>
+<td>-0.038651</td>
+<td>-0.031466</td>
+<td>-0.075981</td>
+<td>0.054079</td>
+<td>-0.098870</td>
+<td>-0.058138</td>
+<td>0.096336</td>
+<td>0.019353</td>
+<td>-0.072613</td>
+<td>0.013719</td>
+<td>-0.486306</td>
+<td>0.059301</td>
+<td>-0.322663</td>
+<td>-0.010969</td>
+<td>-0.645721</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">% new stud. from top 10%</td>
+<td>0.354028</td>
+<td>0.093547</td>
+<td>-0.120129</td>
+<td>-0.372457</td>
+<td>0.162260</td>
+<td>-0.004445</td>
+<td>0.102709</td>
+<td>-0.112334</td>
+<td>0.028676</td>
+<td>-0.326675</td>
+<td>0.209275</td>
+<td>-0.043489</td>
+<td>-0.003825</td>
+<td>0.646399</td>
+<td>-0.185719</td>
+<td>0.168396</td>
+<td>0.171236</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">% new stud. from top 25%</td>
+<td>0.340496</td>
+<td>0.118396</td>
+<td>-0.142720</td>
+<td>-0.385565</td>
+<td>0.158187</td>
+<td>0.092636</td>
+<td>0.136409</td>
+<td>-0.039927</td>
+<td>-0.006007</td>
+<td>-0.314110</td>
+<td>0.234355</td>
+<td>0.010823</td>
+<td>0.037524</td>
+<td>-0.685605</td>
+<td>0.088571</td>
+<td>-0.055470</td>
+<td>-0.105283</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th"># FT undergrad</td>
+<td>-0.049586</td>
+<td>0.443583</td>
+<td>-0.004012</td>
+<td>-0.056459</td>
+<td>-0.094781</td>
+<td>0.043504</td>
+<td>-0.043157</td>
+<td>-0.043464</td>
+<td>0.034858</td>
+<td>-0.009057</td>
+<td>-0.061392</td>
+<td>0.050779</td>
+<td>-0.512673</td>
+<td>0.012862</td>
+<td>0.441354</td>
+<td>-0.217176</td>
+<td>0.519944</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th"># PT undergrad</td>
+<td>-0.106380</td>
+<td>0.287700</td>
+<td>0.265769</td>
+<td>0.053495</td>
+<td>-0.343681</td>
+<td>-0.188041</td>
+<td>0.509297</td>
+<td>-0.122490</td>
+<td>0.172351</td>
+<td>0.225459</td>
+<td>0.531642</td>
+<td>-0.107999</td>
+<td>0.168015</td>
+<td>-0.006459</td>
+<td>-0.036556</td>
+<td>0.009390</td>
+<td>0.003856</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">in-state tuition</td>
+<td>0.379389</td>
+<td>-0.150248</td>
+<td>0.084350</td>
+<td>0.041064</td>
+<td>-0.172639</td>
+<td>-0.000539</td>
+<td>-0.129328</td>
+<td>0.009974</td>
+<td>0.092325</td>
+<td>0.103905</td>
+<td>-0.044406</td>
+<td>-0.497755</td>
+<td>-0.066563</td>
+<td>-0.041638</td>
+<td>-0.355983</td>
+<td>-0.592824</td>
+<td>0.157093</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">out-of-state tuition</td>
+<td>0.402555</td>
+<td>-0.048728</td>
+<td>0.051577</td>
+<td>0.077658</td>
+<td>-0.158499</td>
+<td>-0.044407</td>
+<td>-0.077965</td>
+<td>-0.010688</td>
+<td>0.044615</td>
+<td>0.151510</td>
+<td>-0.099283</td>
+<td>-0.507936</td>
+<td>-0.101073</td>
+<td>0.006317</td>
+<td>0.449517</td>
+<td>0.507584</td>
+<td>-0.175592</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">room</td>
+<td>0.273165</td>
+<td>0.052271</td>
+<td>0.250578</td>
+<td>0.454416</td>
+<td>-0.004482</td>
+<td>-0.015068</td>
+<td>-0.122402</td>
+<td>-0.091329</td>
+<td>-0.680595</td>
+<td>-0.180139</td>
+<td>0.308060</td>
+<td>0.153113</td>
+<td>-0.120440</td>
+<td>0.004846</td>
+<td>-0.027487</td>
+<td>-0.009710</td>
+<td>-0.020306</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">board</td>
+<td>0.290437</td>
+<td>0.010051</td>
+<td>0.252096</td>
+<td>0.301620</td>
+<td>-0.199067</td>
+<td>-0.038477</td>
+<td>0.152138</td>
+<td>0.466412</td>
+<td>0.421339</td>
+<td>-0.419434</td>
+<td>-0.181506</td>
+<td>0.302579</td>
+<td>-0.004475</td>
+<td>0.001880</td>
+<td>-0.011574</td>
+<td>0.033039</td>
+<td>0.004999</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">add. fees</td>
+<td>-0.012351</td>
+<td>0.169499</td>
+<td>-0.249747</td>
+<td>0.446562</td>
+<td>0.648920</td>
+<td>-0.418437</td>
+<td>0.082359</td>
+<td>0.048174</td>
+<td>0.205132</td>
+<td>-0.013333</td>
+<td>0.098383</td>
+<td>-0.214784</td>
+<td>-0.043950</td>
+<td>-0.039396</td>
+<td>-0.006340</td>
+<td>-0.039115</td>
+<td>0.030237</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">estim. book costs</td>
+<td>0.057302</td>
+<td>0.056689</td>
+<td>0.652241</td>
+<td>-0.044356</td>
+<td>0.518644</td>
+<td>0.421195</td>
+<td>0.190728</td>
+<td>-0.130177</td>
+<td>0.078975</td>
+<td>0.170842</td>
+<td>-0.172220</td>
+<td>-0.033709</td>
+<td>-0.006943</td>
+<td>0.009861</td>
+<td>-0.004617</td>
+<td>0.003225</td>
+<td>0.000384</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">estim. personal $</td>
+<td>-0.144908</td>
+<td>0.156837</td>
+<td>0.403735</td>
+<td>-0.403709</td>
+<td>0.103358</td>
+<td>-0.466598</td>
+<td>-0.289271</td>
+<td>0.505883</td>
+<td>-0.194258</td>
+<td>0.000128</td>
+<td>0.038711</td>
+<td>-0.133197</td>
+<td>0.051416</td>
+<td>-0.013721</td>
+<td>-0.012993</td>
+<td>0.017390</td>
+<td>-0.012251</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">% fac. w/PHD</td>
+<td>0.254201</td>
+<td>0.196852</td>
+<td>-0.189367</td>
+<td>-0.074609</td>
+<td>-0.017278</td>
+<td>-0.180623</td>
+<td>0.533349</td>
+<td>0.145009</td>
+<td>-0.404837</td>
+<td>0.267768</td>
+<td>-0.502748</td>
+<td>0.096447</td>
+<td>0.101835</td>
+<td>0.027889</td>
+<td>-0.050578</td>
+<td>-0.073086</td>
+<td>-0.009757</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">stud./fac. ratio</td>
+<td>-0.278542</td>
+<td>0.101034</td>
+<td>-0.187598</td>
+<td>0.105222</td>
+<td>0.003000</td>
+<td>0.522154</td>
+<td>0.211516</td>
+<td>0.525627</td>
+<td>-0.207194</td>
+<td>-0.181720</td>
+<td>0.136107</td>
+<td>-0.416236</td>
+<td>0.005232</td>
+<td>0.065855</td>
+<td>-0.006340</td>
+<td>0.010918</td>
+<td>-0.003511</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Graduation rate</td>
+<td>0.325305</td>
+<td>0.024264</td>
+<td>-0.181888</td>
+<td>-0.012600</td>
+<td>0.109137</td>
+<td>0.215325</td>
+<td>-0.200105</td>
+<td>0.389370</td>
+<td>0.112811</td>
+<td>0.598537</td>
+<td>0.353414</td>
+<td>0.333592</td>
+<td>-0.009703</td>
+<td>0.049079</td>
+<td>0.006724</td>
+<td>0.009623</td>
+<td>0.024913</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>Because the different variables are measured on different scales, we must first normalize the data, otherwise the variables with the largest scale will dominate the principal components. From the non-standardized output we see that the first component account for over 50% of the total variability (and the first 6 components accounts for over 98% of the total variability). When we standardize the data, those numbers drop to 30% and 81%.</p>
+<p>The 1st component appears to capture program quality (e.g.&nbsp;student and faculty quality) and expenses (tuition, room, board). The 2nd component is related to the popularity of the program (as reflected by # application received, accepted, # new enrolled students, and # FT undergraduates). The 3rd component is mainly estimated book and personal costs, and the 4th contrasts room &amp; board costs with student quality (% new students from top 10% and top 25%).</p>
+</section>
+<section id="problem-4.3-sales-of-toyota-corolla-cars." class="level1">
+<h1>Problem 4.3 Sales of Toyota Corolla Cars.</h1>
+<p>The file <em>ToyotaCorolla.csv</em> contains data on used cars (Toyota Corollas) on sale during late summer of 2004 in the Netherlands. It has 1436 records containing details on 38 attributes, including Price, Age, Kilometers, HP, and other specifications. The goal will be to predict the price of a used Toyota Corolla based on its specifications.</p>
+<div id="cell-50" class="cell" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load the data</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>toyota_df <span class="op">=</span> pd.read_csv(DATA <span class="op">/</span> <span class="st">'ToyotaCorolla.csv'</span>)</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>toyota_df.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="20">
+<pre><code>(1436, 39)</code></pre>
+</div>
+</div>
+<div id="cell-51" class="cell" data-scrolled="true" data-execution_count="21">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># variable types</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>toyota_df.dtypes</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="21">
+<pre><code>Id                    int64
+Model                object
+Price                 int64
+Age_08_04             int64
+Mfg_Month             int64
+Mfg_Year              int64
+KM                    int64
+Fuel_Type            object
+HP                    int64
+Met_Color             int64
+Color                object
+Automatic             int64
+CC                    int64
+Doors                 int64
+Cylinders             int64
+Gears                 int64
+Quarterly_Tax         int64
+Weight                int64
+Mfr_Guarantee         int64
+BOVAG_Guarantee       int64
+Guarantee_Period      int64
+ABS                   int64
+Airbag_1              int64
+Airbag_2              int64
+Airco                 int64
+Automatic_airco       int64
+Boardcomputer         int64
+CD_Player             int64
+Central_Lock          int64
+Powered_Windows       int64
+Power_Steering        int64
+Radio                 int64
+Mistlamps             int64
+Sport_Model           int64
+Backseat_Divider      int64
+Metallic_Rim          int64
+Radio_cassette        int64
+Parking_Assistant     int64
+Tow_Bar               int64
+dtype: object</code></pre>
+</div>
+</div>
+<p>categorical variables Fuel_Type Fuel Type (Petrol, Diesel, CNG) Color Color (Blue, Red, Grey, Silver, Black, etc.) Met_Color Metallic Color? (Yes=1, No=0) Automatic Automatic ( (Yes=1, No=0) Mfr_Guarantee Within Manufacturer’s Guarantee period (Yes=1, No=0) BOVAG_Guarantee BOVAG (Dutch dealer network) Guarantee (Yes=1, No=0) ABS Anti-Lock Brake System (Yes=1, No=0) Airbag_1 Driver_Airbag (Yes=1, No=0) Airbag_2 Passenger Airbag (Yes=1, No=0) Airco Airconditioning (Yes=1, No=0) Automatic_airco Automatic Airconditioning (Yes=1, No=0) Boardcomputer Boardcomputer (Yes=1, No=0) CD_Player CD Player (Yes=1, No=0) Central_Lock Central Lock (Yes=1, No=0) Powered_Windows Powered Windows (Yes=1, No=0) Power_Steering Power Steering (Yes=1, No=0) Radio Radio (Yes=1, No=0) Mistlamps Mistlamps (Yes=1, No=0) Sport_Model Sport Model (Yes=1, No=0) Backseat_Divider Backseat Divider (Yes=1, No=0) Metallic_Rim Metallic Rim (Yes=1, No=0) Radio_cassette Radio Cassette (Yes=1, No=0) Parking_Assistant Parking assistance system (Yes=1, No=0) Tow_Bar Tow Bar (Yes=1, No=0)</p>
+<p><strong>4.3.b.</strong> Explain the relationship between a categorical variable and the series of binary dummy variables derived from it.</p>
+<p>A variable with N categories will be transformed into N dummy variables, with each dummy indicating whether a certain category is present or not. For example, Fuel type has 3 categories: Petrol, Diesel, and CNG. If we convert it to dummy variables, we get 3 dummy variables: Fuel_Type_Petrol (if the fuel type is Petrol then Fuel_Type_Petrol=1, otherwise Fuel_Type_Petrol=0), Fuel_Type_Diesel (if the fuel type is Diesel then Fuel_Type_Diesel=1, otherwise Fuel_Type_Diesel=0) and Fuel_Type_CNG (if the fuel type is CNG then Fuel_Type_CNG=1, otherwise Fuel_Type_CNG=0). Note that when the first two dummies both have values of 0, it indicates that the fuel type is CNG.</p>
+<p><strong>4.3.c.</strong> How many dummy binary variables are required to capture the information in a categorical variable with N categories?</p>
+<p>N-1 binary variables are required to capture the information in a categorical variable with N categories. Note that in some routines, e.g.&nbsp;linear regression and logistic regression, use of all N dummies will cause the routine to fail because the nth variable contains redundant information and can be expressed as a linear combination of the others. Only N-1 variables should be used (they contain all the available information about the variable from which they were derived.)</p>
+<p><strong>4.3.d.</strong> Use Python to convert the categorical variables in this dataset into dummy variables, and explain in words, for one record, the values in the derived binary dummies.</p>
+<p>When we convert Fuel type into dummy variables, we get Fuel_Type_Diesel, Fuel_Type_Petrol and Fuel_Type_CNG. For the 1st record Fuel type is Diesel. Values in dummy variables are as follows: Fuel_Type_Diesel = 1, Fuel_Type_Petrol = 0, Fuel_Type_CNG = 0.</p>
+<p>Note: that not all 42 variables are shown in the output showing some initial observations below.</p>
+<div id="cell-59" class="cell" data-execution_count="22">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>df_fuel_type <span class="op">=</span> pd.get_dummies(toyota_df[<span class="st">'Fuel_Type'</span>])</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>new_df <span class="op">=</span> pd.concat([toyota_df, df_fuel_type], axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>new_df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="22">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Id</th>
+<th data-quarto-table-cell-role="th">Model</th>
+<th data-quarto-table-cell-role="th">Price</th>
+<th data-quarto-table-cell-role="th">Age_08_04</th>
+<th data-quarto-table-cell-role="th">Mfg_Month</th>
+<th data-quarto-table-cell-role="th">Mfg_Year</th>
+<th data-quarto-table-cell-role="th">KM</th>
+<th data-quarto-table-cell-role="th">Fuel_Type</th>
+<th data-quarto-table-cell-role="th">HP</th>
+<th data-quarto-table-cell-role="th">Met_Color</th>
+<th data-quarto-table-cell-role="th">...</th>
+<th data-quarto-table-cell-role="th">Mistlamps</th>
+<th data-quarto-table-cell-role="th">Sport_Model</th>
+<th data-quarto-table-cell-role="th">Backseat_Divider</th>
+<th data-quarto-table-cell-role="th">Metallic_Rim</th>
+<th data-quarto-table-cell-role="th">Radio_cassette</th>
+<th data-quarto-table-cell-role="th">Parking_Assistant</th>
+<th data-quarto-table-cell-role="th">Tow_Bar</th>
+<th data-quarto-table-cell-role="th">CNG</th>
+<th data-quarto-table-cell-role="th">Diesel</th>
+<th data-quarto-table-cell-role="th">Petrol</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>1</td>
+<td>TOYOTA Corolla 2.0 D4D HATCHB TERRA 2/3-Doors</td>
+<td>13500</td>
+<td>23</td>
+<td>10</td>
+<td>2002</td>
+<td>46986</td>
+<td>Diesel</td>
+<td>90</td>
+<td>1</td>
+<td>...</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>2</td>
+<td>TOYOTA Corolla 2.0 D4D HATCHB TERRA 2/3-Doors</td>
+<td>13750</td>
+<td>23</td>
+<td>10</td>
+<td>2002</td>
+<td>72937</td>
+<td>Diesel</td>
+<td>90</td>
+<td>1</td>
+<td>...</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>3</td>
+<td>TOYOTA Corolla 2.0 D4D HATCHB TERRA 2/3-Doors</td>
+<td>13950</td>
+<td>24</td>
+<td>9</td>
+<td>2002</td>
+<td>41711</td>
+<td>Diesel</td>
+<td>90</td>
+<td>1</td>
+<td>...</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>4</td>
+<td>TOYOTA Corolla 2.0 D4D HATCHB TERRA 2/3-Doors</td>
+<td>14950</td>
+<td>26</td>
+<td>7</td>
+<td>2002</td>
+<td>48000</td>
+<td>Diesel</td>
+<td>90</td>
+<td>0</td>
+<td>...</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>5</td>
+<td>TOYOTA Corolla 2.0 D4D HATCHB SOL 2/3-Doors</td>
+<td>13750</td>
+<td>30</td>
+<td>3</td>
+<td>2002</td>
+<td>38500</td>
+<td>Diesel</td>
+<td>90</td>
+<td>0</td>
+<td>...</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+
+<p>5 rows × 42 columns</p>
+</div>
+</div>
+</div>
+<p><strong>4.3.e.</strong> Use Python to produce a correlation matrix and matrix plot. Comment on the relationships among variables.</p>
+<div id="cell-61" class="cell" data-execution_count="23">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># correlation matric</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>corr_df <span class="op">=</span> new_df[[<span class="st">'Price'</span>, <span class="st">'Age_08_04'</span>, <span class="st">'KM'</span>, <span class="st">'HP'</span>, <span class="st">'CC'</span>, <span class="st">'Quarterly_Tax'</span>, <span class="st">'Weight'</span>]]</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>corr <span class="op">=</span> corr_df.corr()</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>corr</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="23">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Price</th>
+<th data-quarto-table-cell-role="th">Age_08_04</th>
+<th data-quarto-table-cell-role="th">KM</th>
+<th data-quarto-table-cell-role="th">HP</th>
+<th data-quarto-table-cell-role="th">CC</th>
+<th data-quarto-table-cell-role="th">Quarterly_Tax</th>
+<th data-quarto-table-cell-role="th">Weight</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Price</td>
+<td>1.000000</td>
+<td>-0.876590</td>
+<td>-0.569960</td>
+<td>0.314990</td>
+<td>0.126389</td>
+<td>0.219197</td>
+<td>0.581198</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Age_08_04</td>
+<td>-0.876590</td>
+<td>1.000000</td>
+<td>0.505672</td>
+<td>-0.156622</td>
+<td>-0.098084</td>
+<td>-0.198431</td>
+<td>-0.470253</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">KM</td>
+<td>-0.569960</td>
+<td>0.505672</td>
+<td>1.000000</td>
+<td>-0.333538</td>
+<td>0.102683</td>
+<td>0.278165</td>
+<td>-0.028598</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">HP</td>
+<td>0.314990</td>
+<td>-0.156622</td>
+<td>-0.333538</td>
+<td>1.000000</td>
+<td>0.035856</td>
+<td>-0.298432</td>
+<td>0.089614</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">CC</td>
+<td>0.126389</td>
+<td>-0.098084</td>
+<td>0.102683</td>
+<td>0.035856</td>
+<td>1.000000</td>
+<td>0.306996</td>
+<td>0.335637</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Quarterly_Tax</td>
+<td>0.219197</td>
+<td>-0.198431</td>
+<td>0.278165</td>
+<td>-0.298432</td>
+<td>0.306996</td>
+<td>1.000000</td>
+<td>0.626134</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Weight</td>
+<td>0.581198</td>
+<td>-0.470253</td>
+<td>-0.028598</td>
+<td>0.089614</td>
+<td>0.335637</td>
+<td>0.626134</td>
+<td>1.000000</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="cell-62" class="cell" data-execution_count="24">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># correlation heatmap</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>sns.heatmap(corr, xticklabels<span class="op">=</span>corr.columns, yticklabels<span class="op">=</span>corr.columns)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Ch-04-ProbSolutions-PCA_files/figure-html/cell-25-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Age_08_04 is negatively correlated with price. KM is negatively correlated with price. Weight is positively correlated with price. KM is positively correlated with Age_08_04. Weight is positively correlated with quarterly tax.</p>
+</section>
+<section id="problem-4.4-chemical-features-of-wine." class="level1">
+<h1>Problem 4.4 Chemical Features of Wine.</h1>
+<p>Table 4.13 shows the PCA output on data (nonnormalized) in which the variables represent chemical characteristics of wine, and each case is a different wine.</p>
+<p><strong>4.4.a.</strong> The data are in the file Wine.csv. Consider the rows labeled “Proportion of Variance.” Explain why the value for PC1 is so much greater than that of any other column.</p>
+<p>PC1 has a very high proportion of the variance because it is composed mostly of proline, which has a much larger scale than the other variables.</p>
+<p><strong>4.4.b.</strong> Comment on the use of normalization (standardization) in part (a).</p>
+<p>Normalizing the data would equalize the scales and eliminate the undesired impact of scale on the calculation of the principal components.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
