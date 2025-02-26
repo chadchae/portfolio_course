@@ -2758,141 +2758,141 @@
     "text": "Assignment\n\n\n\nWhat to do\n\n\n\nRequirement\n\nPDF format\nfile name should be include your student id and name\n\nstuID_name_title.pdf (e.g. 1111111_ChungilChae_SelfIntroduction.pdf)\n\n\nDue date\n\nby DATE 11:59PM\nNO LATE SUBMISSION ALLOWED!!!!"
   },
   {
-    "objectID": "Course/MGS3701/03_Lecture_Note/LectureNote_Chad/Lecture_Note/chapter2/Chapter2_Note.html#classification",
-    "href": "Course/MGS3701/03_Lecture_Note/LectureNote_Chad/Lecture_Note/chapter2/Chapter2_Note.html#classification",
+    "objectID": "Course/MGS3701/03_Lecture_Note/LectureNote_Chad/Lecture_Note/chapter2/chapter2_note.html#classification",
+    "href": "Course/MGS3701/03_Lecture_Note/LectureNote_Chad/Lecture_Note/chapter2/chapter2_note.html#classification",
     "title": "[Lecture Note] Overview of the Data Mining Process",
     "section": "Classification",
     "text": "Classification\n\nClassification is the most basic form of data analysis.\n\ne.g., application of a loan, credit card transaction\n\nTo examine data where the classification is\n\nunknown or\nwill occur in the future\n\nSimilar to classification is develop rules"
   },
   {
-    "objectID": "Course/MGS3701/03_Lecture_Note/LectureNote_Chad/Lecture_Note/chapter2/Chapter2_Note.html#prediction",
-    "href": "Course/MGS3701/03_Lecture_Note/LectureNote_Chad/Lecture_Note/chapter2/Chapter2_Note.html#prediction",
+    "objectID": "Course/MGS3701/03_Lecture_Note/LectureNote_Chad/Lecture_Note/chapter2/chapter2_note.html#prediction",
+    "href": "Course/MGS3701/03_Lecture_Note/LectureNote_Chad/Lecture_Note/chapter2/chapter2_note.html#prediction",
     "title": "[Lecture Note] Overview of the Data Mining Process",
     "section": "Prediction",
     "text": "Prediction\n\nPrediction is to predict the value of a numerical variable (e.g., amount of purchase) rather than a class (e.g.,purchaser or nonpurchaser).\nthe value of a continuous variable."
   },
   {
-    "objectID": "Course/MGS3701/03_Lecture_Note/LectureNote_Chad/Lecture_Note/chapter2/Chapter2_Note.html#assiciation-rules-and-recommendation-systems",
-    "href": "Course/MGS3701/03_Lecture_Note/LectureNote_Chad/Lecture_Note/chapter2/Chapter2_Note.html#assiciation-rules-and-recommendation-systems",
+    "objectID": "Course/MGS3701/03_Lecture_Note/LectureNote_Chad/Lecture_Note/chapter2/chapter2_note.html#assiciation-rules-and-recommendation-systems",
+    "href": "Course/MGS3701/03_Lecture_Note/LectureNote_Chad/Lecture_Note/chapter2/chapter2_note.html#assiciation-rules-and-recommendation-systems",
     "title": "[Lecture Note] Overview of the Data Mining Process",
     "section": "Assiciation Rules and Recommendation Systems",
     "text": "Assiciation Rules and Recommendation Systems\n\nWhat goes with what\nAssociation rules, or affinity analysis, is designed to find such general associations patterns between items in large databases.\n\ngrocery stores: product placement, weekly promotional offers, bundling products.\nhospital database: which symptom is followed by what other symptom to help predict future symptoms for returning patients.\nOnline recommendation systems: collaborative filtering\n\n\n\n\n\n\n\n\nCollaborative filtering\n\n\n\nCollaborative filteringa method that uses individual users’ preferences and tastes given their historic purchase, rating, browsing, or any other measurable behavior indicative of preference, as well as other users’ history.\n\n\n\n\n\n\n\n\nAssociation rules vs Collaborative filtering\n\n\n\nIn contrast to association rules that generate rules general to an entire population, collaborative filtering generates “what goes with what” at the individual user level. Hence, collaborative filtering is used in many recommendation systems that aim to deliver personalized recommendations to users with a wide range of preferences."
   },
   {
-    "objectID": "Course/MGS3701/03_Lecture_Note/LectureNote_Chad/Lecture_Note/chapter2/Chapter2_Note.html#predictive-analytics",
-    "href": "Course/MGS3701/03_Lecture_Note/LectureNote_Chad/Lecture_Note/chapter2/Chapter2_Note.html#predictive-analytics",
+    "objectID": "Course/MGS3701/03_Lecture_Note/LectureNote_Chad/Lecture_Note/chapter2/chapter2_note.html#predictive-analytics",
+    "href": "Course/MGS3701/03_Lecture_Note/LectureNote_Chad/Lecture_Note/chapter2/chapter2_note.html#predictive-analytics",
     "title": "[Lecture Note] Overview of the Data Mining Process",
     "section": "Predictive Analytics",
     "text": "Predictive Analytics\n\nClassification, prediction, and to some extent, association rules and collaborative filtering constitute the analytical methods employed in predictive analytics.\nThe term predictive analytics is sometimes used to also include data pattern identification methods such as clustering."
   },
   {
-    "objectID": "Course/MGS3701/03_Lecture_Note/LectureNote_Chad/Lecture_Note/chapter2/Chapter2_Note.html#data-reduction-and-dimension-reduction",
-    "href": "Course/MGS3701/03_Lecture_Note/LectureNote_Chad/Lecture_Note/chapter2/Chapter2_Note.html#data-reduction-and-dimension-reduction",
+    "objectID": "Course/MGS3701/03_Lecture_Note/LectureNote_Chad/Lecture_Note/chapter2/chapter2_note.html#data-reduction-and-dimension-reduction",
+    "href": "Course/MGS3701/03_Lecture_Note/LectureNote_Chad/Lecture_Note/chapter2/chapter2_note.html#data-reduction-and-dimension-reduction",
     "title": "[Lecture Note] Overview of the Data Mining Process",
     "section": "Data Reduction and Dimension Reduction",
     "text": "Data Reduction and Dimension Reduction\n\nData mining algorithms is often improved\n\nwhen the number of variables is limited, and\nwhen large numbers of records can be grouped into homogeneous groups.\n\nFor example,\n\nrather than dealing with thousands of product types, an analyst might wish to group them into a smaller number of groups and build separate models for each group.\nOr a marketer might want to classify customers into different “personas,” and must therefore group customers into homogeneous groups to define the personas.\n\nThis process of consolidating a large number of records (or cases) into a smaller set is termed data reduction. Methods for reducing the number of cases are often called clustering.\nReducing the number of variables is typically called dimension reduction.\n\nDimension reduction is a common initial step before deploying data mining methods, intended to improve predictive power, manageability, and inter-pretability."
   },
   {
-    "objectID": "Course/MGS3701/03_Lecture_Note/LectureNote_Chad/Lecture_Note/chapter2/Chapter2_Note.html#data-exploration-and-visualization",
-    "href": "Course/MGS3701/03_Lecture_Note/LectureNote_Chad/Lecture_Note/chapter2/Chapter2_Note.html#data-exploration-and-visualization",
+    "objectID": "Course/MGS3701/03_Lecture_Note/LectureNote_Chad/Lecture_Note/chapter2/chapter2_note.html#data-exploration-and-visualization",
+    "href": "Course/MGS3701/03_Lecture_Note/LectureNote_Chad/Lecture_Note/chapter2/chapter2_note.html#data-exploration-and-visualization",
     "title": "[Lecture Note] Overview of the Data Mining Process",
     "section": "Data Exploration and Visualization",
     "text": "Data Exploration and Visualization\n\nExploration is aimed at\n\nunderstanding the global landscape of the data, and\ndetecting unusual values.\n\nExploration is used for data cleaning and manipulation as well as for visual discovery and hypothesis generation.\nMethods for exploring data include looking at various data aggregations and summaries\n(Both numerically and graphically) looking at each variable separately as well as looking at relationships among variables.\nThe purpose is to discover patterns and exceptions.\nData Visualization or Visual Analytics - Exploration by creating charts and dashboards\nFor numerical variables,\n\nwe use histograms and boxplots to learn about the distribution of their values,\n\nto detect outliers (extreme observations), and to\nfind other information that is relevant to the analysis task.\n\n\nFor categorical variables,\n\nwe use bar charts. We can also look at scatter plots of pairs of numerical variables\n\nto learn about possible relationships,\nthe type of relationship,\nto detect outliers.\n\n\nVisualization can be greatly enhanced by adding features such as color and interactive navigation."
   },
   {
-    "objectID": "Course/MGS3701/03_Lecture_Note/LectureNote_Chad/Lecture_Note/chapter2/Chapter2_Note.html#supervised-and-unsupervised-learning",
-    "href": "Course/MGS3701/03_Lecture_Note/LectureNote_Chad/Lecture_Note/chapter2/Chapter2_Note.html#supervised-and-unsupervised-learning",
+    "objectID": "Course/MGS3701/03_Lecture_Note/LectureNote_Chad/Lecture_Note/chapter2/chapter2_note.html#supervised-and-unsupervised-learning",
+    "href": "Course/MGS3701/03_Lecture_Note/LectureNote_Chad/Lecture_Note/chapter2/chapter2_note.html#supervised-and-unsupervised-learning",
     "title": "[Lecture Note] Overview of the Data Mining Process",
     "section": "Supervised and Unsupervised Learning",
     "text": "Supervised and Unsupervised Learning\n\nA fundamental distinction among data mining techniques is between supervised and unsupervised methods.\n\n\nSupervised Learning Algorithms\n\nSupervised learning algorithms are those used in classification and prediction.\n\nWe must have data available in which the value of the outcome of interest (e.g., purchase or no purchase) is known, “labeled data”\nThese training data are the data from which the classification or prediction algorithm “learns,” or is “trained,” about the relationship between predictor variables and the outcome variable.\nOnce the algorithm has learned from the training data, it is then applied to another sample of labeled data (the validation data) where the outcome is known but initially hidden, to see how well it does in comparison to other models.\nIf many different models are being tried out, it is prudent to save a third sample, which also includes known outcomes (the test data) to use with the model finally selected to predict how well it will do.\nThe model can then be used to classify or predict the outcome of interest in new cases where the outcome is unknown.\n\n\n\n\n\n\n\n\nLinear Regression as Supervised Machine Learning Algorithm\n\n\n\n\nSimple linear regression is an example of a supervised learning algorithm (although rarely called that in the introductory statistics course where you probably first encountered it).\n\nThe Y variable is the (known) outcome variable and the X variable is a predictor variable.\nA regression line is drawn to minimize the sum of squared deviations between the actual Y values and the values predicted by this line.\nThe regression line can now be used to predict Y values for new values of X for which we do not know the Y value.\n\n\n\n\n\n\nUnsupervised Learning Algorithms\n\nUnsupervised learning algorithms are those used where there is no outcome variable to predict or classify.\nHence, there is no “learning” from cases where such an outcome variable is known.\nAssociation rules, dimension reduction methods, and clustering techniques are all unsupervised learning methods.\nSupervised and unsupervised methods are sometimes used in conjunction.\n\n\n\n\n\n\n\nNote\n\n\n\nFor example, unsupervised clustering methods are used to separate loan applicants into several risk-level groups. Then, supervised algorithms are applied separately to each risk-level group for predicting propensity of loan default."
   },
   {
-    "objectID": "Course/MGS3701/03_Lecture_Note/LectureNote_Chad/Lecture_Note/chapter2/Chapter2_Note.html#data-mining-steps",
-    "href": "Course/MGS3701/03_Lecture_Note/LectureNote_Chad/Lecture_Note/chapter2/Chapter2_Note.html#data-mining-steps",
+    "objectID": "Course/MGS3701/03_Lecture_Note/LectureNote_Chad/Lecture_Note/chapter2/chapter2_note.html#data-mining-steps",
+    "href": "Course/MGS3701/03_Lecture_Note/LectureNote_Chad/Lecture_Note/chapter2/chapter2_note.html#data-mining-steps",
     "title": "[Lecture Note] Overview of the Data Mining Process",
     "section": "Data Mining Steps",
     "text": "Data Mining Steps\n\nDevelop an understanding of the purpose of the data mining project. How will the stakeholder use the results? Who will be affected by the results? Will the analysis be a one-shot effort or an ongoing procedure?\nObtain the dataset to be used in the analysis. This often involves sampling from a large database to capture records to be used in an analysis. How well this sample reflects the records of interest affects the ability of the data mining results to generalize to records outside of this sample. It may also involve pulling together data from different databases or sources The databases could be internal (e.g., past purchases made by customers) or external (credit ratings). While data mining deals with very large databases, usually the analysis to be done requires only thousands or tens of thousands of records.\nExplore, clean, and preprocess the data. This step involves verifying that the data are in reasonable condition. How should missing data be handled? Are the values in a reasonable range, given what you would expect for each variable? Are there obvious outliers? The data are reviewed graphically: for example, a matrix of scatterplots showing the relationship of each variable with every other variable. We also need to ensure consistency in the definitions of fields, units of measurement, time periods, and so on. In this step, new variables are also typically created from existing ones. For example, “duration” can be computed from start and end dates.\nReduce the data dimension, if necessary. Dimension reduction can involve operations such as eliminating unneeded variables, transforming variables (e.g., turning “money spent” into “spent &gt; $100” vs. “spent ≤ $100”), and creating new variables (e.g., a variable that records whether at least one of several products was purchased). Make sure that you know what each variable means and whether it is sensible to include it in the model.\nDetermine the data mining task. (classification, prediction, clustering, etc.). This involves translating the general question or problem of Step 1 into a more specific data mining question.\nPartition the data (for supervised tasks). If the task is supervised (classification or prediction), randomly partition the dataset into three parts: training, validation, and test datasets.\nChoose the data mining techniques to be used. (regression, neural nets, hierarchical clustering, etc.).\nUse algorithms to perform the task. This is typically an iterative process—trying multiple variants, and often using multiple variants of the same algorithm (choosing different variables or settings within the algorithm). Where appropriate, feedback from the algorithm’s performance on validation data is used to refine the settings.\nInterpret the results of the algorithms. This involves making a choice as to the best algorithm to deploy, and where possible, testing the final choice on the test data to get an idea as to how well it will perform. (Recall that each algorithm may also be tested on the validation data for tuning purposes; in this way, the validation data become a part of the fitting process and are likely to underestimate the error in the deployment of the model that is finally chosen.)\nDeploy the model. This step involves integrating the model into operational systems and running it on real records to produce decisions or actions. For example, the model might be applied to a purchased list of possible customers, and the action might be “include in the mailing if the predicted amount of purchase is &gt; $10.” A key step here is “scoring” the new records, or using the chosen model to predict the outcome value (“score”) for each new record."
   },
   {
-    "objectID": "Course/MGS3701/03_Lecture_Note/LectureNote_Chad/Lecture_Note/chapter2/Chapter2_Note.html#semma",
-    "href": "Course/MGS3701/03_Lecture_Note/LectureNote_Chad/Lecture_Note/chapter2/Chapter2_Note.html#semma",
+    "objectID": "Course/MGS3701/03_Lecture_Note/LectureNote_Chad/Lecture_Note/chapter2/chapter2_note.html#semma",
+    "href": "Course/MGS3701/03_Lecture_Note/LectureNote_Chad/Lecture_Note/chapter2/chapter2_note.html#semma",
     "title": "[Lecture Note] Overview of the Data Mining Process",
     "section": "SEMMA",
     "text": "SEMMA\nThe foregoing steps encompass the steps in SEMMA, a methodology developed by the software company SAS:\n\nSample: Take a sample from the dataset; partition into training, validation, and test datasets.\nExplore: Examine the dataset statistically and graphically.\nModify: Transform the variables and impute missing values.\nModel: Fit predictive models (e.g., regression tree, neural network).\nAssess: Compare models using a validation dataset.\n\n\nIBM SPSS Modeler (previously SPSS-Clementine) has a similar methodology, termed CRISP-DM (CRoss-Industry Standard Process for Data Mining). All these frameworks include the same main steps involved in predictive modeling."
   },
   {
-    "objectID": "Course/MGS3701/03_Lecture_Note/LectureNote_Chad/Lecture_Note/chapter2/Chapter2_Note.html#other-models",
-    "href": "Course/MGS3701/03_Lecture_Note/LectureNote_Chad/Lecture_Note/chapter2/Chapter2_Note.html#other-models",
+    "objectID": "Course/MGS3701/03_Lecture_Note/LectureNote_Chad/Lecture_Note/chapter2/chapter2_note.html#other-models",
+    "href": "Course/MGS3701/03_Lecture_Note/LectureNote_Chad/Lecture_Note/chapter2/chapter2_note.html#other-models",
     "title": "[Lecture Note] Overview of the Data Mining Process",
     "section": "Other Models",
     "text": "Other Models\n\nKDD Model: Knowledge Discovery in Databases (KDD) is a systematic process that seeks to identify valid, novel, potentially useful, and ultimately understandable patterns from large amounts of data. In simpler terms, it’s about transforming raw data into valuable knowledge.\nCRISP-DM: CRISP-DM stands for Cross-Industry Standard Process for Data Mining. It is a cyclical process that provides a structured approach to planning, organizing, and implementing a data mining project. The process consists of six major phases: Business Understanding, Data Understanding, Data, Preparation, Modeling, Evaluation, Deployment"
   },
   {
-    "objectID": "Course/MGS3701/03_Lecture_Note/LectureNote_Chad/Lecture_Note/chapter2/Chapter2_Note.html#organization-of-datasets",
-    "href": "Course/MGS3701/03_Lecture_Note/LectureNote_Chad/Lecture_Note/chapter2/Chapter2_Note.html#organization-of-datasets",
+    "objectID": "Course/MGS3701/03_Lecture_Note/LectureNote_Chad/Lecture_Note/chapter2/chapter2_note.html#organization-of-datasets",
+    "href": "Course/MGS3701/03_Lecture_Note/LectureNote_Chad/Lecture_Note/chapter2/chapter2_note.html#organization-of-datasets",
     "title": "[Lecture Note] Overview of the Data Mining Process",
     "section": "Organization of Datasets",
     "text": "Organization of Datasets"
   },
   {
-    "objectID": "Course/MGS3701/03_Lecture_Note/LectureNote_Chad/Lecture_Note/chapter2/Chapter2_Note.html#predicting-home-values-in-the-west-roxbury-neighborhood",
-    "href": "Course/MGS3701/03_Lecture_Note/LectureNote_Chad/Lecture_Note/chapter2/Chapter2_Note.html#predicting-home-values-in-the-west-roxbury-neighborhood",
+    "objectID": "Course/MGS3701/03_Lecture_Note/LectureNote_Chad/Lecture_Note/chapter2/chapter2_note.html#predicting-home-values-in-the-west-roxbury-neighborhood",
+    "href": "Course/MGS3701/03_Lecture_Note/LectureNote_Chad/Lecture_Note/chapter2/chapter2_note.html#predicting-home-values-in-the-west-roxbury-neighborhood",
     "title": "[Lecture Note] Overview of the Data Mining Process",
     "section": "Predicting Home Values in the West Roxbury Neighborhood",
     "text": "Predicting Home Values in the West Roxbury Neighborhood"
   },
   {
-    "objectID": "Course/MGS3701/03_Lecture_Note/LectureNote_Chad/Lecture_Note/chapter2/Chapter2_Note.html#loading-and-looking-at-the-data-in-r",
-    "href": "Course/MGS3701/03_Lecture_Note/LectureNote_Chad/Lecture_Note/chapter2/Chapter2_Note.html#loading-and-looking-at-the-data-in-r",
+    "objectID": "Course/MGS3701/03_Lecture_Note/LectureNote_Chad/Lecture_Note/chapter2/chapter2_note.html#loading-and-looking-at-the-data-in-r",
+    "href": "Course/MGS3701/03_Lecture_Note/LectureNote_Chad/Lecture_Note/chapter2/chapter2_note.html#loading-and-looking-at-the-data-in-r",
     "title": "[Lecture Note] Overview of the Data Mining Process",
     "section": "Loading and Looking at the Data in R",
     "text": "Loading and Looking at the Data in R"
   },
   {
-    "objectID": "Course/MGS3701/03_Lecture_Note/LectureNote_Chad/Lecture_Note/chapter2/Chapter2_Note.html#sampling-from-a-database",
-    "href": "Course/MGS3701/03_Lecture_Note/LectureNote_Chad/Lecture_Note/chapter2/Chapter2_Note.html#sampling-from-a-database",
+    "objectID": "Course/MGS3701/03_Lecture_Note/LectureNote_Chad/Lecture_Note/chapter2/chapter2_note.html#sampling-from-a-database",
+    "href": "Course/MGS3701/03_Lecture_Note/LectureNote_Chad/Lecture_Note/chapter2/chapter2_note.html#sampling-from-a-database",
     "title": "[Lecture Note] Overview of the Data Mining Process",
     "section": "Sampling from a Database",
     "text": "Sampling from a Database"
   },
   {
-    "objectID": "Course/MGS3701/03_Lecture_Note/LectureNote_Chad/Lecture_Note/chapter2/Chapter2_Note.html#oversampling-rare-events-in-classification-tasks",
-    "href": "Course/MGS3701/03_Lecture_Note/LectureNote_Chad/Lecture_Note/chapter2/Chapter2_Note.html#oversampling-rare-events-in-classification-tasks",
+    "objectID": "Course/MGS3701/03_Lecture_Note/LectureNote_Chad/Lecture_Note/chapter2/chapter2_note.html#oversampling-rare-events-in-classification-tasks",
+    "href": "Course/MGS3701/03_Lecture_Note/LectureNote_Chad/Lecture_Note/chapter2/chapter2_note.html#oversampling-rare-events-in-classification-tasks",
     "title": "[Lecture Note] Overview of the Data Mining Process",
     "section": "Oversampling Rare Events in Classification Tasks",
     "text": "Oversampling Rare Events in Classification Tasks"
   },
   {
-    "objectID": "Course/MGS3701/03_Lecture_Note/LectureNote_Chad/Lecture_Note/chapter2/Chapter2_Note.html#preprocessing-and-cleaning-the-data",
-    "href": "Course/MGS3701/03_Lecture_Note/LectureNote_Chad/Lecture_Note/chapter2/Chapter2_Note.html#preprocessing-and-cleaning-the-data",
+    "objectID": "Course/MGS3701/03_Lecture_Note/LectureNote_Chad/Lecture_Note/chapter2/chapter2_note.html#preprocessing-and-cleaning-the-data",
+    "href": "Course/MGS3701/03_Lecture_Note/LectureNote_Chad/Lecture_Note/chapter2/chapter2_note.html#preprocessing-and-cleaning-the-data",
     "title": "[Lecture Note] Overview of the Data Mining Process",
     "section": "Preprocessing and Cleaning the Data",
     "text": "Preprocessing and Cleaning the Data"
   },
   {
-    "objectID": "Course/MGS3701/03_Lecture_Note/LectureNote_Chad/Lecture_Note/chapter2/Chapter2_Note.html#overfitting",
-    "href": "Course/MGS3701/03_Lecture_Note/LectureNote_Chad/Lecture_Note/chapter2/Chapter2_Note.html#overfitting",
+    "objectID": "Course/MGS3701/03_Lecture_Note/LectureNote_Chad/Lecture_Note/chapter2/chapter2_note.html#overfitting",
+    "href": "Course/MGS3701/03_Lecture_Note/LectureNote_Chad/Lecture_Note/chapter2/chapter2_note.html#overfitting",
     "title": "[Lecture Note] Overview of the Data Mining Process",
     "section": "Overfitting",
     "text": "Overfitting"
   },
   {
-    "objectID": "Course/MGS3701/03_Lecture_Note/LectureNote_Chad/Lecture_Note/chapter2/Chapter2_Note.html#creation-and-use-of-data-partitions",
-    "href": "Course/MGS3701/03_Lecture_Note/LectureNote_Chad/Lecture_Note/chapter2/Chapter2_Note.html#creation-and-use-of-data-partitions",
+    "objectID": "Course/MGS3701/03_Lecture_Note/LectureNote_Chad/Lecture_Note/chapter2/chapter2_note.html#creation-and-use-of-data-partitions",
+    "href": "Course/MGS3701/03_Lecture_Note/LectureNote_Chad/Lecture_Note/chapter2/chapter2_note.html#creation-and-use-of-data-partitions",
     "title": "[Lecture Note] Overview of the Data Mining Process",
     "section": "Creation and Use of Data Partitions",
     "text": "Creation and Use of Data Partitions"
   },
   {
-    "objectID": "Course/MGS3701/03_Lecture_Note/LectureNote_Chad/Lecture_Note/chapter2/Chapter2_Note.html#more-to-read",
-    "href": "Course/MGS3701/03_Lecture_Note/LectureNote_Chad/Lecture_Note/chapter2/Chapter2_Note.html#more-to-read",
+    "objectID": "Course/MGS3701/03_Lecture_Note/LectureNote_Chad/Lecture_Note/chapter2/chapter2_note.html#more-to-read",
+    "href": "Course/MGS3701/03_Lecture_Note/LectureNote_Chad/Lecture_Note/chapter2/chapter2_note.html#more-to-read",
     "title": "[Lecture Note] Overview of the Data Mining Process",
     "section": "More to Read",
     "text": "More to Read"
   },
   {
-    "objectID": "Course/MGS3701/03_Lecture_Note/LectureNote_Chad/Lecture_Note/chapter2/Chapter2_Note.html#assignment",
-    "href": "Course/MGS3701/03_Lecture_Note/LectureNote_Chad/Lecture_Note/chapter2/Chapter2_Note.html#assignment",
+    "objectID": "Course/MGS3701/03_Lecture_Note/LectureNote_Chad/Lecture_Note/chapter2/chapter2_note.html#assignment",
+    "href": "Course/MGS3701/03_Lecture_Note/LectureNote_Chad/Lecture_Note/chapter2/chapter2_note.html#assignment",
     "title": "[Lecture Note] Overview of the Data Mining Process",
     "section": "Assignment",
     "text": "Assignment\n\nWhat to do\nRequirement\n\nPDF format\nfile name should be include your student id and name\n\nstuID_name_title.pdf (e.g. 1111111_ChungilChae_SelfIntroduction.pdf)\n\n\nDue date\n\nby DATE 11:59PM\nNO LATE SUBMISSION ALLOWED!!!!"
