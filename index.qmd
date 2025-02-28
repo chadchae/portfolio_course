@@ -2,6 +2,42 @@
 title: "Chad's Course Portfolio"
 ---
 
-Welcome. 
+# GE2021
+## Lecture Note
+- [Introduction and Housekeeping]()
+- []()
 
-You just accessed to Chad's Course Portfolio.
+## Course Slide
+- [Introduction and Housekeeping]()
+
+# MGS3001
+## Lecture Note
+- [Introduction and Housekeeping]()
+
+## Course Slide
+- [Introduction and Housekeeping]()
+
+## Notebook
+- [Introduction and Housekeeping]()
+
+# MGS3701
+## Lecture Note
+- [Introduction and Housekeeping]()
+
+## Course Slide
+- [Introduction and Housekeeping]()
+
+
+## Notebook R
+- [Introduction and Housekeeping]()
+
+
+## Notebook Python
+
+
+
+## Problem and Solution
+
+
+
+
