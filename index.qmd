@@ -1,43 +1,138 @@
 ---
-title: "Chad's Course Portfolio"
+title: "Chad's Course Portal"
+subtitle: "2025, Spring"
+author:
+  - name: Chad (Chungil Chae)
+    email: cchae@kean.edu
+date: today
+date-format: "ddd, D MMMM YYYY"
+bibliography: _resource/reference.bib
+csl: _resource/apa.csl
+format: 
+  html:
+    theme: simplex
+    toc: true
+    toc_float: TRUE
+    toc-depth: 4
+    toc-location: left
+    toc-title: TOPICS
+    toc-font-size: .5em
+    title-block-banner: true
+    fig-cap-locatio: bottom
+    tbl-cap-location: top
+    fig-align: left
+    reference-location: section
+    footnotes-hover: true
+    link-external-icon: true
+    lightbox: true
+    embed-resources: true
+    code-tools: false
+    code-fold: false
+    highlight-style: dracula
+    code-line-numbers: true
+    code-overflow: scroll
+    code-block-border-left: true
+  docx: 
+    geometry: 
+      - top=30mm
+      - left=20mm
+  pdf: 
+    geometry: 
+      - top=30mm
+      - left=20mm
+    header-includes:
+      - \usepackage{kotex}
+      - \usepackage{marginnote}
+      - \usepackage{lineno}
+      - \linenumbers
+      - \usepackage{fancyhdr}
+      - \usepackage{lipsum}
+      - \pagestyle{fancy}
+      - \fancyhead[HL]{Report}
+      - \fancyfoot[CO,CE]{Copyright @ Chad (Chungil) Chae, since 2023}
+      - \fancyfoot[LE,RO]{\thepage}
+      - \usepackage{eso-pic,graphicx,transparent}
+      - \usepackage{pdflscape}
+      - \usepackage{fontspec}
+      - \setmainfont[Mapping=tex-text]{Times New Roman}
+      - \setsansfont[Mapping=tex-text]{Tahoma}
+      - \newcommand{\blandscape}{\begin{landscape}}
+      - \newcommand{\elandscape}{\end{landscape}}
+#number-sections: true
+#number-depth: 4
+#mainfont: Georgia, serif;
+#editor: visual
+fontsize: .88em
+abstract-title: "Abstract"
+abstract: ""
 ---
 
-# GE2021
-## Lecture Note
-- [Introduction and Housekeeping]()
-- []()
-
-## Course Slide
-- [Introduction and Housekeeping]()
-
-# MGS3001
-## Lecture Note
-- [Introduction and Housekeeping]()
-
-## Course Slide
-- [Introduction and Housekeeping]()
-
-## Notebook
-- [Introduction and Housekeeping]()
-
-# MGS3701
-## Lecture Note
-- [Introduction and Housekeeping]()
-
-## Course Slide
-- [Introduction and Housekeeping]()
 
 
-## Notebook R
-- [Introduction and Housekeeping]()
+```{r setup, echo=FALSE, message=FALSE, warning=FALSE, paged.print=TRUE}
+#knitr::opts_knit$set(root.dir= normalizePath('..'), echo = F)
+knitr::opts_chunk$set(error = F, echo = F, warning = F, fig.width=8, fig.height=6)
+
+```
+
+# Class Materias
+
+## GE2021: Research Performance
+### [Student Performance](https://chadchae.shinyapps.io/studentperformance_2025S_GE2021/)
+### [Introduciton and Housekeeping](Course/GE2021/03_Lecture_Note/LectureNote_Chad/PPT/chapter0/chapter0.qmd)
+### [Chapter1 Lecture Note](Course/GE2021/03_Lecture_Note/LectureNote_Chad/PPT/chapter1/chapter1_note.qmd)
+### [Chapter1 Slide](Course/GE2021/03_Lecture_Note/LectureNote_Chad/PPT/chapter1/chapter1.qmd)
+### [Chapter2 Lecture Note](Course/GE2021/03_Lecture_Note/LectureNote_Chad/PPT/chapter2/chapter2_note.qmd)
+### [Chapter2 Slide](Course/GE2021/03_Lecture_Note/LectureNote_Chad/PPT/chapter2/chapter2.qmd)
+### [Chapter3 Lecture Note](Course/GE2021/03_Lecture_Note/LectureNote_Chad/PPT/chapter3/chapter3_note.qmd)
+### [Chapter3 Slide](Course/GE2021/03_Lecture_Note/LectureNote_Chad/PPT/chapter3/chapter3.qmd)
+
+---
+
+## MGS3001: Python Programming for Business
+### [Student Performance](https://chadchae.shinyapps.io/studentperformance_2025S_MGS3001/)
+### [Introduciton and Housekeeping](Course/MGS3001/03_Lecture_Note/LectureNote_Chad/PPT/chapter0/chapter0.qmd)
+### [Chapter1 Lecture Note](Course/MGS3001/03_Lecture_Note/LectureNote_Chad/PPT/chapter1/chapter1_note.qmd)
+### [Chapter1 Slide](Course/MGS3001/03_Lecture_Note/LectureNote_Chad/PPT/chapter1/chapter1.qmd)
+### [Chapter1 Lecture Notebook - Python](Course/MGS3001/03_Lecture_Note/LectureNote_Chad/PPT/chapter1/chapter1_notebook.qmd)
+### [Chapter2 Lecture Note](Course/MGS3001/03_Lecture_Note/LectureNote_Chad/PPT/chapter2/chapter2_note.qmd)
+### [Chapter2 Slide](Course/MGS3001/03_Lecture_Note/LectureNote_Chad/PPT/chapter2/chapter2.qmd)
+### [Chapter2 Lecture Notebook - Python](Course/MGS3001/03_Lecture_Note/LectureNote_Chad/PPT/chapter2/chapter2_notebook.qmd)
+
+---
+
+## MGS3701: Data Mining
+### [Student Performance](https://chadchae.shinyapps.io/studentperformance_2025S_MGS3701/)
+### [Introduciton and Housekeeping](Course/MGS3701/03_Lecture_Note/LectureNote_Chad/PPT/chapter0/chapter0.qmd)
+### [Chapter1 Lecture Note](Course/MGS3701/03_Lecture_Note/LectureNote_Chad/PPT/chapter1/chapter1_note.qmd)
+### [Chapter1 Slide](Course/MGS3701/03_Lecture_Note/LectureNote_Chad/PPT/chapter1/chapter1.qmd)
+### [Chapter1 Lecture Notebook - R](Course/MGS3701/03_Lecture_Note/LectureNote_Chad/PPT/chapter1/chapter1_notebook.qmd)
+### [Chapter1 Lecture Notebook - Python](Course/MGS3701/07_Script/Chapter Examples Python/Chapter 01 - Introduction.html)
+### [Chapter2 Lecture Note](Course/MGS3701/03_Lecture_Note/LectureNote_Chad/PPT/chapter2/chapter2_note.qmd)
+### [Chapter2 Slide](Course/MGS3701/03_Lecture_Note/LectureNote_Chad/PPT/chapter2/chapter2.qmd)
+### [Chapter2 Lecture Notebook - R](Course/MGS3701/03_Lecture_Note/LectureNote_Chad/PPT/chapter2/chapter2_notebook.qmd)
+### [Chapter2 Lecture Notebook - Python](Course/MGS3701/07_Script/Chapter Examples Python/Chapter 02 - Overview.html)
 
 
-## Notebook Python
 
+---
 
-
-## Problem and Solution
-
-
-
-
+Course/MGS3001/07_Script/Chapter Examples Python/Chapter 03 - Data visualization.html
+Course/MGS3001/07_Script/Chapter Examples Python/Chapter 04 - Dimension reduction.html
+Course/MGS3001/07_Script/Chapter Examples Python/Chapter 05 - Evaluating performance.html
+Course/MGS3001/07_Script/Chapter Examples Python/Chapter 06 - Multiple linear regression.html
+Course/MGS3001/07_Script/Chapter Examples Python/Chapter 07 - kNN.html
+Course/MGS3001/07_Script/Chapter Examples Python/Chapter 08 - Naive Bayes classifier.html
+Course/MGS3001/07_Script/Chapter Examples Python/Chapter 09 - Classification and regression trees.html
+Course/MGS3001/07_Script/Chapter Examples Python/Chapter 10 - Logistic regression.html
+Course/MGS3001/07_Script/Chapter Examples Python/Chapter 11 - Neural nets (add-on).html
+Course/MGS3001/07_Script/Chapter Examples Python/Chapter 11 - Neural nets.html
+Course/MGS3001/07_Script/Chapter Examples Python/Chapter 12 - Discriminant analysis.html
+Course/MGS3001/07_Script/Chapter Examples Python/Chapter 13 - Ensembles and uplift.html
+Course/MGS3001/07_Script/Chapter Examples Python/Chapter 14 - Association rules.html
+Course/MGS3001/07_Script/Chapter Examples Python/Chapter 15 - Cluster analysis.html
+Course/MGS3001/07_Script/Chapter Examples Python/Chapter 16 - Handling time series.html
+Course/MGS3001/07_Script/Chapter Examples Python/Chapter 17 - Regression-based forecasting.html
+Course/MGS3001/07_Script/Chapter Examples Python/Chapter 18 - TS smoothing.html
+Course/MGS3001/07_Script/Chapter Examples Python/Chapter 19 - Social Network Analysis.html
+Course/MGS3001/07_Script/Chapter Examples Python/Chapter 20 - Text mining.html
