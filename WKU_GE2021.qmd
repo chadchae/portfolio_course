@@ -1,0 +1,86 @@
+---
+title: "GE2021: Research Technology @ Wenzhou-Kean Unversity"
+subtitle: "2025, Spring"
+author:
+  - name: Chad (Chungil Chae)
+    email: cchae@kean.edu
+date: today
+date-format: "ddd, D MMMM YYYY"
+bibliography: _resource/reference.bib
+csl: _resource/apa.csl
+format: 
+  html:
+    theme: simplex
+    toc: true
+    toc_float: TRUE
+    toc-depth: 4
+    toc-location: left
+    toc-title: TOPICS
+    toc-font-size: .5em
+    title-block-banner: true
+    fig-cap-locatio: bottom
+    tbl-cap-location: top
+    fig-align: left
+    reference-location: section
+    footnotes-hover: true
+    link-external-icon: true
+    lightbox: true
+    embed-resources: true
+    code-tools: false
+    code-fold: false
+    highlight-style: dracula
+    code-line-numbers: true
+    code-overflow: scroll
+    code-block-border-left: true
+  docx: 
+    geometry: 
+      - top=30mm
+      - left=20mm
+  pdf: 
+    geometry: 
+      - top=30mm
+      - left=20mm
+    header-includes:
+      - \usepackage{kotex}
+      - \usepackage{marginnote}
+      - \usepackage{lineno}
+      - \linenumbers
+      - \usepackage{fancyhdr}
+      - \usepackage{lipsum}
+      - \pagestyle{fancy}
+      - \fancyhead[HL]{Report}
+      - \fancyfoot[CO,CE]{Copyright @ Chad (Chungil) Chae, since 2023}
+      - \fancyfoot[LE,RO]{\thepage}
+      - \usepackage{eso-pic,graphicx,transparent}
+      - \usepackage{pdflscape}
+      - \usepackage{fontspec}
+      - \setmainfont[Mapping=tex-text]{Times New Roman}
+      - \setsansfont[Mapping=tex-text]{Tahoma}
+      - \newcommand{\blandscape}{\begin{landscape}}
+      - \newcommand{\elandscape}{\end{landscape}}
+#number-sections: true
+#number-depth: 4
+#mainfont: Georgia, serif;
+#editor: visual
+fontsize: .88em
+abstract-title: "Abstract"
+abstract: ""
+---
+
+
+
+```{r setup, echo=FALSE, message=FALSE, warning=FALSE, paged.print=TRUE}
+#knitr::opts_knit$set(root.dir= normalizePath('..'), echo = F)
+knitr::opts_chunk$set(error = F, echo = F, warning = F, fig.width=8, fig.height=6)
+
+```
+
+### [Student Performance](https://chadchae.shinyapps.io/studentperformance_2025S_GE2021/)
+### [Introduciton and Housekeeping](Course/GE2021/03_Lecture_Note/LectureNote_Chad/PPT/chapter0/chapter0.qmd)
+### [Chapter1 Lecture Note](Course/GE2021/03_Lecture_Note/LectureNote_Chad/PPT/chapter1/chapter1_note.qmd)
+### [Chapter1 Slide](Course/GE2021/03_Lecture_Note/LectureNote_Chad/PPT/chapter1/chapter1.qmd)
+### [Chapter2 Lecture Note](Course/GE2021/03_Lecture_Note/LectureNote_Chad/PPT/chapter2/chapter2_note.qmd)
+### [Chapter2 Slide](Course/GE2021/03_Lecture_Note/LectureNote_Chad/PPT/chapter2/chapter2.qmd)
+### [Chapter3 Lecture Note](Course/GE2021/03_Lecture_Note/LectureNote_Chad/PPT/chapter3/chapter3_note.qmd)
+### [Chapter3 Slide](Course/GE2021/03_Lecture_Note/LectureNote_Chad/PPT/chapter3/chapter3.qmd)
+

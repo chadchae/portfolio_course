@@ -1,5 +1,5 @@
 ---
-title: "Chad's Course Portal"
+title: "Chungil Chae (Chad)'s Teaching / Course Development"
 subtitle: "2025, Spring"
 author:
   - name: Chad (Chungil Chae)
@@ -31,7 +31,6 @@ format:
     highlight-style: dracula
     code-line-numbers: true
     code-overflow: scroll
-    code-block-border-left: true
   docx: 
     geometry: 
       - top=30mm
@@ -75,64 +74,28 @@ knitr::opts_chunk$set(error = F, echo = F, warning = F, fig.width=8, fig.height=
 
 ```
 
-# Class Materias
+# Teaching Statement
+I believe that my teaching philosophy plays a critical role in shaping my approach as an educator and significantly influences my research interests and career development. My classroom experiences have deepened my understanding of philosophical theories, which in turn, have enriched my research methodologies. This reciprocal relationship between teaching and research has been pivotal in my professional growth, guiding my pursuit of innovative educational strategies and contributing to a broader understanding of philosophical discourse. I am committed to continuing this synergistic journey, recognizing the profound impact of teaching on my academic pursuits and personal development.
 
-## GE2021: Research Performance
-### [Student Performance](https://chadchae.shinyapps.io/studentperformance_2025S_GE2021/)
-### [Introduciton and Housekeeping](Course/GE2021/03_Lecture_Note/LectureNote_Chad/PPT/chapter0/chapter0.qmd)
-### [Chapter1 Lecture Note](Course/GE2021/03_Lecture_Note/LectureNote_Chad/PPT/chapter1/chapter1_note.qmd)
-### [Chapter1 Slide](Course/GE2021/03_Lecture_Note/LectureNote_Chad/PPT/chapter1/chapter1.qmd)
-### [Chapter2 Lecture Note](Course/GE2021/03_Lecture_Note/LectureNote_Chad/PPT/chapter2/chapter2_note.qmd)
-### [Chapter2 Slide](Course/GE2021/03_Lecture_Note/LectureNote_Chad/PPT/chapter2/chapter2.qmd)
-### [Chapter3 Lecture Note](Course/GE2021/03_Lecture_Note/LectureNote_Chad/PPT/chapter3/chapter3_note.qmd)
-### [Chapter3 Slide](Course/GE2021/03_Lecture_Note/LectureNote_Chad/PPT/chapter3/chapter3.qmd)
+My journey as an educator began with teaching underprivileged adult students as a volunteer in Pyung-tak's redevelopment zones in Kyungi-do province, Korea. I was confronted with the complexities and rewards of educational empowerment. These early experiences, along with my time tutoring adult learners, have deeply shaped my teaching philosophy. I view teaching as a dynamic dialogue that transcends mere knowledge transfer, emphasizing a mutual journey of understanding between educator and learner. For instance, most of my students at that time were older than me, ranging in age from their early 40s to mid-60s. They had started working at a young age to support their families and missed out on earlier educational opportunities. Their main goals were to learn how to read and write and to earn educational certificates. Initially, it was challenging to maintain their attention on the course material. They struggled with even simple concepts. However, in casual conversations about their life experiences, it became clear they understood the concepts but had trouble expressing themselves. The classroom language was too jargon-filled. Thus, I started using examples from their own life stories, which proved to be very effective. This approach is not just about imparting information but about fostering an environment where learners are actively encouraged to participate in their knowledge acquisition. This foundational belief in the power of dialogue and empowerment continues to guide my teaching, shaping how I engage with students and design learning experiences that are both inclusive and transformative.
 
----
+As a graduate assistant and later as a post-doctoral scholar at the cognitive science lab at Pennsylvania State University, where I advised graduate students on projects, I further shaped my teaching approach. This continued when I became an assistant professor in business analytics at Wenzhou-Kean University. In my teaching, I aim to go beyond traditional methods, focusing on helping students deeply understand and apply their knowledge. My goal is for students to leave the classroom with a solid grasp of collaboration, critical thinking, and practical application in the field of business analytics. I strive to create a psychologically safe and culturally diverse learning environment, fostering fully engaged interactions. My approach includes guiding students through project-based learning, where they tackle real-world problems. I emphasize 'Systems Thinking Capability' and sense-making in my teaching, encouraging a holistic understanding of business phenomena. This approach is especially prominent in HRM and business analytics courses, where students analyze motivational perspectives and develop strategic business insights. In my 'Data Mining in Business' course, for example, students have successfully applied data mining techniques to local business challenges, demonstrating the practical value of their learning. I also utilize a flipped classroom model, allowing students to engage with theoretical content at their own pace outside the classroom, and then apply these concepts through hands-on activities during class time. This method has proven particularly effective in my 'Python Programming for Business' course, where students have shown significant improvement in coding skills and problem-solving abilities. Feedback from students has been overwhelmingly positive, with many highlighting the practical application of skills learned and the supportive learning environment. Feedback is a cornerstone of my approach, and I actively seek student input to refine my methods. This dedication to continuous improvement is also evident in my participation in academic service and program development, ensuring a global perspective for a diverse student body. I value positive feedback but pay more attention to negative feedback from students, trying to see it as helpful without getting upset. As mentioned in my 'diversity statement,' feedback about language barriers led me to spend more time with students during office hours. I listen to their struggles in class and with campus life and keep looking for better communication tools and ways to help them learn independently.
 
-## MGS3001: Python Programming for Business
-### [Student Performance](https://chadchae.shinyapps.io/studentperformance_2025S_MGS3001/)
-### [Introduciton and Housekeeping](Course/MGS3001/03_Lecture_Note/LectureNote_Chad/PPT/chapter0/chapter0.qmd)
-### [Chapter1 Lecture Note](Course/MGS3001/03_Lecture_Note/LectureNote_Chad/PPT/chapter1/chapter1_note.qmd)
-### [Chapter1 Slide](Course/MGS3001/03_Lecture_Note/LectureNote_Chad/PPT/chapter1/chapter1.qmd)
-### [Chapter1 Lecture Notebook - Python](Course/MGS3001/03_Lecture_Note/LectureNote_Chad/PPT/chapter1/chapter1_notebook.qmd)
-### [Chapter2 Lecture Note](Course/MGS3001/03_Lecture_Note/LectureNote_Chad/PPT/chapter2/chapter2_note.qmd)
-### [Chapter2 Slide](Course/MGS3001/03_Lecture_Note/LectureNote_Chad/PPT/chapter2/chapter2.qmd)
-### [Chapter2 Lecture Notebook - Python](Course/MGS3001/03_Lecture_Note/LectureNote_Chad/PPT/chapter2/chapter2_notebook.qmd)
+Looking ahead, I aim to further integrate technology and innovative methods into my teaching, fostering an environment that respects and values diversity. The use of technology has been particularly appreciated for making complex concepts more accessible and engaging. I am aware of both the benefits and risks of using new tools like the chatbot AI, ChatGPT, in the classroom. For instance, instructors sometimes struggle to provide properly described examples with diverse cases. In this case, a Large Language Model based Artificial Intelligence was very efficient but needed extra care to apply it to the course material. In an analytics class, some students found it hard to grasp the concept of mediation. I understood the concept and the mathematical logic behind it, but there weren't many examples in the textbook, and my own research examples didn't really fit the course or the students' level. So, I used ChatGPT to create examples that matched the students' understanding and related to things they see in their everyday lives. They immediately responded to the case, and I felt it was very effective to teach them some complex concept with proper cases. However, at the same time, I found some misinterpretations from AI-generated cases and spent time evaluating and revising them. This experience linked to my research interest in 'learning and performance in organizations.' Specifically, it's about finding ways to help people interact with advanced technologies like AI more actively and safely and understanding how AI-assisted tasks can encourage knowledge sharing. Moreover, I have integrated online and hybrid learning curriculums since the COVID-19 period, employing various learning technologies such as artificial intelligence tools, mobile, and web learning platforms. I've developed a student performance application ([https://chadchae.shinyapps.io/MGS3101_2023_Fall/]), which has been instrumental in tracking and enhancing student learning outcomes. This tool not only provides me with valuable insights into student progress but also empowers students to take charge of their learning journey. To cater to diverse learning styles and ensure accessibility, I incorporate a range of teaching materials and activities. This includes multimedia content for visual learners and interactive discussions for those who learn best through dialogue. I also ensure that all my online resources are accessible to students with disabilities or those in quarantine in COVID19 period.
 
----
-
-## MGS3701: Data Mining
-### [Student Performance](https://chadchae.shinyapps.io/studentperformance_2025S_MGS3701/)
-### [Introduciton and Housekeeping](Course/MGS3701/03_Lecture_Note/LectureNote_Chad/PPT/chapter0/chapter0.qmd)
-### [Chapter1 Lecture Note](Course/MGS3701/03_Lecture_Note/LectureNote_Chad/PPT/chapter1/chapter1_note.qmd)
-### [Chapter1 Slide](Course/MGS3701/03_Lecture_Note/LectureNote_Chad/PPT/chapter1/chapter1.qmd)
-### [Chapter1 Lecture Notebook - R](Course/MGS3701/03_Lecture_Note/LectureNote_Chad/PPT/chapter1/chapter1_notebook.qmd)
-### [Chapter1 Lecture Notebook - Python](Course/MGS3701/07_Script/Chapter Examples Python/Chapter 01 - Introduction.html)
-### [Chapter2 Lecture Note](Course/MGS3701/03_Lecture_Note/LectureNote_Chad/PPT/chapter2/chapter2_note.qmd)
-### [Chapter2 Slide](Course/MGS3701/03_Lecture_Note/LectureNote_Chad/PPT/chapter2/chapter2.qmd)
-### [Chapter2 Lecture Notebook - R](Course/MGS3701/03_Lecture_Note/LectureNote_Chad/PPT/chapter2/chapter2_notebook.qmd)
-### [Chapter2 Lecture Notebook - Python](Course/MGS3701/07_Script/Chapter Examples Python/Chapter 02 - Overview.html)
+My research in HRD and analytics significantly informs my teaching. I explore topics such as knowledge sharing, employee retention, and the impact of technology on learning, integrating these insights into my courses. Students gain practical understanding, bridging gaps between technology, educational methodologies, and industry practices. This approach proved invaluable not only in the classroom but also in managing the business analytics lab and providing astute guidance to its students. I organized research initiatives such as a book club, and small projects that are related to my ongoing scholarly endeavors. Diligently, I endeavored to integrate these students into the broader academic and professional sphere, leveraging my scholarly connections. Esteemed colleagues from antecedent research projects and my mentor were invited to participate in lab sessions and student project presentations. It extended my lab students' experience and helped them expose themselves to more diverse subjects and learning opportunities. Recognizing the significance of a robust internal network, I initiated a mentorship program within the lab, enlisting the expertise of our program's alumni who have excelled in their respective professional and academic trajectories.
+My international journey across South Korea, the United States, and China, has underscored the importance of cultural inclusivity. This rich background informs my commitment to creating a culturally inclusive curriculum and a supportive environment for students from diverse backgrounds. In conclusion, my role as an educator, researcher, and advocate for diversity is dedicated to evolving alongside my students, empowering them to become accomplished business experts, leaders, and collaborators in the exploration of theory and practice. Moving forward, I plan to continue refining these methods, exploring new pedagogical approaches, and staying abreast of technological advancements to enhance the learning experience further. My ultimate goal is to not only educate but to inspire a lifelong passion for learning and innovation in the field of management, business analytics, and human resource development.
 
 
 
----
-
-Course/MGS3001/07_Script/Chapter Examples Python/Chapter 03 - Data visualization.html
-Course/MGS3001/07_Script/Chapter Examples Python/Chapter 04 - Dimension reduction.html
-Course/MGS3001/07_Script/Chapter Examples Python/Chapter 05 - Evaluating performance.html
-Course/MGS3001/07_Script/Chapter Examples Python/Chapter 06 - Multiple linear regression.html
-Course/MGS3001/07_Script/Chapter Examples Python/Chapter 07 - kNN.html
-Course/MGS3001/07_Script/Chapter Examples Python/Chapter 08 - Naive Bayes classifier.html
-Course/MGS3001/07_Script/Chapter Examples Python/Chapter 09 - Classification and regression trees.html
-Course/MGS3001/07_Script/Chapter Examples Python/Chapter 10 - Logistic regression.html
-Course/MGS3001/07_Script/Chapter Examples Python/Chapter 11 - Neural nets (add-on).html
-Course/MGS3001/07_Script/Chapter Examples Python/Chapter 11 - Neural nets.html
-Course/MGS3001/07_Script/Chapter Examples Python/Chapter 12 - Discriminant analysis.html
-Course/MGS3001/07_Script/Chapter Examples Python/Chapter 13 - Ensembles and uplift.html
-Course/MGS3001/07_Script/Chapter Examples Python/Chapter 14 - Association rules.html
-Course/MGS3001/07_Script/Chapter Examples Python/Chapter 15 - Cluster analysis.html
-Course/MGS3001/07_Script/Chapter Examples Python/Chapter 16 - Handling time series.html
-Course/MGS3001/07_Script/Chapter Examples Python/Chapter 17 - Regression-based forecasting.html
-Course/MGS3001/07_Script/Chapter Examples Python/Chapter 18 - TS smoothing.html
-Course/MGS3001/07_Script/Chapter Examples Python/Chapter 19 - Social Network Analysis.html
-Course/MGS3001/07_Script/Chapter Examples Python/Chapter 20 - Text mining.html
+# Planning to Develop
+- HR/HRD Related
+  - Adult Learning
+- Organization Behavior/Psychology
+  - Leadership
+- Statstics
+  - Basic Statstics
+- Research Methodology
+  - Social Network Analysis 
+- Analytics
+  - People/HR Analytics
