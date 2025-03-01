@@ -1563,17 +1563,17 @@ display:block!important;
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     TOTAL.VALUE  TAX LOT.SQFT YR.BUILT GROSS.AREA LIVING.AREA FLOORS ROOMS
-351        320.9 4036     8088     1967       2240        1726    1.0     8
-4507       301.5 3792     4225     1958       2357        1026    1.0     5
-767        229.1 2882     2900     1915       2183        1119    1.5     7
-464        398.2 5009    10044     1960       2180        1726    1.0     6
-2877       348.7 4386     5643     1954       2697        1459    1.5     6
+2643       542.0 6818    10911     1950       3031        2047      2     9
+4618       468.0 5887     5510     1933       2596        1594      2     6
+4842       394.2 4959     6971     1935       3024        1920      2     7
+1574       288.1 3624     5603     1961       2063         864      1     5
+557        324.1 4077     5099     1933       2597        1577      2     7
      BEDROOMS FULL.BATH HALF.BATH KITCHEN FIREPLACE REMODEL
-351         3         2         0       1         0    None
-4507        3         1         0       1         1    None
-767         3         1         0       1         0    None
-464         3         1         1       1         0  Recent
-2877        2         1         1       1         1    None</code></pre>
+2643        5         2         1       1         1     Old
+4618        3         2         1       1         1  Recent
+4842        3         1         1       1         1    None
+1574        2         1         0       1         1     Old
+557         4         2         1       1         0    None</code></pre>
 </div>
 <details class="code-fold">
 <summary>Code</summary>
@@ -1583,17 +1583,17 @@ display:block!important;
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>     TOTAL.VALUE  TAX LOT.SQFT YR.BUILT GROSS.AREA LIVING.AREA FLOORS ROOMS
-4513     772.100 9713     8400     1919       6382        3496      2    12
-3859     673.700 8475    11808     1918       5641        3120      2    12
-3729     578.600 7278    10450     1900       4182        2416      2    10
-3761     750.595 9442     7000     1890       6069        3443      2    11
-4155     478.900 6024    10960     1880       3244        2164      2     7
+4928       405.8 5104     5500     1930       2932        1636      2     7
+4058       430.7 5418     4971     1930       3981        1890      1    11
+1918       397.8 5004     3906     1860       3830        2280      2    11
+2495       660.0 8302    13650     1924       5192        2640      2    13
+2243       390.8 4916     4647     1930       2587        1666      2     8
      BEDROOMS FULL.BATH HALF.BATH KITCHEN FIREPLACE REMODEL
-4513        8         3         1       1         2  Recent
-3859        6         3         1       1         2    None
-3729        5         2         0       1         1     Old
-3761        5         2         1       2         3  Recent
-4155        4         1         1       1         1    None</code></pre>
+4928        4         1         0       1         1     Old
+4058        3         1         1       1         0     Old
+1918        7         2         0       1         0     Old
+2495        7         2         1       1         2  Recent
+2243        4         1         0       1         1    None</code></pre>
 </div>
 </div>
 </section>
@@ -1936,7 +1936,7 @@ display:block!important;
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
-  1.000   3.000   3.000   3.231   4.000   9.000      10 </code></pre>
+   1.00    3.00    3.00    3.23    4.00    9.00      10 </code></pre>
 </div>
 <details class="code-fold">
 <summary>Code</summary>
@@ -2295,12 +2295,12 @@ display:block!important;
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     train.data.TOTAL_VALUE reg.fitted.values reg.residuals
-1886                  356.7          351.7718      4.928166
-3515                  333.3          319.2062     14.093806
-460                   298.6          360.0588    -61.458765
-855                   265.3          327.0651    -61.765109
-4094                  575.1          527.8023     47.297662
-3581                  348.0          379.0220    -31.021963</code></pre>
+1886                  356.7          351.7717      4.928287
+3515                  333.3          319.1531     14.146864
+460                   298.6          360.0937    -61.493661
+855                   265.3          327.0528    -61.752801
+4094                  575.1          527.8263     47.273712
+3581                  348.0          379.0189    -31.018916</code></pre>
 </div>
 <details class="code-fold">
 <summary>Code</summary>
@@ -2311,12 +2311,12 @@ display:block!important;
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>     valid.data.TOTAL_VALUE     pred  residuals
-5642                  318.0 370.0171 -52.017084
-2766                  498.7 430.4021  68.297937
-3676                  331.8 352.6638 -20.863791
-2054                  371.9 374.5693  -2.669296
-2217                  436.2 437.7157  -1.515692
-3117                  280.2 255.4823  24.717714</code></pre>
+5642                  318.0 370.0092 -52.009177
+2766                  498.7 430.4226  68.277438
+3676                  331.8 352.6607 -20.860657
+2054                  371.9 374.5782  -2.678164
+2217                  436.2 437.7169  -1.516881
+3117                  280.2 255.4895  24.710460</code></pre>
 </div>
 </div>
 </section>
@@ -2354,8 +2354,8 @@ display:block!important;
 </details>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>                   ME     RMSE      MAE       MPE     MAPE
-Test set 4.506717e-16 41.98867 31.85323 -1.064921 8.351894</code></pre>
+<pre><code>                    ME   RMSE     MAE       MPE     MAPE
+Test set -2.625653e-15 41.988 31.8531 -1.064873 8.351896</code></pre>
 </div>
 <details class="code-fold">
 <summary>Code</summary>
@@ -2364,8 +2364,8 @@ Test set 4.506717e-16 41.98867 31.85323 -1.064921 8.351894</code></pre>
 <span id="cb32-3"><a></a><span class="fu">accuracy</span>(pred, valid.data<span class="sc">$</span>TOTAL_VALUE)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>                ME   RMSE      MAE        MPE     MAPE
-Test set 0.3871866 43.142 32.66392 -0.8569656 8.414971</code></pre>
+<pre><code>                ME     RMSE      MAE        MPE     MAPE
+Test set 0.3864685 43.13954 32.66057 -0.8572164 8.414027</code></pre>
 </div>
 </div>
 </section></section>
