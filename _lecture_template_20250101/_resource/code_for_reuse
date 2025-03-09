@@ -62,3 +62,10 @@ Content for `Tab B`
 [슬라이드 백그라운드 - 컬러, 이미지 타이틀없이]
 ## {background-color="aquamarine"}
 ## {background-color="black" background-image="https://placekitten.com/100/100" background-size="100px" background-repeat="repeat"}
+
+```{python}
+#| eval: false
+#| echo: true
+#| code-fold: false
+#| output-location: column # fragment slide column column-fragment
+```

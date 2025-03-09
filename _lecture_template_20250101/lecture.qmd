@@ -72,7 +72,7 @@ format:
     transition-speed: fast
     
     # 슬라이드 레이아웃
-    navigation-mode: grid #linear vertical grid
+    navigation-mode: vertical #linear vertical grid
     
     # 컨프롤 버튼
     controls-layout: bottom-right
@@ -89,7 +89,7 @@ format:
     embed-resources: true
     
     # 터치 컨트롤 - 스마트폰 사용
-    touch: false
+    touch: true
     controls: true
     
     # 기타
@@ -132,23 +132,19 @@ format:
 
 ::: {.column width="40%"}
 - **What to do**
-  - a brief self-introduction < 300 words
-  - Chinese name in English
-  - English name
-  - Student ID
-  - Picture that shows your face
-  - Major
-  - Class name and section (e.g. GE2021, W09; MGS3001, W01)
+  - A
+  - B
 :::
 
 ::: {.column width="60%"}
 - **Format and Requirement**
-  - PDF format
+  - PDF format, < ?? pages
   - file name should be include your student id and name
     - stuID_name_title.pdf (e.g. 1111111_ChungilChae_SelfIntroduction.pdf)
-  - send it to cchae@kean.edu with proper subject and contents of the mail
+  - APA, Double-Space, No title page, 12 points, Reference section if necessary
+  - Chinese name in English, English name, Student ID, Class name and section (e.g. GE2021, W09; MGS3001, W01)
 - due date
-  - by Feb23(Sun) 11:59PM
+  - by Date(DAY) 11:59PM
   - NO LATE SUBMISSION ALLOWED!!!!
 :::
 

@@ -4870,7 +4870,7 @@ vertical-align: -.125em;
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">Mon, 3 March 2025</p>
+        <p class="date">Sun, 9 March 2025</p>
       </div>
     </div>
     
@@ -5095,17 +5095,17 @@ vertical-align: -.125em;
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>     TOTAL.VALUE  TAX LOT.SQFT YR.BUILT GROSS.AREA LIVING.AREA FLOORS ROOMS
-2753       358.6 4511     5225     1954       2754        1459    1.5     7
-3738       339.6 4272     3185     1940       2714        1758    2.0     7
-4240       316.9 3986     5304     1930       2706        1479    1.5     7
-2143       306.9 3860     5114     1950       2676        1476    1.5     6
-5280       439.3 5526     5000     1930       2784        1498    2.0     8
+2708       408.3 5136    10762     1940       2686        1627      2     6
+351        320.9 4036     8088     1967       2240        1726      1     8
+4944       329.7 4147     4305     1950       2508        1123      1     6
+1935       363.2 4569     5770     1989       1774         980      2     5
+1824       340.7 4286     4352     1930       2210        1372      2     6
      BEDROOMS FULL.BATH HALF.BATH KITCHEN FIREPLACE REMODEL
-2753        3         2         1       1         1    None
-3738        4         1         1       1         0    None
-4240        3         1         0       1         0    None
-2143        3         1         0       1         1    None
-5280        3         1         1       1         0     Old</code></pre>
+2708        3         1         1       1         0    None
+351         3         2         0       1         0    None
+4944        3         2         0       1         1    None
+1935        2         1         1       1         2    None
+1824        3         2         0       1         0  Recent</code></pre>
 </div>
 <details class="code-fold">
 <summary>Code</summary>
@@ -5114,18 +5114,18 @@ vertical-align: -.125em;
 <span id="cb27-3"><a href="#cb27-3"></a>housing.df[s,]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>     TOTAL.VALUE  TAX LOT.SQFT YR.BUILT GROSS.AREA LIVING.AREA FLOORS ROOMS
-2590       530.3 6671    10000     1890       4628        2908    2.0    11
-981        502.3 6318    10960     1950       4167        2224    1.5    10
-4501       490.1 6165     9000     1939       4123        2285    2.0    11
-2682       511.5 6434    10531     1910       4997        2781    2.0    12
-2874       645.7 8122    10569     1901       4760        2933    2.0    11
+<pre><code>     TOTAL.VALUE   TAX LOT.SQFT YR.BUILT GROSS.AREA LIVING.AREA FLOORS ROOMS
+4513     772.100  9713     8400     1919       6382        3496      2    12
+4029     815.300 10256    12328     1916       6573        3902      2    11
+1559     496.100  6240     6832     2001       3334        2186      2     7
+2658     617.600  7769     5170     1930       4756        2742      2    11
+3761     750.595  9442     7000     1890       6069        3443      2    11
      BEDROOMS FULL.BATH HALF.BATH KITCHEN FIREPLACE REMODEL
-2590        6         1         1       1         1    None
-981         3         2         1       1         1  Recent
-4501        4         1         1       1         1     Old
-2682        5         1         2       1         1    None
-2874        5         3         0       1         1    None</code></pre>
+4513        8         3         1       1         2  Recent
+4029        5         3         1       1         2     Old
+1559        4         2         1       1         1    None
+2658        6         1         1       1         1    None
+3761        5         2         1       2         3  Recent</code></pre>
 </div>
 </div>
 </section>
@@ -28493,7 +28493,7 @@ vertical-align: -.125em;
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
-   1.00    3.00    3.00    3.23    4.00    9.00      10 </code></pre>
+  1.000   3.000   3.000   3.231   4.000   9.000      10 </code></pre>
 </div>
 <details class="code-fold">
 <summary>Code</summary>
@@ -28563,12 +28563,12 @@ vertical-align: -.125em;
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>     train.data.TOTAL_VALUE reg.fitted.values reg.residuals
-1886                  356.7          351.7984      4.901596
-3515                  333.3          319.3458     13.954202
-460                   298.6          359.9436    -61.343611
-855                   265.3          327.1248    -61.824826
-4094                  575.1          527.7329     47.367061
-3581                  348.0          379.0337    -31.033735</code></pre>
+1886                  356.7          351.7814      4.918571
+3515                  333.3          319.2575     14.042548
+460                   298.6          360.0236    -61.423633
+855                   265.3          327.0914    -61.791406
+4094                  575.1          527.7691     47.330897
+3581                  348.0          379.0276    -31.027573</code></pre>
 </div>
 </div>
 </section>
@@ -28584,12 +28584,12 @@ vertical-align: -.125em;
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>     valid.data.TOTAL_VALUE     pred  residuals
-5642                  318.0 370.0327 -52.032749
-2766                  498.7 430.3496  68.350373
-3676                  331.8 352.6369 -20.836947
-2054                  371.9 374.5647  -2.664733
-2217                  436.2 437.7137  -1.513669
-3117                  280.2 255.4429  24.757119</code></pre>
+5642                  318.0 370.0165 -52.016532
+2766                  498.7 430.3862  68.313778
+3676                  331.8 352.6592 -20.859211
+2054                  371.9 374.5686  -2.668572
+2217                  436.2 437.7099  -1.509913
+3117                  280.2 255.4706  24.729384</code></pre>
 </div>
 </div>
 </section>
@@ -28611,8 +28611,8 @@ vertical-align: -.125em;
 <span id="cb65-2"><a href="#cb65-2"></a><span class="fu">accuracy</span>(reg<span class="sc">$</span>fitted.values, train.data<span class="sc">$</span>TOTAL_VALUE)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>                   ME    RMSE      MAE       MPE     MAPE
-Test set 1.175665e-16 41.9909 31.85503 -1.065019 8.352282</code></pre>
+<pre><code>                   ME     RMSE      MAE       MPE     MAPE
+Test set 2.802002e-15 41.98957 31.85561 -1.064942 8.352663</code></pre>
 </div>
 <details class="code-fold">
 <summary>Code</summary>
@@ -28621,8 +28621,8 @@ Test set 1.175665e-16 41.9909 31.85503 -1.065019 8.352282</code></pre>
 <span id="cb67-3"><a href="#cb67-3"></a><span class="fu">accuracy</span>(pred, valid.data<span class="sc">$</span>TOTAL_VALUE)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>                ME     RMSE     MAE        MPE    MAPE
-Test set 0.3921647 43.13726 32.6613 -0.8561116 8.41418</code></pre>
+<pre><code>                ME     RMSE      MAE        MPE     MAPE
+Test set 0.3894358 43.13869 32.66016 -0.8568215 8.413819</code></pre>
 </div>
 </div>
 
