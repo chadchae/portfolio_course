@@ -10,6 +10,7 @@ title-slide-attributes:
 author: 
   - name: Chad (Chungil Chae)
     email: cchae@kean.edu
+    institution: Wenzhou-Kean University
 # Date
 date: today
 date-format: "ddd, D MMMM YYYY"
@@ -107,18 +108,82 @@ format:
     highlight-style: dracula
     code-line-numbers: true
     code-overflow: scroll
-    code-block-border-left: true
-    
+    code-block-border-left: false
+    webcam: 
+      toggleKey: "c" # Change the key to toggle the video
+      enabled: false # Enable the video stream directly at startup. Pressing [C] will still allow you to toggle
+      persistent: false # Keep the stream open
+    flashcards: 
+      flipKey: 'r'
+      shuffleKey: 't'
+      showFlipButton: true
+    quiz: 
+      checkKey: 'c'
+      resetKey: 'q'
+      shuffleKey: 't'
+      allowNumberKeys: true
+      disableOnCheck: false
+      disableReset: false
+      shuffleOptions: true
+      defaultCorrect: "Correct!"
+      defaultIncorrect: "Incorrect!"
+      includeScore: true
+revealjs-plugins:
+  - quiz
+  - flashcards
+  - webcam
 
 
 
 ---
 
+# Version and Document Information 
+::: {.nonincremental}
+Version {{< var version >}} is a minor upgrade. Please contact us at {{< var email.school >}}.
+
+:::
+
 # Learning Objectives {background-color="black" background-image="_resource/school_background_blured.png" background-size=100%}
 
 ## SHORT VIDEO INTRODUCTION
+::: {.nonincremental}
 {{< video YOUTUBE_URL_OR_FILE_LOCATION_HERE width="100%" height="85%">}}
 
+:::
+
+
+
+
+
+
+# Quiz {background-color="black" background-image="_resource/school_background_blured.png" background-size=100%}
+
+## Quiz question goes here {.quiz-question}
+::: {.nonincremental}
+- Option 1
+- [Option 2 which is correct]{.correct}
+- Option 3
+- Option 4
+
+:::
+
+## Quiz question goes here {.quiz-question}
+::: {.nonincremental}
+- Option 1
+- [Option 2 which is correct]{.correct}
+- Option 3
+- Option 4
+
+:::
+
+## What is the formula for the area of a circle? {.quiz-question}
+::: {.nonincremental}
+- [$πr^2$]{.correct}
+- [$2πr$]{data-explanation="This is the formula for the circumference of a circle."}
+- [$4πr^2$]{data-explanation="This is the formula for the surface area of a sphere."}
+- [$\frac{4}{3}r^3$]{data-explanation="This is the formula for the volume of a sphere."}
+
+:::
 
 # House Keeping
 ## Announcement
@@ -127,7 +192,7 @@ format:
 :::{.r-fit-text}
 
 ### Assignment1: Assignment Title
-
+::: {.nonincremental}
 :::: {.columns}
 
 ::: {.column width="40%"}
@@ -149,10 +214,8 @@ format:
 :::
 
 ::::
-
+:::
 
 :::
 
-# Reference {.smaller}
-
-
+# Reference 

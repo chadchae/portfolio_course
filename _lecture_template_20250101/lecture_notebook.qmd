@@ -31,7 +31,7 @@ format:
     highlight-style: dracula
     code-line-numbers: true
     code-overflow: scroll
-    code-block-border-left: true
+    code-block-border-left: false
   docx: 
     geometry: 
       - top=30mm
