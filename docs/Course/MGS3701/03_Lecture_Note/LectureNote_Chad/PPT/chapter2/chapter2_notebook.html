@@ -4870,7 +4870,7 @@ vertical-align: -.125em;
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">Thu, 13 March 2025</p>
+        <p class="date">Fri, 21 March 2025</p>
       </div>
     </div>
     
@@ -5095,17 +5095,17 @@ vertical-align: -.125em;
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>     TOTAL.VALUE  TAX LOT.SQFT YR.BUILT GROSS.AREA LIVING.AREA FLOORS ROOMS
-2385       476.0 5988     8624     1914       2608        1680      2     8
-4851       347.2 4367     5000     1925       2316        1365      2     7
-3552       268.3 3375     4000     1962       1392         660      1     4
-1809       349.4 4395     4597     1935       2043        1334      2     7
-1549       410.0 5157     6391     1920       3208        1824      2     7
+312        298.1 3750     6000     1960       2212        1692      1     7
+5474       442.6 5567     5000     1890       2873        1680      2     7
+4962       458.4 5766     4620     1910       3346        1921      2     8
+5715       399.0 5019     8764     1953       3384        1500      1     6
+3544       482.0 6063     4720     1920       4553        2572      2     9
      BEDROOMS FULL.BATH HALF.BATH KITCHEN FIREPLACE REMODEL
-2385        3         2         1       1         0     Old
-4851        3         1         0       1         1    None
-3552        2         1         0       1         1    None
-1809        3         1         0       1         1    None
-1549        3         1         1       1         0    None</code></pre>
+312         3         1         1       1         0    None
+5474        3         1         0       1         1    None
+4962        4         2         0       1         1  Recent
+5715        3         1         1       1         1    None
+3544        5         1         1       1         0    None</code></pre>
 </div>
 <details class="code-fold">
 <summary>Code</summary>
@@ -5115,17 +5115,17 @@ vertical-align: -.125em;
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>     TOTAL.VALUE  TAX LOT.SQFT YR.BUILT GROSS.AREA LIVING.AREA FLOORS ROOMS
-3595       600.1 7549     9637     1938       4631        2333    2.0    11
-4969       406.0 5107     7660     1950       2252         960    1.0    12
-5035       736.7 9267    13960     1880       5358        3452    2.5    12
-3163       550.6 6926     7633     1910       4959        2633    2.0     9
-3233       668.7 8412    20897     1910       7175        3977    2.0    13
+5681       489.1 6152     6693     1950       2592        1602    2.0     9
+2063       398.0 5006     5564     1945       2268        1457    2.0     7
+2340       559.5 7038     9330     1920       3620        2288    2.0     8
+4341       498.0 6264     7932     1910       3728        2234    2.5     9
+3814       705.0 8868    18696     1900       7022        4381    2.5    12
      BEDROOMS FULL.BATH HALF.BATH KITCHEN FIREPLACE REMODEL
-3595        5         1         1       1         1    None
-4969        2         1         0       1         1    None
-5035        5         4         0       2         1     Old
-3163        6         1         1       1         1    None
-3233        4         1         1       1         1     Old</code></pre>
+5681        3         1         1       1         1    None
+2063        3         1         1       1         1    None
+2340        3         2         1       1         1  Recent
+4341        6         2         1       1         1  Recent
+3814        5         3         1       1         1    None</code></pre>
 </div>
 </div>
 </section>
@@ -28563,12 +28563,12 @@ vertical-align: -.125em;
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>     train.data.TOTAL_VALUE reg.fitted.values reg.residuals
-1886                  356.7          351.7703      4.929719
-3515                  333.3          319.2007     14.099276
-460                   298.6          360.0591    -61.459054
-855                   265.3          327.0629    -61.762905
-4094                  575.1          527.7981     47.301871
-3581                  348.0          379.0176    -31.017557</code></pre>
+1886                  356.7          351.7626      4.937426
+3515                  333.3          319.1453     14.154679
+460                   298.6          360.1107    -61.510663
+855                   265.3          327.0443    -61.744317
+4094                  575.1          527.8322     47.267822
+3581                  348.0          379.0126    -31.012601</code></pre>
 </div>
 </div>
 </section>
@@ -28584,12 +28584,12 @@ vertical-align: -.125em;
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>     valid.data.TOTAL_VALUE     pred  residuals
-5642                  318.0 370.0105 -52.010491
-2766                  498.7 430.4027  68.297306
-3676                  331.8 352.6616 -20.861570
-2054                  371.9 374.5672  -2.667217
-2217                  436.2 437.7113  -1.511282
-3117                  280.2 255.4809  24.719139</code></pre>
+5642                  318.0 370.0056 -52.005600
+2766                  498.7 430.4229  68.277073
+3676                  331.8 352.6697 -20.869659
+2054                  371.9 374.5649  -2.664909
+2217                  436.2 437.7162  -1.516169
+3117                  280.2 255.5090  24.691028</code></pre>
 </div>
 </div>
 </section>
@@ -28611,8 +28611,8 @@ vertical-align: -.125em;
 <span id="cb65-2"><a href="#cb65-2"></a><span class="fu">accuracy</span>(reg<span class="sc">$</span>fitted.values, train.data<span class="sc">$</span>TOTAL_VALUE)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>                   ME     RMSE      MAE       MPE     MAPE
-Test set 1.430393e-15 41.98864 31.85244 -1.064915 8.351697</code></pre>
+<pre><code>                    ME     RMSE      MAE       MPE   MAPE
+Test set -1.724309e-15 41.98762 31.85054 -1.064861 8.3513</code></pre>
 </div>
 <details class="code-fold">
 <summary>Code</summary>
@@ -28622,7 +28622,7 @@ Test set 1.430393e-15 41.98864 31.85244 -1.064915 8.351697</code></pre>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>                ME     RMSE      MAE        MPE     MAPE
-Test set 0.3882053 43.14196 32.66269 -0.8568517 8.414387</code></pre>
+Test set 0.3879501 43.14196 32.66228 -0.8570231 8.414338</code></pre>
 </div>
 </div>
 
