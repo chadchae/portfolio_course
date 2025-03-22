@@ -97,12 +97,24 @@ knitr::opts_chunk$set(error = F, echo = F, warning = F, fig.width=8, fig.height=
 ### [Chapter3 Lecture Notebook - R](Course/MGS3701/03_Lecture_Note/LectureNote_Chad/PPT/chapter3/chapter3_notebook.qmd)
 ### [Chapter3 Lecture Notebook - Python](Course/MGS3001/07_Script/Chapter Examples Python/Chapter 03 - Data visualization.html)
 
+## Chapter4
+### [Chapter4 Lecture Note](Course/MGS3701/03_Lecture_Note/LectureNote_Chad/PPT/chapter4/chapter4_note.qmd)
+### [Chapter4 Slide](Course/MGS3701/03_Lecture_Note/LectureNote_Chad/PPT/chapter4/chapter4.qmd)
+### [Chapter4 Lecture Notebook - R](Course/MGS3701/03_Lecture_Note/LectureNote_Chad/PPT/chapter4/chapter4_notebook.qmd)
+### [Chapter4 Lecture Notebook - Python](Course/MGS3001/07_Script/Chapter Examples Python/Chapter 04 - Dimension reduction.html)
+
+## Chapter5
+### [Chapter5 Lecture Note](Course/MGS3701/03_Lecture_Note/LectureNote_Chad/PPT/chapter5/chapter5_note.qmd)
+### [Chapter5 Slide](Course/MGS3701/03_Lecture_Note/LectureNote_Chad/PPT/chapter5/chapter5.qmd)
+### [Chapter5 Lecture Notebook - R](Course/MGS3701/03_Lecture_Note/LectureNote_Chad/PPT/chapter5/chapter5_notebook.qmd)
+### [Chapter5 Lecture Notebook - Python](Course/MGS3001/07_Script/Chapter Examples Python/Chapter 05 - Evaluating performance.html)
+
 
 ---
 
 
-Course/MGS3001/07_Script/Chapter Examples Python/Chapter 04 - Dimension reduction.html
-Course/MGS3001/07_Script/Chapter Examples Python/Chapter 05 - Evaluating performance.html
+
+
 Course/MGS3001/07_Script/Chapter Examples Python/Chapter 06 - Multiple linear regression.html
 Course/MGS3001/07_Script/Chapter Examples Python/Chapter 07 - kNN.html
 Course/MGS3001/07_Script/Chapter Examples Python/Chapter 08 - Naive Bayes classifier.html

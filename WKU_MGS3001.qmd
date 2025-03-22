@@ -75,21 +75,31 @@ knitr::opts_chunk$set(error = F, echo = F, warning = F, fig.width=8, fig.height=
 
 ```
 
-
+## Course Material
 ### [Student Performance](https://chadchae.shinyapps.io/studentperformance_2025S_MGS3001/)
 ### [Introduciton and Housekeeping](Course/MGS3001/03_Lecture_Note/LectureNote_Chad/PPT/chapter0/chapter0.qmd)
+
+## Chapter1
 ### [Chapter1 Lecture Note](Course/MGS3001/03_Lecture_Note/LectureNote_Chad/PPT/chapter1/chapter1_note.qmd)
 ### [Chapter1 Slide](Course/MGS3001/03_Lecture_Note/LectureNote_Chad/PPT/chapter1/chapter1.qmd)
 ### [Chapter1 Lecture Notebook - Python](Course/MGS3001/03_Lecture_Note/LectureNote_Chad/PPT/chapter1/chapter1_notebook.qmd)
+
+## Chapter2
 ### [Chapter2 Lecture Note](Course/MGS3001/03_Lecture_Note/LectureNote_Chad/PPT/chapter2/chapter2_note.qmd)
 ### [Chapter2 Slide](Course/MGS3001/03_Lecture_Note/LectureNote_Chad/PPT/chapter2/chapter2.qmd)
 ### [Chapter2 Lecture Notebook - Python](Course/MGS3001/03_Lecture_Note/LectureNote_Chad/PPT/chapter2/chapter2_notebook.qmd)
+
+## Chapter3
 ### [Chapter3 Lecture Note](Course/MGS3001/03_Lecture_Note/LectureNote_Chad/PPT/chapter3/chapter3_note.qmd)
 ### [Chapter3 Slide](Course/MGS3001/03_Lecture_Note/LectureNote_Chad/PPT/chapter3/chapter3.qmd)
 ### [Chapter3 Lecture Notebook - Python](Course/MGS3001/03_Lecture_Note/LectureNote_Chad/PPT/chapter3/chapter3_notebook.qmd)
+
+## Chapter4
 ### [Chapter4 Lecture Note](Course/MGS3001/03_Lecture_Note/LectureNote_Chad/PPT/chapter4/chapter4_note.qmd)
 ### [Chapter4 Slide](Course/MGS3001/03_Lecture_Note/LectureNote_Chad/PPT/chapter4/chapter4.qmd)
 ### [Chapter4 Lecture Notebook - Python](Course/MGS3001/03_Lecture_Note/LectureNote_Chad/PPT/chapter4/chapter4_notebook.qmd)
+
+## Chapter5
 ### [Chapter5 Lecture Note](Course/MGS3001/03_Lecture_Note/LectureNote_Chad/PPT/chapter5/chapter5_note.qmd)
 ### [Chapter5 Slide](Course/MGS3001/03_Lecture_Note/LectureNote_Chad/PPT/chapter5/chapter5.qmd)
 ### [Chapter5 Lecture Notebook - Python](Course/MGS3001/03_Lecture_Note/LectureNote_Chad/PPT/chapter5/chapter5_notebook.qmd)
