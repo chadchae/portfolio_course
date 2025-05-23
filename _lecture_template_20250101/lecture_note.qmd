@@ -1,6 +1,6 @@
 ---
-title: "[Lecture Note] "
-subtitle: ""
+title: "[Lecture Note] Make up for May 6th"
+subtitle: "Special Topic: "
 author:
   - name: Chad (Chungil Chae)
     email: cchae@kean.edu

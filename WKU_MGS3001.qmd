@@ -103,3 +103,40 @@ knitr::opts_chunk$set(error = F, echo = F, warning = F, fig.width=8, fig.height=
 ### [Chapter5 Lecture Note](Course/MGS3001/03_Lecture_Note/LectureNote_Chad/PPT/chapter5/chapter5_note.qmd)
 ### [Chapter5 Slide](Course/MGS3001/03_Lecture_Note/LectureNote_Chad/PPT/chapter5/chapter5.qmd)
 ### [Chapter5 Lecture Notebook - Python](Course/MGS3001/03_Lecture_Note/LectureNote_Chad/PPT/chapter5/chapter5_notebook.qmd)
+
+---
+
+## Chapter6
+### [Chapter6 Lecture Note](Course/MGS3001/03_Lecture_Note/LectureNote_Chad/PPT/chapter5/chapter5_note.qmd)
+### [Chapter6 Slide](Course/MGS3001/03_Lecture_Note/LectureNote_Chad/PPT/chapter5/chapter5.qmd)
+### [Chapter6 Lecture Notebook - Python](Course/MGS3001/03_Lecture_Note/LectureNote_Chad/PPT/chapter5/chapter5_notebook.qmd)
+
+## Chapter7
+### [Chapter7 Lecture Note](Course/MGS3001/03_Lecture_Note/LectureNote_Chad/PPT/chapter5/chapter5_note.qmd)
+### [Chapter7 Slide](Course/MGS3001/03_Lecture_Note/LectureNote_Chad/PPT/chapter5/chapter5.qmd)
+### [Chapter7 Lecture Notebook - Python](Course/MGS3001/03_Lecture_Note/LectureNote_Chad/PPT/chapter5/chapter5_notebook.qmd)
+
+## Chapter8
+### [Chapter8 Lecture Note](Course/MGS3001/03_Lecture_Note/LectureNote_Chad/PPT/chapter5/chapter5_note.qmd)
+### [Chapter8 Slide](Course/MGS3001/03_Lecture_Note/LectureNote_Chad/PPT/chapter5/chapter5.qmd)
+### [Chapter8 Lecture Notebook - Python](Course/MGS3001/03_Lecture_Note/LectureNote_Chad/PPT/chapter5/chapter5_notebook.qmd)
+
+## Chapter9
+### [Chapter9 Lecture Note](Course/MGS3001/03_Lecture_Note/LectureNote_Chad/PPT/chapter5/chapter5_note.qmd)
+### [Chapter9 Slide](Course/MGS3001/03_Lecture_Note/LectureNote_Chad/PPT/chapter5/chapter5.qmd)
+### [Chapter9 Lecture Notebook - Python](Course/MGS3001/03_Lecture_Note/LectureNote_Chad/PPT/chapter5/chapter5_notebook.qmd)
+
+## Chapter10
+### [Chapter10 Lecture Note](Course/MGS3001/03_Lecture_Note/LectureNote_Chad/PPT/chapter5/chapter5_note.qmd)
+### [Chapter10 Slide](Course/MGS3001/03_Lecture_Note/LectureNote_Chad/PPT/chapter5/chapter5.qmd)
+### [Chapter10 Lecture Notebook - Python](Course/MGS3001/03_Lecture_Note/LectureNote_Chad/PPT/chapter5/chapter5_notebook.qmd)
+
+## Chapter11
+### [Chapter11 Lecture Note](Course/MGS3001/03_Lecture_Note/LectureNote_Chad/PPT/chapter5/chapter5_note.qmd)
+### [Chapter11 Slide](Course/MGS3001/03_Lecture_Note/LectureNote_Chad/PPT/chapter5/chapter5.qmd)
+### [Chapter11 Lecture Notebook - Python](Course/MGS3001/03_Lecture_Note/LectureNote_Chad/PPT/chapter5/chapter5_notebook.qmd)
+
+## Chapter12
+### [Chapter12 Lecture Note](Course/MGS3001/03_Lecture_Note/LectureNote_Chad/PPT/chapter5/chapter5_note.qmd)
+### [Chapter12 Slide](Course/MGS3001/03_Lecture_Note/LectureNote_Chad/PPT/chapter5/chapter5.qmd)
+### [Chapter12 Lecture Notebook - Python](Course/MGS3001/03_Lecture_Note/LectureNote_Chad/PPT/chapter5/chapter5_notebook.qmd)

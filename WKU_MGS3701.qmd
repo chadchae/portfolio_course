@@ -112,7 +112,95 @@ knitr::opts_chunk$set(error = F, echo = F, warning = F, fig.width=8, fig.height=
 
 ---
 
+## Chapter5
+### [Chapter5 Lecture Note](Course/MGS3701/03_Lecture_Note/LectureNote_Chad/PPT/chapter5/chapter5_note.qmd)
+### [Chapter5 Slide](Course/MGS3701/03_Lecture_Note/LectureNote_Chad/PPT/chapter5/chapter5.qmd)
+### [Chapter5 Lecture Notebook - R](Course/MGS3701/03_Lecture_Note/LectureNote_Chad/PPT/chapter5/chapter5_notebook.qmd)
+### [Chapter5 Lecture Notebook - Python](Course/MGS3001/07_Script/Chapter Examples Python/Chapter 05 - Evaluating performance.html)
 
+## Chapter5
+### [Chapter5 Lecture Note](Course/MGS3701/03_Lecture_Note/LectureNote_Chad/PPT/chapter5/chapter5_note.qmd)
+### [Chapter5 Slide](Course/MGS3701/03_Lecture_Note/LectureNote_Chad/PPT/chapter5/chapter5.qmd)
+### [Chapter5 Lecture Notebook - R](Course/MGS3701/03_Lecture_Note/LectureNote_Chad/PPT/chapter5/chapter5_notebook.qmd)
+### [Chapter5 Lecture Notebook - Python](Course/MGS3001/07_Script/Chapter Examples Python/Chapter 05 - Evaluating performance.html)
+
+## Chapter5
+### [Chapter5 Lecture Note](Course/MGS3701/03_Lecture_Note/LectureNote_Chad/PPT/chapter5/chapter5_note.qmd)
+### [Chapter5 Slide](Course/MGS3701/03_Lecture_Note/LectureNote_Chad/PPT/chapter5/chapter5.qmd)
+### [Chapter5 Lecture Notebook - R](Course/MGS3701/03_Lecture_Note/LectureNote_Chad/PPT/chapter5/chapter5_notebook.qmd)
+### [Chapter5 Lecture Notebook - Python](Course/MGS3001/07_Script/Chapter Examples Python/Chapter 05 - Evaluating performance.html)
+
+## Chapter5
+### [Chapter5 Lecture Note](Course/MGS3701/03_Lecture_Note/LectureNote_Chad/PPT/chapter5/chapter5_note.qmd)
+### [Chapter5 Slide](Course/MGS3701/03_Lecture_Note/LectureNote_Chad/PPT/chapter5/chapter5.qmd)
+### [Chapter5 Lecture Notebook - R](Course/MGS3701/03_Lecture_Note/LectureNote_Chad/PPT/chapter5/chapter5_notebook.qmd)
+### [Chapter5 Lecture Notebook - Python](Course/MGS3001/07_Script/Chapter Examples Python/Chapter 05 - Evaluating performance.html)
+
+## Chapter5
+### [Chapter5 Lecture Note](Course/MGS3701/03_Lecture_Note/LectureNote_Chad/PPT/chapter5/chapter5_note.qmd)
+### [Chapter5 Slide](Course/MGS3701/03_Lecture_Note/LectureNote_Chad/PPT/chapter5/chapter5.qmd)
+### [Chapter5 Lecture Notebook - R](Course/MGS3701/03_Lecture_Note/LectureNote_Chad/PPT/chapter5/chapter5_notebook.qmd)
+### [Chapter5 Lecture Notebook - Python](Course/MGS3001/07_Script/Chapter Examples Python/Chapter 05 - Evaluating performance.html)
+
+## Chapter5
+### [Chapter5 Lecture Note](Course/MGS3701/03_Lecture_Note/LectureNote_Chad/PPT/chapter5/chapter5_note.qmd)
+### [Chapter5 Slide](Course/MGS3701/03_Lecture_Note/LectureNote_Chad/PPT/chapter5/chapter5.qmd)
+### [Chapter5 Lecture Notebook - R](Course/MGS3701/03_Lecture_Note/LectureNote_Chad/PPT/chapter5/chapter5_notebook.qmd)
+### [Chapter5 Lecture Notebook - Python](Course/MGS3001/07_Script/Chapter Examples Python/Chapter 05 - Evaluating performance.html)
+
+## Chapter5
+### [Chapter5 Lecture Note](Course/MGS3701/03_Lecture_Note/LectureNote_Chad/PPT/chapter5/chapter5_note.qmd)
+### [Chapter5 Slide](Course/MGS3701/03_Lecture_Note/LectureNote_Chad/PPT/chapter5/chapter5.qmd)
+### [Chapter5 Lecture Notebook - R](Course/MGS3701/03_Lecture_Note/LectureNote_Chad/PPT/chapter5/chapter5_notebook.qmd)
+### [Chapter5 Lecture Notebook - Python](Course/MGS3001/07_Script/Chapter Examples Python/Chapter 05 - Evaluating performance.html)
+
+## Chapter5
+### [Chapter5 Lecture Note](Course/MGS3701/03_Lecture_Note/LectureNote_Chad/PPT/chapter5/chapter5_note.qmd)
+### [Chapter5 Slide](Course/MGS3701/03_Lecture_Note/LectureNote_Chad/PPT/chapter5/chapter5.qmd)
+### [Chapter5 Lecture Notebook - R](Course/MGS3701/03_Lecture_Note/LectureNote_Chad/PPT/chapter5/chapter5_notebook.qmd)
+### [Chapter5 Lecture Notebook - Python](Course/MGS3001/07_Script/Chapter Examples Python/Chapter 05 - Evaluating performance.html)
+
+## Chapter5
+### [Chapter5 Lecture Note](Course/MGS3701/03_Lecture_Note/LectureNote_Chad/PPT/chapter5/chapter5_note.qmd)
+### [Chapter5 Slide](Course/MGS3701/03_Lecture_Note/LectureNote_Chad/PPT/chapter5/chapter5.qmd)
+### [Chapter5 Lecture Notebook - R](Course/MGS3701/03_Lecture_Note/LectureNote_Chad/PPT/chapter5/chapter5_notebook.qmd)
+### [Chapter5 Lecture Notebook - Python](Course/MGS3001/07_Script/Chapter Examples Python/Chapter 05 - Evaluating performance.html)
+
+## Chapter5
+### [Chapter5 Lecture Note](Course/MGS3701/03_Lecture_Note/LectureNote_Chad/PPT/chapter5/chapter5_note.qmd)
+### [Chapter5 Slide](Course/MGS3701/03_Lecture_Note/LectureNote_Chad/PPT/chapter5/chapter5.qmd)
+### [Chapter5 Lecture Notebook - R](Course/MGS3701/03_Lecture_Note/LectureNote_Chad/PPT/chapter5/chapter5_notebook.qmd)
+### [Chapter5 Lecture Notebook - Python](Course/MGS3001/07_Script/Chapter Examples Python/Chapter 05 - Evaluating performance.html)
+
+## Chapter5
+### [Chapter5 Lecture Note](Course/MGS3701/03_Lecture_Note/LectureNote_Chad/PPT/chapter5/chapter5_note.qmd)
+### [Chapter5 Slide](Course/MGS3701/03_Lecture_Note/LectureNote_Chad/PPT/chapter5/chapter5.qmd)
+### [Chapter5 Lecture Notebook - R](Course/MGS3701/03_Lecture_Note/LectureNote_Chad/PPT/chapter5/chapter5_notebook.qmd)
+### [Chapter5 Lecture Notebook - Python](Course/MGS3001/07_Script/Chapter Examples Python/Chapter 05 - Evaluating performance.html)
+
+## Chapter5
+### [Chapter5 Lecture Note](Course/MGS3701/03_Lecture_Note/LectureNote_Chad/PPT/chapter5/chapter5_note.qmd)
+### [Chapter5 Slide](Course/MGS3701/03_Lecture_Note/LectureNote_Chad/PPT/chapter5/chapter5.qmd)
+### [Chapter5 Lecture Notebook - R](Course/MGS3701/03_Lecture_Note/LectureNote_Chad/PPT/chapter5/chapter5_notebook.qmd)
+### [Chapter5 Lecture Notebook - Python](Course/MGS3001/07_Script/Chapter Examples Python/Chapter 05 - Evaluating performance.html)
+
+## Chapter5
+### [Chapter5 Lecture Note](Course/MGS3701/03_Lecture_Note/LectureNote_Chad/PPT/chapter5/chapter5_note.qmd)
+### [Chapter5 Slide](Course/MGS3701/03_Lecture_Note/LectureNote_Chad/PPT/chapter5/chapter5.qmd)
+### [Chapter5 Lecture Notebook - R](Course/MGS3701/03_Lecture_Note/LectureNote_Chad/PPT/chapter5/chapter5_notebook.qmd)
+### [Chapter5 Lecture Notebook - Python](Course/MGS3001/07_Script/Chapter Examples Python/Chapter 05 - Evaluating performance.html)
+
+## Chapter5
+### [Chapter5 Lecture Note](Course/MGS3701/03_Lecture_Note/LectureNote_Chad/PPT/chapter5/chapter5_note.qmd)
+### [Chapter5 Slide](Course/MGS3701/03_Lecture_Note/LectureNote_Chad/PPT/chapter5/chapter5.qmd)
+### [Chapter5 Lecture Notebook - R](Course/MGS3701/03_Lecture_Note/LectureNote_Chad/PPT/chapter5/chapter5_notebook.qmd)
+### [Chapter5 Lecture Notebook - Python](Course/MGS3001/07_Script/Chapter Examples Python/Chapter 05 - Evaluating performance.html)
+
+## Chapter5
+### [Chapter5 Lecture Note](Course/MGS3701/03_Lecture_Note/LectureNote_Chad/PPT/chapter5/chapter5_note.qmd)
+### [Chapter5 Slide](Course/MGS3701/03_Lecture_Note/LectureNote_Chad/PPT/chapter5/chapter5.qmd)
+### [Chapter5 Lecture Notebook - R](Course/MGS3701/03_Lecture_Note/LectureNote_Chad/PPT/chapter5/chapter5_notebook.qmd)
+### [Chapter5 Lecture Notebook - Python](Course/MGS3001/07_Script/Chapter Examples Python/Chapter 05 - Evaluating performance.html)
 
 
 Course/MGS3001/07_Script/Chapter Examples Python/Chapter 06 - Multiple linear regression.html
