@@ -1,7 +1,7 @@
 ---
 # Title
-title: "Make up for May 6th" # 폰트가 굵음으로 짧은 타이틀
-subtitle: "Special Topic:" # 자세한 타이틀
+title: "" # 폰트가 굵음으로 짧은 타이틀
+subtitle: "" # 자세한 타이틀
 title-slide-attributes:
     data-background-image: _resource/school_background.jpg
     data-background-size: contain

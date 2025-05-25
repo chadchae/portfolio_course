@@ -1,6 +1,6 @@
 ---
-title: "[Lecture Note] Make up for May 6th"
-subtitle: "Special Topic: "
+title: "[Lecture Note] "
+subtitle: ""
 author:
   - name: Chad (Chungil Chae)
     email: cchae@kean.edu
@@ -64,6 +64,7 @@ format:
 #number-depth: 4
 #mainfont: Georgia, serif;
 #editor: visual
+always_allow_html: true
 fontsize: .88em
 abstract-title: "Abstract"
 abstract: ""
