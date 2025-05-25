@@ -114,6 +114,9 @@ knitr::opts_chunk$set(error = F, echo = F, warning = F, fig.width=8, fig.height=
 ### [Chapter Summary Slide](Course/MGS3701/03_Lecture_Note/LectureNote_Chad/PPT/Summary_ch6_to_ch20/chapter.qmd)
 ### [Chapter Summary Notebook - R](Course/MGS3701/03_Lecture_Note/LectureNote_Chad/PPT/Summary_ch6_to_ch20/chapter_notebook.qmd)
 
+## Extra Video 
+{{< video https://youtu.be/d3g6l9Fi4kM width="100%" height="85%">}}
+
 ---
 
 Course/MGS3001/07_Script/Chapter Examples Python/Chapter 06 - Multiple linear regression.html
