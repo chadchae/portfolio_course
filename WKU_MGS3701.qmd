@@ -110,9 +110,9 @@ knitr::opts_chunk$set(error = F, echo = F, warning = F, fig.width=8, fig.height=
 ### [Chapter5 Lecture Notebook - Python](Course/MGS3001/07_Script/Chapter Examples Python/Chapter 05 - Evaluating performance.html)
 
 ## Chapter Summary of chapter6 to chapter20
-### [Chapter Summary Lecture Note](Course/MGS3701/03_Lecture_Note/LectureNote_Chad/PPT/Summary_ch6_to_ch20/chapter_note.qmd)
-### [Chapter Summary Slide](Course/MGS3701/03_Lecture_Note/LectureNote_Chad/PPT/Summary_ch6_to_ch20/chapter.qmd)
-### [Chapter Summary Notebook - R](Course/MGS3701/03_Lecture_Note/LectureNote_Chad/PPT/Summary_ch6_to_ch20/chapter_notebook.qmd)
+### [Chapter Summary Lecture Note](Course/MGS3701/03_Lecture_Note/LectureNote_Chad/PPT/Summary_ch6_to_ch20/lecture_note.qmd)
+### [Chapter Summary Slide](Course/MGS3701/03_Lecture_Note/LectureNote_Chad/PPT/Summary_ch6_to_ch20/lecture.qmd)
+### [Chapter Summary Notebook - R](Course/MGS3701/03_Lecture_Note/LectureNote_Chad/PPT/Summary_ch6_to_ch20/lecture_notebook.qmd)
 
 ## Extra Video 
 {{< video https://youtu.be/d3g6l9Fi4kM width="100%" height="85%">}}
