@@ -1,6 +1,6 @@
 ---
 title: "GE2021: Research Technology @ Wenzhou-Kean Unversity"
-subtitle: "2025, Spring"
+subtitle: "2026, Fall"
 author:
   - name: Chad (Chungil Chae)
     email: cchae@kean.edu
@@ -76,7 +76,7 @@ knitr::opts_chunk$set(error = F, echo = F, warning = F, fig.width=8, fig.height=
 ```
 
 ## Course Material
-### [Student Performance](https://chadchae.shinyapps.io/studentperformance_2025S_GE2021/)
+### [Student Performance](https://chadchae.shinyapps.io/student_performance/)
 ### [Introduciton and Housekeeping](Course/GE2021/03_Lecture_Note/LectureNote_Chad/PPT/chapter0/chapter0.qmd)
 ### Video 
 {{< video https://youtu.be/d3g6l9Fi4kM width="100%" height="85%">}}
